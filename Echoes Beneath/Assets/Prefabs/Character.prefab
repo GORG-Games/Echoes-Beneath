@@ -169,7 +169,8 @@ MonoBehaviour:
   _firePoint: {fileID: 0}
   _bulletSpeed: 10
   _bulletCount: 5
-  _spread: 15
+  _spread: 50
+  _coneLength: 0
 --- !u!1 &7505128428874272170
 GameObject:
   m_ObjectHideFlags: 0

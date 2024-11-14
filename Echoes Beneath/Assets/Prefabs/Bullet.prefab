@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1327344298474280033}
   - component: {fileID: 1769642621519888517}
   - component: {fileID: -3894296223959924501}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b350a9568208e844ae9d665adde37d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifespan: 200
+  _lifespan: 2
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &6077018393548979967
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,7 +138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8190657876248606953}
   - component: {fileID: 4459423003302067037}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

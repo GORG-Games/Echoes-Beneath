@@ -7,8 +7,10 @@ public class Shotgun : MonoBehaviour
     [SerializeField] private GameObject _bulletPrefab; // Префаб пули
     [SerializeField] private Transform _firePoint; // Точка, из которой будет происходить выстрел
     [SerializeField] private float _bulletSpeed; // Скорость пули
-    [SerializeField] private int _bulletCount;
-    [SerializeField] private float _spread;
+    
+    [SerializeField] public int _bulletCount;
+    [SerializeField] public float _spread;
+    [SerializeField] public float _coneLength;
 
     private void Start()
     {
@@ -27,7 +29,7 @@ public class Shotgun : MonoBehaviour
     {
 
 
-        float angleStep = spread / (bulletCount - 1); // Шаг угла между пулями
+        float angleStep = spread / (bulletCount); // Шаг угла между пулями
         float startAngle = -spread / 2; // Начальный угол
 
         for (int i = 0; i < bulletCount; i++)
@@ -46,13 +48,13 @@ public class Shotgun : MonoBehaviour
         }
     }
 
-    void OnDrawGizmos(int bulletCount, float spread)
+    void OnDrawGizmos()
     {
         Gizmos.color = Color.red; // Цвет конуса
-        float angleStep = spread / (bulletCount - 1);
-        float startAngle = -spread / 2;
+        float angleStep = _spread / (_bulletCount - 1);
+        float startAngle = -_spread / 2;
 
-        for (int i = 0; i < bulletCount; i++)
+        for (int i = 0; i < _bulletCount; i++)
         {
             float angle = startAngle + i * angleStep;
             Quaternion bulletRotation = Quaternion.Euler(new Vector3(0, 0, angle));
@@ -61,8 +63,8 @@ public class Shotgun : MonoBehaviour
         }
 
         // Рисуем линии по краям
-        Gizmos.DrawLine(_firePoint.position, _firePoint.position + (Vector3)(Quaternion.Euler(0, 0, -spread / 2) * _firePoint.up) * 100f);
-        Gizmos.DrawLine(_firePoint.position, _firePoint.position + (Vector3)(Quaternion.Euler(0, 0, spread / 2) * _firePoint.up) * 100f);
+        Gizmos.DrawLine(_firePoint.position, _firePoint.position + (Vector3)(Quaternion.Euler(0, 0, -_spread / 2) * _firePoint.up));
+        Gizmos.DrawLine(_firePoint.position, _firePoint.position + (Vector3)(Quaternion.Euler(0, 0, _spread / 2) * _firePoint.up));
     }
 
 }
