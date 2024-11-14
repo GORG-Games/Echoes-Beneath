@@ -1,29 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Shotgun : MonoBehaviour
 {
+    // ВСЕ ДЛЯ СТРЕЛЬБЫ:
     [SerializeField] private GameObject _bulletPrefab; // Префаб пули
     [SerializeField] private Transform _firePoint; // Точка, из которой будет происходить выстрел
     [SerializeField] private float _bulletSpeed; // Скорость пули
     
-    [SerializeField] public int _bulletCount;
-    [SerializeField] public float _spread;
-    [SerializeField] public float fireRate; // Время между выстрелами (кулдаун)
+    [SerializeField] private int _bulletCount;
+    [SerializeField] private float _spread;
+    [SerializeField] private float fireRate; // Время между выстрелами (кулдаун)
     private float _nextFireTime; // Время, когда можно стрелять в следующий раз
+
+    // ВСЕ ДЛЯ ПЕРЕЗАРЯДКИ
+    [SerializeField] private int maxAmmo; // Максимальное количество патронов
+    private int currentAmmo; // Текущее количество патронов
+    [SerializeField] private float _reloadDelay; // Время на перезарядку
+    private bool isReloading = false; // Флаг, указывающий, что идет перезарядка
+    [SerializeField] private Text _ammoDisplay; //Ссылка на текстовое поле для отображения текущего кол-ва патронов
+    private Coroutine _reloadCoroutine; // Ссылка на текущую корутину перезарядки
+
 
     private void Start()
     {
-
+        currentAmmo = maxAmmo; // Инициализируем начальное количество патронов
+        UpdateAmmoUI();
     }
     void Update()
     {
 
         if (Input.GetMouseButtonDown(0) && Time.time >= _nextFireTime) // Проверка нажатия ЛКМ
         {
+            if (isReloading)
+            {
+                StopCoroutine(_reloadCoroutine); // Останавливаем корутину перезарядки
+                isReloading = false; // Снимаем флаг перезарядки
+                Debug.Log("Перезарядка прервана!");
+            }
             Shoot(_bulletCount, _spread);
             _nextFireTime = Time.time + 1f / fireRate; // Устанавливаем новое время для следующего выстрела
+            currentAmmo--;
+            UpdateAmmoUI();
+
+        }
+        if ((Input.GetKeyDown(KeyCode.R) && currentAmmo < maxAmmo && !isReloading) || (currentAmmo == 0 && !isReloading))
+        {
+            _reloadCoroutine = StartCoroutine(Reload()); // Запускаем корутину для перезарядки
         }
     }
 
@@ -33,23 +58,50 @@ public class Shotgun : MonoBehaviour
 
         float angleStep = spread / (bulletCount); // Шаг угла между пулями
         float startAngle = -spread / 2; // Начальный угол
-
-        for (int i = 0; i < bulletCount; i++)
+        if (!isReloading)
         {
-            // Создаем пулю
-            GameObject bullet = Instantiate(_bulletPrefab, _firePoint.position, _firePoint.rotation);
-            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
 
-            // Вычисляем угол для текущей пули
-            float angle = startAngle + i * angleStep;
-            Quaternion bulletRotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            for (int i = 0; i < bulletCount; i++)
+            {
+                // Создаем пулю
+                GameObject bullet = Instantiate(_bulletPrefab, _firePoint.position, _firePoint.rotation);
+                Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
 
-            // Направляем пулю с учетом разброса
-            Vector2 direction = bulletRotation * _firePoint.up; // Изменить на firePoint.right, если дробовик ориентирован вправо
-            rb.velocity = direction * _bulletSpeed;
+                // Вычисляем угол для текущей пули
+                float angle = startAngle + i * angleStep;
+                Quaternion bulletRotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+                // Направляем пулю с учетом разброса
+                Vector2 direction = bulletRotation * _firePoint.up; // Изменить на firePoint.right, если дробовик ориентирован вправо
+                rb.velocity = direction * _bulletSpeed;
+
+            }
         }
     }
+    IEnumerator Reload()
+    {
+        isReloading = true; // Устанавливаем флаг, что идет перезарядка
+        Debug.Log("Перезарядка...");
+        // Задержка на начало перезарядки (если нужно время для анимации, звуков и т.д.)
+        yield return new WaitForSeconds(0.5f); // Например, 0.5 секунд на начало перезарядки
 
+        // Заряжаем патроны по одному с задержкой
+        while (currentAmmo < maxAmmo)
+        {
+            currentAmmo++; // Увеличиваем количество патронов на 1
+            UpdateAmmoUI(); // Обновляем отображение патронов
+
+            // Задержка между каждым патроном
+            yield return new WaitForSeconds(_reloadDelay); // Задержка на 0.2 секунды между патронами
+        }
+        isReloading = false; // Снимаем флаг перезарядки
+        UpdateAmmoUI();
+        Debug.Log("Перезарядка завершена!");
+    }
+    void UpdateAmmoUI()
+    {
+        _ammoDisplay.text = "Ammo: " + currentAmmo + "/" + maxAmmo; // Обновляем текст UI
+    }
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red; // Цвет конуса
