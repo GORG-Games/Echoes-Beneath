@@ -10,7 +10,8 @@ public class Shotgun : MonoBehaviour
     
     [SerializeField] public int _bulletCount;
     [SerializeField] public float _spread;
-    [SerializeField] public float _coneLength;
+    [SerializeField] public float fireRate; // Время между выстрелами (кулдаун)
+    private float _nextFireTime; // Время, когда можно стрелять в следующий раз
 
     private void Start()
     {
@@ -19,9 +20,10 @@ public class Shotgun : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetMouseButtonDown(0)) // Проверка нажатия ЛКМ
+        if (Input.GetMouseButtonDown(0) && Time.time >= _nextFireTime) // Проверка нажатия ЛКМ
         {
             Shoot(_bulletCount, _spread);
+            _nextFireTime = Time.time + 1f / fireRate; // Устанавливаем новое время для следующего выстрела
         }
     }
 

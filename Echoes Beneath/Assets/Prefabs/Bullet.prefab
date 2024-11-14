@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b350a9568208e844ae9d665adde37d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lifespan: 2
+  _lifespan: 0.5
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 64
