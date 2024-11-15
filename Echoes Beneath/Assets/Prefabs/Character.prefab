@@ -42,9 +42,10 @@ GameObject:
   - component: {fileID: 1963648414835764067}
   - component: {fileID: 5279506196937338129}
   - component: {fileID: 1732746898140742670}
+  - component: {fileID: 5419583743436432168}
   m_Layer: 0
   m_Name: Character
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,6 +107,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+--- !u!70 &5419583743436432168
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6958056940225576645}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.12112701}
+  m_Size: {x: 1.3148555, y: 2.0130632}
+  m_Direction: 0
 --- !u!1 &7075523761749334516
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,8 +201,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00ce8c6fc9cca764fad529d83baea9a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 0}
-  _firePoint: {fileID: 0}
+  _bulletPrefab: {fileID: 3853265741260225818, guid: c23fd0396bb95a24fa71990c55328d29, type: 3}
+  _firePoint: {fileID: 4552574824923826540}
   _bulletSpeed: 25
   _bulletCount: 5
   _spread: 42
