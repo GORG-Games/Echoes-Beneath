@@ -7,9 +7,15 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float _lifespan; // Время жизни пули
     [SerializeField] private LayerMask _enemyLayer;
     private LayerMask _bulletLayer;
+    private TrailRenderer trailRenderer;
 
     void Start()
     {
+        trailRenderer = GetComponent<TrailRenderer>();
+        trailRenderer.time = _lifespan/10; //Продолжительность следа
+        trailRenderer.startWidth = 0.05f;  // Начальная ширина следа
+        trailRenderer.endWidth = 0.00f;    // Конечная ширина следа
+
         _bulletLayer = gameObject.layer;
         // Уничтожаем пулю через заданное время
         Destroy(gameObject, _lifespan);

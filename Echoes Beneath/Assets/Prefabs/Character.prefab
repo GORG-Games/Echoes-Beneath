@@ -286,12 +286,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletPrefab: {fileID: 3853265741260225818, guid: c23fd0396bb95a24fa71990c55328d29, type: 3}
   _firePoint: {fileID: 4552574824923826540}
-  _bulletSpeed: 25
+  _bulletSpeed: 50
   _bulletCount: 5
   _spread: 42
-  fireRate: 1.5
+  fireRate: 1.7
   maxAmmo: 8
-  _reloadDelay: 0.2
+  _reloadDelay: 0.5
   _ammoDisplay: {fileID: 0}
 --- !u!1 &7435412645026549564
 GameObject:
