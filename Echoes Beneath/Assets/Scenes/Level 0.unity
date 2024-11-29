@@ -1053,13 +1053,17 @@ PrefabInstance:
       propertyPath: _bulletPrefab
       value: 
       objectReference: {fileID: 3853265741260225818, guid: c23fd0396bb95a24fa71990c55328d29, type: 3}
+    - target: {fileID: 503046134048659213, guid: e1623e112bceab846b96defde75d0f3e, type: 3}
+      propertyPath: _totalAmmoDisplay
+      value: 
+      objectReference: {fileID: 8104282155768990720}
     - target: {fileID: 1963648414835764067, guid: e1623e112bceab846b96defde75d0f3e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1963648414835764067, guid: e1623e112bceab846b96defde75d0f3e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.48
       objectReference: {fileID: 0}
     - target: {fileID: 1963648414835764067, guid: e1623e112bceab846b96defde75d0f3e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1274,7 +1278,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3331013322445933026, guid: 8f1477b65d7ef334f93f3d48d906d24a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.48
       objectReference: {fileID: 0}
     - target: {fileID: 3331013322445933026, guid: 8f1477b65d7ef334f93f3d48d906d24a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1334,7 +1338,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5965161892681794141, guid: 0777bb4bda757094aa0d23001035a094, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.48
       objectReference: {fileID: 0}
     - target: {fileID: 5965161892681794141, guid: 0777bb4bda757094aa0d23001035a094, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1385,6 +1389,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2470372341124606367, guid: 015c7074d227e1b4c91e1d7c62d07691, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -90.3
+      objectReference: {fileID: 0}
     - target: {fileID: 4536036190442312262, guid: 015c7074d227e1b4c91e1d7c62d07691, type: 3}
       propertyPath: m_Name
       value: Canvas
@@ -1514,6 +1522,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 015c7074d227e1b4c91e1d7c62d07691, type: 3}
+--- !u!114 &8104282155768990720 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8346959655850665505, guid: 015c7074d227e1b4c91e1d7c62d07691, type: 3}
+  m_PrefabInstance: {fileID: 8104282155768990719}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -289,10 +289,12 @@ MonoBehaviour:
   _bulletSpeed: 50
   _bulletCount: 5
   _spread: 42
-  fireRate: 1.7
-  maxAmmo: 8
+  _fireRate: 1.7
+  _maxAmmo: 8
+  _startTotalAmmo: 16
   _reloadDelay: 0.5
   _ammoDisplay: {fileID: 0}
+  _totalAmmoDisplay: {fileID: 0}
 --- !u!1 &7435412645026549564
 GameObject:
   m_ObjectHideFlags: 0
