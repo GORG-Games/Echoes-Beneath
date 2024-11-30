@@ -15,6 +15,11 @@ public class Shotgun : MonoBehaviour
     [SerializeField] private float fireRate; // Время между выстрелами (кулдаун)
     private float _nextFireTime; // Время, когда можно стрелять в следующий раз
 
+    [SerializeField] private float _shakeStrength;
+    [SerializeField] private float _shakeTime;
+    [SerializeField] private float _shakeFadeTime;
+
+
     // ВСЕ ДЛЯ ПЕРЕЗАРЯДКИ
     [SerializeField] private int maxAmmo; // Максимальное количество патронов
     private int currentAmmo; // Текущее количество патронов
@@ -41,6 +46,7 @@ public class Shotgun : MonoBehaviour
                 Debug.Log("Перезарядка прервана!");
             }
             Shoot(_bulletCount, _spread);
+            CameraController.cameraShake(_shakeStrength, _shakeTime, _shakeFadeTime);
             _nextFireTime = Time.time + 1f / fireRate; // Устанавливаем новое время для следующего выстрела
             currentAmmo--;
             UpdateAmmoUI();

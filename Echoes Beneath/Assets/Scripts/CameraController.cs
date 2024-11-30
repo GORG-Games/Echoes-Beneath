@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class CamController : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
     public static Action<float, float, float> cameraShake;
     public static Action<float> changeCameraSizeEvent;

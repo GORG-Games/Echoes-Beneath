@@ -20,11 +20,11 @@ public class VisionManipulator : MonoBehaviour
         {
             if (other.transform.position.x > transform.position.x) //Если пошёл направо
             {
-                CamController.changeCameraSizeEvent?.Invoke(rightCameraSize);
+                CameraController.changeCameraSizeEvent?.Invoke(rightCameraSize);
             }
             else if (other.transform.position.x < transform.position.x)//Если пошёл налево
             {
-                CamController.changeCameraSizeEvent?.Invoke(leftCameraSize);
+                CameraController.changeCameraSizeEvent?.Invoke(leftCameraSize);
             }
             /*else if (other.transform.position.y > transform.position.y)//Если пошёл вверх
             {
