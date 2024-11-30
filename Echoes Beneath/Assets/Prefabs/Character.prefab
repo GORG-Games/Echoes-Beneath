@@ -290,6 +290,9 @@ MonoBehaviour:
   _bulletCount: 5
   _spread: 42
   _fireRate: 1.7
+  _shakeStrength: 5
+  _shakeTime: 0.1
+  _shakeFadeTime: 0.1
   _maxAmmo: 8
   _startTotalAmmo: 16
   _reloadDelay: 0.5
