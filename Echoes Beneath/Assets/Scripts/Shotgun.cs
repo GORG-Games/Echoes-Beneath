@@ -115,8 +115,11 @@ public class Shotgun : MonoBehaviour
     {
         _ammoDisplay.text = "Ammo: " + _currentAmmoInChamber + "/" + _maxAmmo; // Обновляем текст UI
         _totalAmmoDisplay.text = $"{_totalAmmo}";
-        if (_totalAmmo < 1)
+        if (_totalAmmo == 0)
             _totalAmmoDisplay.color = Color.red;
+        else
+            _totalAmmoDisplay.color = Color.white;
+
     }
     void OnDrawGizmos()
     {
