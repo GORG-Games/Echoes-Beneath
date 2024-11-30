@@ -111,7 +111,7 @@ public class Shotgun : MonoBehaviour
         UpdateAmmoUI();
         Debug.Log("Перезарядка завершена!");
     }
-    void UpdateAmmoUI()
+    public void UpdateAmmoUI()
     {
         _ammoDisplay.text = "Ammo: " + _currentAmmoInChamber + "/" + _maxAmmo; // Обновляем текст UI
         _totalAmmoDisplay.text = $"{_totalAmmo}";
