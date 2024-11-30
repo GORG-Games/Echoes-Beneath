@@ -23,7 +23,7 @@ public class Shotgun : MonoBehaviour
     [SerializeField] private int _maxAmmo; // Максимальное количество патронов
     [SerializeField] private int _startTotalAmmo;
     private int _currentAmmoInChamber; // Текущее количество патронов
-    private int _totalAmmo;
+    public int _totalAmmo;
     [SerializeField] private float _reloadDelay; // Время на перезарядку
     private bool _isReloading = false; // Флаг, указывающий, что идет перезарядка
     [SerializeField] private Text _ammoDisplay; //Ссылка на текстовое поле для отображения текущего кол-ва патронов
@@ -48,14 +48,17 @@ public class Shotgun : MonoBehaviour
                 _isReloading = false; // Снимаем флаг перезарядки
                 Debug.Log("Перезарядка прервана!");
             }
-            Shoot(_bulletCount, _spread);
-            CameraController.cameraShake(_shakeStrength, _shakeTime, _shakeFadeTime);
-            _nextFireTime = Time.time + 1f / _fireRate; // Устанавливаем новое время для следующего выстрела
-            _currentAmmoInChamber--;
-            UpdateAmmoUI();
+            if (_currentAmmoInChamber >= 1)
+            {
+                Shoot(_bulletCount, _spread);
+                CameraController.cameraShake(_shakeStrength, _shakeTime, _shakeFadeTime);
+                _nextFireTime = Time.time + 1f / _fireRate; // Устанавливаем новое время для следующего выстрела
+                _currentAmmoInChamber--;
+                UpdateAmmoUI();
+            }
 
         }
-        if ((Input.GetKeyDown(KeyCode.R) && _currentAmmoInChamber < _maxAmmo && !_isReloading) || (_currentAmmoInChamber == 0 && !_isReloading))
+        if ((Input.GetKeyDown(KeyCode.R) && _currentAmmoInChamber < _maxAmmo && !_isReloading) || (_currentAmmoInChamber == 0 && !_isReloading && _totalAmmo != 0))
         {
             _reloadCoroutine = StartCoroutine(Reload()); // Запускаем корутину для перезарядки
         }
@@ -95,7 +98,7 @@ public class Shotgun : MonoBehaviour
         yield return new WaitForSeconds(0.5f); 
 
         // Заряжаем патроны по одному с задержкой
-        while (_currentAmmoInChamber < _maxAmmo && _totalAmmo - _maxAmmo >= 1)
+        while (_currentAmmoInChamber < _maxAmmo && _totalAmmo >= 1)
         {
             _currentAmmoInChamber++; // Увеличиваем количество патронов на 1
             _totalAmmo--; // Уменьшаем общее количество патронов на 1
@@ -111,8 +114,8 @@ public class Shotgun : MonoBehaviour
     void UpdateAmmoUI()
     {
         _ammoDisplay.text = "Ammo: " + _currentAmmoInChamber + "/" + _maxAmmo; // Обновляем текст UI
-        _totalAmmoDisplay.text = $"{(_totalAmmo - _maxAmmo)}";
-        if (_totalAmmo  - _maxAmmo < 1)
+        _totalAmmoDisplay.text = $"{_totalAmmo}";
+        if (_totalAmmo < 1)
             _totalAmmoDisplay.color = Color.red;
     }
     void OnDrawGizmos()
