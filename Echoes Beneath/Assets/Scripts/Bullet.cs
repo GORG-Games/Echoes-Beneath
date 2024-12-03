@@ -33,8 +33,8 @@ public class Bullet : MonoBehaviour
         }
         else
             Destroy(gameObject); //уничтожаем пулю
-            Debug.Log("Layer: " + collision.gameObject.layer);
-            Debug.Log("Collided Layer: " + LayerMask.LayerToName(collision.gameObject.layer));
+            /*Debug.Log("Layer: " + collision.gameObject.layer);
+            Debug.Log("Collided Layer: " + LayerMask.LayerToName(collision.gameObject.layer));*/
 
         // «десь можно добавить дополнительную логику, например, урон врагам
         // ≈сли нужно, можно проверить тег объекта, с которым произошло столкновение:
