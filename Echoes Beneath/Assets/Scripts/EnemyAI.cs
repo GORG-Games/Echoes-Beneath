@@ -1,6 +1,10 @@
 using UnityEngine;
 using UnityEngine.AI;
+using Pathfinding;
+using System.Collections;
 
+[RequireComponent(typeof(AIPath))]
+[RequireComponent(typeof(Seeker))]
 public class EnemyAI : MonoBehaviour
 {
     [SerializeField] private Transform _player; // Ссылка на игрока
@@ -8,17 +12,24 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float _speed; // Скорость движения
     [SerializeField] private float _attackRange; // Дальность атаки
     [SerializeField] private LayerMask _playerLayer; // Слой препятствий
-    private Vector2 _directionToPlayer;
-    [SerializeField] private float stoppingDistance; // Расстояние, на котором враг останавливается
-
-    public bool _isPlayerInSight = false; // Проверка, замечен ли игрок
+    [SerializeField] private float attackCooldown;
     private float _distanceToPlayer;
 
-    private Rigidbody2D rb;
+    public bool _isPlayerInSight = false; // Проверка, замечен ли игрок
+    private bool isAttacking = false; // Флаг атаки для предотвращения повторного вызова корутины
+
+    public AIPath aiPath;
+    //private AIPath aiPath;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        aiPath = GetComponent<AIPath>();
+        if (aiPath == null)
+        {
+            Debug.LogError("AIPath component missing!");
+        }
+        aiPath.maxSpeed = _speed;
+        aiPath.endReachedDistance = _attackRange;
     }
 
     void Update()
@@ -28,44 +39,35 @@ public class EnemyAI : MonoBehaviour
 
         if (_isPlayerInSight)
         {
-            _distanceToPlayer = Vector2.Distance(transform.position, _player.position);
+            // Устанавливаем игрока как цель
+            aiPath.destination = _player.position;
 
-            if (_distanceToPlayer > stoppingDistance)
+            // Если враг находится в пределах stoppingDistance, атакуем
+            if (!aiPath.hasPath || aiPath.reachedDestination)
             {
-                // Движение к игроку
-                _directionToPlayer = (_player.position - transform.position).normalized;
+                if (!isAttacking)
+                {
+                    StartCoroutine(AttackPlayer());
+                }
             }
-            else
-            {
-                // Останавливаемся, если игрок близко
-                _directionToPlayer = Vector2.zero;
-            }
-        }
-    }
-    void FixedUpdate()
-    {
-        if (_directionToPlayer != Vector2.zero)
-        {
-            rb.MovePosition(rb.position + _directionToPlayer * _speed * Time.fixedDeltaTime);
         }
     }
 
     private void CheckPlayerVisibility()
     {
-        Debug.Log("CheckPlayerVisibility called"); // Убедимся, что метод вызывается
+        //Debug.Log("CheckPlayerVisibility called"); // Убедимся, что метод вызывается
         _distanceToPlayer = Vector2.Distance(transform.position, _player.position);
         if (_distanceToPlayer > _detectionRange)
         {
-            Debug.Log($"Player is out of detection range. Distance: {_distanceToPlayer}");
             return;
         }
         // Направление от врага к игроку
-        _directionToPlayer = (_player.position - transform.position).normalized;
+        Vector2 direction = (_player.position - transform.position).normalized;
 
         // Визуализация Raycast
-        Debug.DrawRay(transform.position, _directionToPlayer * _detectionRange, Color.red);
+        Debug.DrawRay(transform.position, direction * _detectionRange, Color.red);
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, _directionToPlayer, _detectionRange, _playerLayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, _detectionRange, _playerLayer);
 
         if (hit.collider != null)
         {
@@ -73,13 +75,28 @@ public class EnemyAI : MonoBehaviour
             if ((_playerLayer.value & (1 << hit.collider.gameObject.layer)) != 0)
             {
                 _isPlayerInSight = true; // Игрок видим
-                Debug.Log("Player detected in 2D!");
+                Debug.Log("Player detected!");
             }
             else
             {
                 Debug.Log($"Raycast hit object on layer: {LayerMask.LayerToName(hit.collider.gameObject.layer)}");
             }
         }
+    }
+    IEnumerator AttackPlayer()
+    {
+        isAttacking = true;
+
+        // Здесь логика атаки
+        Debug.Log("Enemy attacks the player!");
+
+        // Например, наносим урон игроку
+        // player.GetComponent<PlayerHealth>().TakeDamage(attackDamage);
+
+        // Ждём завершения кулдауна
+        yield return new WaitForSeconds(attackCooldown);
+
+        isAttacking = false;
     }
     private void OnDrawGizmos()
     {
@@ -103,13 +120,5 @@ public class EnemyAI : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, _player.position);
         }
-    }
-
-    private Vector2 RotateVector(Vector2 vector, float angle)
-    {
-        float rad = angle * Mathf.Deg2Rad;
-        float cos = Mathf.Cos(rad);
-        float sin = Mathf.Sin(rad);
-        return new Vector2(vector.x * cos - vector.y * sin, vector.x * sin + vector.y * cos);
     }
 }
