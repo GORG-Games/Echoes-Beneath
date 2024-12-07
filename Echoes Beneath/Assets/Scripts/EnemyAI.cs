@@ -7,29 +7,40 @@ using System.Collections;
 [RequireComponent(typeof(Seeker))]
 public class EnemyAI : MonoBehaviour
 {
-    [SerializeField] private Transform _player; // Ссылка на игрока
-    [SerializeField] private float _detectionRange; // Радиус видимости
-    [SerializeField] private float _speed; // Скорость движения
-    [SerializeField] private float _attackRange; // Дальность атаки
-    [SerializeField] private LayerMask _playerLayer; // Слой препятствий
-    [SerializeField] private float attackCooldown;
-    private float _distanceToPlayer;
+    [Header("Movement and Finding player")]
+    [SerializeField] private Transform _player; // Player Transform component
+    [SerializeField] private float _detectionRange; // Detection radius
+    [SerializeField] private float _speed; // Enemy speed
+    [SerializeField] private LayerMask _playerLayer; // Layer of Player object
+    public bool IsPlayerInSight = false; // Check if player is detected
+    private float _distanceToPlayer; // Distance from enemy to player
+    private AIPath aiPath;
 
-    public bool _isPlayerInSight = false; // Проверка, замечен ли игрок
-    private bool isAttacking = false; // Флаг атаки для предотвращения повторного вызова корутины
-
-    public AIPath aiPath;
-    //private AIPath aiPath;
+    [Header("Attacking Player")]
+    [SerializeField] private float _attackCooldown; // Attack cooldown
+    [SerializeField] private float _attackRange; // Attack radius
+    [SerializeField] private int _attackDamage; // Attaack damage dealt to player
+    public bool _isAttacking = false;
+    private PlayerHealth _playerHealth;
 
     void Start()
     {
+        // AI initialization
         aiPath = GetComponent<AIPath>();
         if (aiPath == null)
         {
+#if UNITY_EDITOR
             Debug.LogError("AIPath component missing!");
+#endif
         }
         aiPath.maxSpeed = _speed;
         aiPath.endReachedDistance = _attackRange;
+
+        // Player health initialization
+        if(_player != null)
+        {
+            _playerHealth = _player.GetComponent<PlayerHealth>();
+        }
     }
 
     void Update()
@@ -37,15 +48,13 @@ public class EnemyAI : MonoBehaviour
         // Проверяем, видит ли враг игрока
         CheckPlayerVisibility();
 
-        if (_isPlayerInSight)
+        if (IsPlayerInSight)
         {
             // Устанавливаем игрока как цель
             aiPath.destination = _player.position;
-
-            // Если враг находится в пределах stoppingDistance, атакуем
-            if (!aiPath.hasPath || aiPath.reachedDestination)
+            if (_distanceToPlayer <= _attackRange)
             {
-                if (!isAttacking)
+                if (!_isAttacking)
                 {
                     StartCoroutine(AttackPlayer());
                 }
@@ -64,8 +73,10 @@ public class EnemyAI : MonoBehaviour
         // Направление от врага к игроку
         Vector2 direction = (_player.position - transform.position).normalized;
 
+#if UNITY_EDITOR
         // Визуализация Raycast
         Debug.DrawRay(transform.position, direction * _detectionRange, Color.red);
+#endif
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, _detectionRange, _playerLayer);
 
@@ -74,51 +85,59 @@ public class EnemyAI : MonoBehaviour
             // Проверяем, принадлежит ли объект слою игрока
             if ((_playerLayer.value & (1 << hit.collider.gameObject.layer)) != 0)
             {
-                _isPlayerInSight = true; // Игрок видим
+                IsPlayerInSight = true; // Игрок видим
+#if UNITY_EDITOR
                 Debug.Log("Player detected!");
+#endif
             }
             else
             {
+#if UNITY_EDITOR
                 Debug.Log($"Raycast hit object on layer: {LayerMask.LayerToName(hit.collider.gameObject.layer)}");
+#endif
             }
         }
     }
     IEnumerator AttackPlayer()
     {
-        isAttacking = true;
+        _isAttacking = true;
 
-        // Здесь логика атаки
+#if UNITY_EDITOR
         Debug.Log("Enemy attacks the player!");
+#endif
+        // Dealing damage to player
+        if (_playerHealth != null)
+        {
+            _playerHealth.TakeDamage(_attackDamage);
+        }
 
-        // Например, наносим урон игроку
-        // player.GetComponent<PlayerHealth>().TakeDamage(attackDamage);
-
-        // Ждём завершения кулдауна
-        yield return new WaitForSeconds(attackCooldown);
-
-        isAttacking = false;
+        // Wait for attack cooldown
+        yield return new WaitForSeconds(_attackCooldown);
+        _isAttacking = false;
     }
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         if (_player == null)
             return;
 
-        // Радиус обнаружения
+        // Detection range radius
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, _detectionRange);
 
-        // Луч к игроку
+        // direction to player
         Vector2 directionToPlayer = (_player.position - transform.position).normalized;
 
-        // Рисуем жёлтый луч до игрока
+        // yellow ray to player to track him
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, _player.position);
 
-        // Если игрок замечен, перекрашиваем луч в красный
-        if (_isPlayerInSight)
+        // If player is spotted, red ray
+        if (IsPlayerInSight)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, _player.position);
         }
     }
+#endif
 }

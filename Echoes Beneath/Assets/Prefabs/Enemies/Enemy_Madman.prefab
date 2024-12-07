@@ -123,7 +123,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0013151169, y: -0.052632213}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -134,7 +134,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1, y: 1.1}
+  m_Size: {x: 1.0078907, y: 0.8947346}
   m_EdgeRadius: 0
 --- !u!50 &5889808916121351168
 Rigidbody2D:
@@ -189,7 +189,7 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: -109786
+  m_InstanceId: 30138
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.5, y: 0.5, z: 0}
@@ -207,14 +207,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
   _detectionRange: 10
-  _speed: 5
-  _attackRange: 1.08
+  _speed: 3
   _playerLayer:
     serializedVersion: 2
     m_Bits: 256
-  attackCooldown: 2
-  _isPlayerInSight: 0
-  aiPath: {fileID: 0}
+  IsPlayerInSight: 0
+  _attackCooldown: 1.6
+  _attackRange: 4
+  _attackDamage: 5
+  _isAttacking: 0
 --- !u!114 &-1001295338117234821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,7 +260,7 @@ MonoBehaviour:
   radius: 0.75
   height: 1
   canMove: 1
-  maxSpeed: 2
+  maxSpeed: 4
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -278,9 +279,9 @@ MonoBehaviour:
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
-  slowdownDistance: 2.69
+  slowdownDistance: 2.72
   pickNextWaypointDist: 2
-  endReachedDistance: 1.76
+  endReachedDistance: 2.65
   alwaysDrawGizmos: 1
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0

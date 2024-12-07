@@ -18,19 +18,19 @@ public class VisionManipulator : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (other.transform.position.x > transform.position.x) //Если пошёл направо
+            if (other.transform.position.x > transform.position.x) //right
             {
                 CameraController.changeCameraSizeEvent?.Invoke(rightCameraSize);
             }
-            else if (other.transform.position.x < transform.position.x)//Если пошёл налево
+            else if (other.transform.position.x < transform.position.x)//left
             {
                 CameraController.changeCameraSizeEvent?.Invoke(leftCameraSize);
             }
-            /*else if (other.transform.position.y > transform.position.y)//Если пошёл вверх
+            /*else if (other.transform.position.y > transform.position.y)//up
             {
                 CamController.changeCameraSizeEvent?.Invoke(upCameraSize);
             }
-            else if (other.transform.position.y < transform.position.y)//Если пошёл вниз
+            else if (other.transform.position.y < transform.position.y)//down
             {
                 CamController.changeCameraSizeEvent?.Invoke(downCameraSize);
             }*/

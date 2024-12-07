@@ -22,16 +22,16 @@ public class CameraController : MonoBehaviour
         transposer = cam.GetCinemachineComponent<CinemachineFramingTransposer>();
         channelPerlin = cam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
-        cameraShake += shake;
-        changeCameraSizeEvent += changeCameraSize;
-        changeFollowTargetEvent += changeFollowTarget;
+        cameraShake += Shake;
+        changeCameraSizeEvent += ChangeCameraSize;
+        changeFollowTargetEvent += ChangeFollowTarget;
     }
 
     void OnDisable()
     {
-        cameraShake -= shake;
-        changeCameraSizeEvent -= changeCameraSize;
-        changeFollowTargetEvent -= changeFollowTarget;
+        cameraShake -= Shake;
+        changeCameraSizeEvent -= ChangeCameraSize;
+        changeFollowTargetEvent -= ChangeFollowTarget;
     }
 
     private void Update()
@@ -39,19 +39,19 @@ public class CameraController : MonoBehaviour
 
     }
 
-    void shake(float strength, float time, float fadeTime)
+    void Shake(float strength, float time, float fadeTime)
     {
         StartCoroutine(shakeCam(strength, time, fadeTime));
     }
 
-    void changeCameraSize(float newSize)
+    void ChangeCameraSize(float newSize)
     {
         StopCoroutine(changeSize(newSize));
         camSize = cam.m_Lens.OrthographicSize;
         StartCoroutine(changeSize(newSize));
     }
 
-    void changeFollowTarget(Transform followObject)
+    void ChangeFollowTarget(Transform followObject)
     {
         if (followObject != null) cam.m_Follow = followObject;
     }

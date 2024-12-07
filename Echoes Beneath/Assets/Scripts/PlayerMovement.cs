@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f; // Скорость перемещения
+    [SerializeField] private float moveSpeed;
 
     private Rigidbody2D rb;
     private Vector2 movement;
@@ -16,9 +16,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Получаем ввод от пользователя
-        movement.x = Input.GetAxisRaw("Horizontal"); // A/D или стрелки влево/вправо
-        movement.y = Input.GetAxisRaw("Vertical");   // W/S или стрелки вверх/вниз
+        // User Input
+        movement.x = Input.GetAxisRaw("Horizontal"); // A/D
+        movement.y = Input.GetAxisRaw("Vertical");   // W/S
     }
 
     void FixedUpdate()

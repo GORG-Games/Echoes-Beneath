@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float _lifespan; // Время жизни пули
+    [SerializeField] private float _lifespan;
     [SerializeField] private LayerMask _enemyLayer;
     private LayerMask _bulletLayer;
     private TrailRenderer trailRenderer;
@@ -12,12 +12,11 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         trailRenderer = GetComponent<TrailRenderer>();
-        trailRenderer.time = _lifespan/10; //Продолжительность следа
-        trailRenderer.startWidth = 0.05f;  // Начальная ширина следа
-        trailRenderer.endWidth = 0.00f;    // Конечная ширина следа
+        trailRenderer.time = _lifespan/10;
+        trailRenderer.startWidth = 0.05f;
+        trailRenderer.endWidth = 0.00f;
 
         _bulletLayer = gameObject.layer;
-        // Уничтожаем пулю через заданное время
         Destroy(gameObject, _lifespan);
 
         Physics2D.IgnoreLayerCollision(_bulletLayer, _bulletLayer);
@@ -25,22 +24,11 @@ public class Bullet : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // Уничтожаем пулю при столкновении
+        // Destroy bullet if collided
         if (((1 << collision.gameObject.layer) & _enemyLayer) != 0)
         {
-            Destroy(collision.gameObject); //уничтожаем 
-            Destroy(gameObject); //уничтожаем пулю
+            Destroy(collision.gameObject); // CHANGE TO DAMAGE TO ENEMY
         }
-        else
-            Destroy(gameObject); //уничтожаем пулю
-            /*Debug.Log("Layer: " + collision.gameObject.layer);
-            Debug.Log("Collided Layer: " + LayerMask.LayerToName(collision.gameObject.layer));*/
-
-        // Здесь можно добавить дополнительную логику, например, урон врагам
-        // Если нужно, можно проверить тег объекта, с которым произошло столкновение:
-        // if (collision.gameObject.CompareTag("Enemy"))
-        // {
-        //     // Логика урона врагу
-        // }
+        Destroy(gameObject);
     }
 }

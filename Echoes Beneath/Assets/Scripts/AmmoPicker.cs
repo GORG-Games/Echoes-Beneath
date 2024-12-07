@@ -29,18 +29,19 @@ public class AmmoPicker : MonoBehaviour
 
     void PickUpAmmo()
     {
-        // Добавляем патроны к общей переменной из скрипта дробовика
+        // Add ammo to shotgun
         _shotgun._totalAmmo += _ammoBox.AmmoAmount;
         _shotgun.UpdateAmmoUI();
-        Debug.Log("Патроны подобраны!");
 
-        // Уничтожаем объект с патронами
+#if UNITY_EDITOR
+        Debug.Log("Патроны подобраны!");
+#endif
         Destroy(_ammoBox.gameObject);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        // Проверяем слой объекта
+        // LayerMask check
         if (((1 << collision.gameObject.layer) & ammoBoxLayer) != 0)
         {
             _ammoBox = collision.GetComponent<AmmoBox>();
@@ -58,7 +59,7 @@ public class AmmoPicker : MonoBehaviour
         {
             if (_ammoBox != null)
             {
-                // Скрываем текст "E" на коробке
+                // Hiding "E" on Box
                 _ammoBox.HidePickupText();
             }
 
