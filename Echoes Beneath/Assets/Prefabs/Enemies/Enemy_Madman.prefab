@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 5889808916121351168}
   - component: {fileID: 7228200113934357804}
   - component: {fileID: 5405947298217280121}
-  - component: {fileID: -1001295338117234821}
+  - component: {fileID: 6844462843271618142}
   - component: {fileID: 6229031827162292681}
+  - component: {fileID: -1001295338117234821}
   - component: {fileID: -1349498517389031573}
   m_Layer: 6
   m_Name: Enemy_Madman
@@ -189,7 +190,7 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 30138
+  m_InstanceId: 30378
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.5, y: 0.5, z: 0}
@@ -216,7 +217,7 @@ MonoBehaviour:
   _attackRange: 4
   _attackDamage: 5
   _isAttacking: 0
---- !u!114 &-1001295338117234821
+--- !u!114 &6844462843271618142
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -225,25 +226,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 9036237423343731133}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Script: {fileID: 11500000, guid: 61fa6ef4c97cd0642a2c9f376f0661a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 1
-  drawGizmos: 1
-  detailedGizmos: 1
-  startEndModifier:
-    addPoints: 0
-    exactStartPoint: 3
-    exactEndPoint: 3
-    useRaycasting: 0
-    mask:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    useGraphRaycasting: 0
-  traversableTags: -1
-  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  graphMask:
-    value: -1
+  <MaxHealth>k__BackingField: 50
 --- !u!114 &6229031827162292681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,6 +272,34 @@ MonoBehaviour:
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
   constrainInsideGraph: 0
+--- !u!114 &-1001295338117234821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9036237423343731133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 1
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: -1
 --- !u!114 &-1349498517389031573
 MonoBehaviour:
   m_ObjectHideFlags: 0

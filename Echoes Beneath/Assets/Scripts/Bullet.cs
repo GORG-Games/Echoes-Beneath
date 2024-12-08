@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [Header("Bullet Path")]
     [SerializeField] private float _lifespan;
-    [SerializeField] private LayerMask _enemyLayer;
-    private LayerMask _bulletLayer;
     private TrailRenderer trailRenderer;
+    private LayerMask _bulletLayer;
+
+    [Header("Dealing Damage")]
+    [SerializeField] private LayerMask _enemyLayer;
+    private EnemyHealth _enemyHealth;
+    [SerializeField] private int damage = 10; // Damage dealt by the bullet
+    private Vector2 _knockbackDirection;
 
     void Start()
     {
@@ -25,9 +31,14 @@ public class Bullet : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         // Destroy bullet if collided
-        if (((1 << collision.gameObject.layer) & _enemyLayer) != 0)
+        if (Utils.LayerMaskUtil.ContainsLayer(_enemyLayer, collision.gameObject))
         {
-            Destroy(collision.gameObject); // CHANGE TO DAMAGE TO ENEMY
+            _enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
+            if (_enemyHealth != null)
+            {
+                _knockbackDirection = (collision.transform.position - transform.position).normalized;
+                _enemyHealth.TakeDamage(damage, _knockbackDirection);
+            }
         }
         Destroy(gameObject);
     }

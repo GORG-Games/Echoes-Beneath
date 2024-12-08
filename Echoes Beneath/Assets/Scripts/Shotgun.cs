@@ -12,6 +12,7 @@ public class Shotgun : MonoBehaviour
     [SerializeField] private int _bulletCount; // How many bullets will be shot after shooting once
     [SerializeField] private float _spread; // Bullet spread
     [SerializeField] private float _fireRate; // Higher the value, lower the cooldown
+    [field: SerializeField] public int Damage { get; private set; }
     private float _nextFireTime;
 
     [Header("Shooting: Camera Shake")]

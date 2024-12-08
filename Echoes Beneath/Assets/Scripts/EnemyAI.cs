@@ -19,7 +19,7 @@ public class EnemyAI : MonoBehaviour
     [Header("Attacking Player")]
     [SerializeField] private float _attackCooldown; // Attack cooldown
     [SerializeField] private float _attackRange; // Attack radius
-    [SerializeField] private int _attackDamage; // Attaack damage dealt to player
+    [SerializeField] private int _attackDamage; // Attack damage dealt to player
     public bool _isAttacking = false;
     private PlayerHealth _playerHealth;
 
