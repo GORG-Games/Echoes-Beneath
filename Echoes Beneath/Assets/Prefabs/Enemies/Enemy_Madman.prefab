@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
-  _detectionRange: 10
+  _detectionRange: 6
   _speed: 3
   _playerLayer:
     serializedVersion: 2
@@ -229,7 +229,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61fa6ef4c97cd0642a2c9f376f0661a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MaxHealth>k__BackingField: 50
+  <MaxHealth>k__BackingField: 100
+  _knockbackForce: 5
 --- !u!114 &6229031827162292681
 MonoBehaviour:
   m_ObjectHideFlags: 0
