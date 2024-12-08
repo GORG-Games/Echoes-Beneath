@@ -6,8 +6,8 @@ using TMPro;
 public class AmmoBox : MonoBehaviour
 {
     public int AmmoAmount;
-    public TextMeshProUGUI pickupText; // Ссылка на объект текста
-
+    public TextMeshProUGUI pickupText { get; private set; }// Ссылка на объект текста
+    [SerializeField] private LayerMask _playerLayer;
     void Start()
     {
         // Получаем ссылку на текст в дочернем объекте
@@ -17,6 +17,20 @@ public class AmmoBox : MonoBehaviour
         if (pickupText != null)
         {
             pickupText.gameObject.SetActive(false);
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (Utils.LayerMaskUtil.ContainsLayer(_playerLayer, collision.gameObject))
+        {
+            ShowPickupText();
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (Utils.LayerMaskUtil.ContainsLayer(_playerLayer, collision.gameObject))
+        {
+            HidePickupText();
         }
     }
 

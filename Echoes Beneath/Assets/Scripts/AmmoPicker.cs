@@ -8,7 +8,7 @@ public class AmmoPicker : MonoBehaviour
 
     private bool canPickUpAmmo = false;
     private AmmoBox _ammoBox;
-    [SerializeField] private LayerMask ammoBoxLayer;
+    [SerializeField] private LayerMask _ammoBoxLayer;
 
     void Start()
     {
@@ -42,12 +42,11 @@ public class AmmoPicker : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         // LayerMask check
-        if (((1 << collision.gameObject.layer) & ammoBoxLayer) != 0)
+        if (Utils.LayerMaskUtil.ContainsLayer(_ammoBoxLayer, collision.gameObject))
         {
             _ammoBox = collision.GetComponent<AmmoBox>();
             if(_ammoBox != null)
             {
-                _ammoBox.ShowPickupText();
                 canPickUpAmmo = true;
             }
         }
@@ -55,13 +54,8 @@ public class AmmoPicker : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        if (((1 << collision.gameObject.layer) & ammoBoxLayer) != 0)
+        if (Utils.LayerMaskUtil.ContainsLayer(_ammoBoxLayer, collision.gameObject))
         {
-            if (_ammoBox != null)
-            {
-                // Hiding "E" on Box
-                _ammoBox.HidePickupText();
-            }
 
             canPickUpAmmo = false;
             _ammoBox = null;
