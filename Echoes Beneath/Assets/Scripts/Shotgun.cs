@@ -68,25 +68,27 @@ public class Shotgun : MonoBehaviour
     }
     void Shoot(int bulletCount, float spread)
     {
-        float angleStep = spread / (bulletCount); // Angle step between bullets
-        float startAngle = -spread / 2; // Starting angle
+        // Calculate the step between each bullet's angle
+        float angleStep = spread / (bulletCount - 1); // Angle step between bullets
+        float startAngle = -spread / 2; // Starting angle for the first bullet
+
         if (!_isReloading)
         {
             for (int i = 0; i < bulletCount; i++)
             {
-                // Create bullet
-                GameObject bullet = Instantiate(_bulletPrefab, _firePoint.position, _firePoint.rotation);
+                // Calculate angle for the current bullet relative to the fire point's rotation
+                float angle = startAngle + i * angleStep;
+                Quaternion bulletRotation = _firePoint.rotation * Quaternion.Euler(0, 0, angle);
+
+                // Instantiate the bullet at the fire point position with the calculated rotation
+                GameObject bullet = Instantiate(_bulletPrefab, _firePoint.position, bulletRotation);
                 Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
 
-                // Calculate angle for future bullet
-                float angle = startAngle + i * angleStep;
-                Quaternion bulletRotation = Quaternion.Euler(new Vector3(0, 0, angle));
-
-                // Directing bullet
-                Vector2 direction = bulletRotation * _firePoint.up;
+                // Apply velocity in the forward direction of the fire point
+                Vector2 direction = bulletRotation * Vector2.up;
                 rb.velocity = direction * _bulletSpeed;
 
-                // Shake camera
+                // Shake the camera (if applicable)
                 CameraController.cameraShake(_shakeStrength, _shakeTime, _shakeFadeTime);
             }
         }
