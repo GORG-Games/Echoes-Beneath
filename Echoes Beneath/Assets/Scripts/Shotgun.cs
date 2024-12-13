@@ -32,12 +32,15 @@ public class Shotgun : MonoBehaviour
     [Header("Reload: UI")]
     [SerializeField] private Text _ammoDisplay;
     [SerializeField] private Text _totalAmmoDisplay;
+    [SerializeField] private AmmoUI ammoUI; // Reference to the AmmoUI script
 
 
     private void Start()
     {
         _currentAmmoInChamber = _maxAmmo;
         _totalAmmo = _startTotalAmmo;
+        ammoUI.InitializeAmmoDisplay(_maxAmmo); // Initialize the ammo display based on maxAmmo
+        ammoUI.UpdateAmmoDisplay(_currentAmmoInChamber); // Update the display to show full ammo
         UpdateAmmoUI();
     }
     void Update()
@@ -58,6 +61,7 @@ public class Shotgun : MonoBehaviour
                 Shoot(_bulletCount, _spread);
                 _nextFireTime = Time.time + 1f / _fireRate;
                 _currentAmmoInChamber--;
+                ammoUI.UpdateAmmoDisplay(_currentAmmoInChamber); // Update the ammo display after shooting
                 UpdateAmmoUI();
             }
         }
@@ -105,7 +109,8 @@ public class Shotgun : MonoBehaviour
         while (_currentAmmoInChamber < _maxAmmo && _totalAmmo >= 1)
         {
             _currentAmmoInChamber++; 
-            _totalAmmo--; 
+            _totalAmmo--;
+            ammoUI.UpdateAmmoDisplay(_currentAmmoInChamber); // Update the ammo display after reloading
             UpdateAmmoUI(); 
 
             // Delay
