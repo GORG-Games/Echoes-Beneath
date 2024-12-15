@@ -30,7 +30,7 @@ public class Shotgun : MonoBehaviour
     private Coroutine _reloadCoroutine;
 
     [Header("Reload: UI")]
-    [SerializeField] private Text _ammoDisplay;
+    //[SerializeField] private Text _ammoDisplay;
     [SerializeField] private Text _totalAmmoDisplay;
     [SerializeField] private AmmoUI ammoUI; // Reference to the AmmoUI script
 
@@ -123,7 +123,7 @@ public class Shotgun : MonoBehaviour
     }
     public void UpdateAmmoUI()
     {
-        _ammoDisplay.text = "Ammo: " + _currentAmmoInChamber + "/" + _maxAmmo;
+        //_ammoDisplay.text = "Ammo: " + _currentAmmoInChamber + "/" + _maxAmmo;
         _totalAmmoDisplay.text = $"{_totalAmmo}";
         if (_totalAmmo == 0)
             _totalAmmoDisplay.color = Color.red;

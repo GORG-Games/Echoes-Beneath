@@ -430,15 +430,15 @@ MonoBehaviour:
   _spread: 60
   _fireRate: 1.7
   <Damage>k__BackingField: 0
-  _shakeStrength: 5
+  _shakeStrength: 7
   _shakeTime: 0.1
   _shakeFadeTime: 0.1
   _maxAmmo: 8
   _startTotalAmmo: 16
   _totalAmmo: 0
   _reloadDelay: 0.7
-  _ammoDisplay: {fileID: 0}
   _totalAmmoDisplay: {fileID: 0}
+  ammoUI: {fileID: 0}
 --- !u!1 &7435412645026549564
 GameObject:
   m_ObjectHideFlags: 0
