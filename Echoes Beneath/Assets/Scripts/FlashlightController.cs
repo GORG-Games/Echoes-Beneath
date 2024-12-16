@@ -18,7 +18,13 @@ public class FlashlightController : MonoBehaviour
     private bool isFlickering = false;  // Flag to show if flashlight flickers
 
     [Header("UI Elements")]
-    [SerializeField] private Slider batterySlider; 
+    [SerializeField] private Slider batterySlider;
+
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource;      // Ссылка на AudioSource для воспроизведения звуков
+    [SerializeField] private AudioClip drainSound;         // Звук разрядки фонарика
+    [SerializeField] private AudioClip flickerSound;       // Звук мигания фонарика
+    [SerializeField] private AudioClip chargeSound;        // Звук зарядки фонарика
 
     void Start()
     {
