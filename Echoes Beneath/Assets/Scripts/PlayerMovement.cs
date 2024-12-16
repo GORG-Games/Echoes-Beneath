@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Movement Settings")]
     [SerializeField] private float moveSpeed;
+
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource footstepAudioSource; // Ссылка на AudioSource для звука шагов
+    [SerializeField] private AudioClip footstepClip;          // Step sound file
+    [SerializeField] private float footstepDelay = 0.5f;      // Задержка между шагами
 
     private Rigidbody2D rb;
     private Vector2 movement;
+    private bool isMoving;
+    private float footstepTimer;
 
     void Start()
     {
@@ -16,15 +24,46 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // User Input
-        movement.x = Input.GetAxisRaw("Horizontal"); // A/D
-        movement.y = Input.GetAxisRaw("Vertical");   // W/S
+        HandleInput();
+        HandleFootsteps();
     }
 
     void FixedUpdate()
     {
-        // Перемещение игрока
-        rb.MovePosition(rb.position + movement.normalized * moveSpeed * Time.fixedDeltaTime);
+        Move();
+    }
+    void HandleInput()
+    {
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
+        isMoving = movement != Vector2.zero;
+    }
+    void Move()
+    {
+        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+    }
+    void HandleFootsteps()
+    {
+        if (isMoving)
+        {
+            footstepTimer -= Time.deltaTime;
+            if (footstepTimer <= 0f)
+            {
+                PlayFootstepSound();
+                footstepTimer = footstepDelay;
+            }
+        }
+        else
+        {
+            footstepTimer = 0f; // Reset Timer if character isn't moving
+        }
+    }
+    void PlayFootstepSound()
+    {
+        if (footstepClip != null && footstepAudioSource != null)
+        {
+            footstepAudioSource.PlayOneShot(footstepClip);
+        }
     }
 }
 

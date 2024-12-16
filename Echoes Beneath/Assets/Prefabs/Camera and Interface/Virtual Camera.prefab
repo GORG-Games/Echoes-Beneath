@@ -56,7 +56,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 9.452482
+    OrthographicSize: 6
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -86,8 +86,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transposer: {fileID: 0}
-  leftOffset: 0
-  rightOffset: 0
 --- !u!1 &1423141212374235699
 GameObject:
   m_ObjectHideFlags: 0
