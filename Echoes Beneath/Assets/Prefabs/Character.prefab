@@ -538,7 +538,7 @@ MonoBehaviour:
   _maxBattery: 100
   _lightDrainSpeed: 5
   _flickerThreshold: 50
-  _chargeAmount: 5
+  _chargeAmount: 15
   _minRange: 0.1
   _maxRange: 0.85
   batterySlider: {fileID: 0}
