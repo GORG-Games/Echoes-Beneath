@@ -320,7 +320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletImagePrefab: {fileID: 8595971292184129389, guid: 0d69fd2fdac45ed43af639f04a5a057b, type: 3}
-  _ammoContainer: {fileID: 0}
+  _ammoContainer: {fileID: 4561100296216214563}
 --- !u!1 &5758014422916007947
 GameObject:
   m_ObjectHideFlags: 0
