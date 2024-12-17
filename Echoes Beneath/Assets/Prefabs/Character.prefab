@@ -409,7 +409,7 @@ MonoBehaviour:
   - {x: -0.29314852, y: -1.1235254, z: 0}
   m_ShapePathHash: -1406454479
   m_Mesh: {fileID: 0}
-  m_InstanceId: -17530
+  m_InstanceId: 37214
   m_LocalBounds:
     m_Center: {x: -0.022479057, y: -1.05517, z: 0}
     m_Extent: {x: 0.30348825, y: 0.09597999, z: 0}
@@ -439,9 +439,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  footstepAudioSource: {fileID: 5522327356549699693}
+  audioManager: {fileID: 0}
+  audioSource: {fileID: 5522327356549699693}
   footstepClip: {fileID: 8300000, guid: dd003deddb817544bbd56a6050202807, type: 3}
   footstepDelay: 1
+  _environmentGroup: {fileID: -4517163722032033758, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
 --- !u!114 &3634534332729839055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -579,13 +581,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2babc7c2360357c4eadce625cac911c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minPulse: 60
-  maxPulse: 210
+  currentPulse: 0
+  minPulse: 50
+  maxPulse: 150
   pulseIncreaseRate: 10
-  heartbeatAudioSource: {fileID: 5522327356549699693}
-  heartbeatClip: {fileID: 8300000, guid: 19984a60d759b3a46b6cdd81b25686e6, type: 3}
+  pulseDecreaseRate: 5
+  audioManager: {fileID: 0}
+  audioSource: {fileID: 5522327356549699693}
+  heartbeatGroup: {fileID: 408982712734654552, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
+  heartbeatClip: {fileID: 8300000, guid: 5338b3a3b79350b408d9164b2dded1ef, type: 3}
   audioMixer: {fileID: 24100000, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
-  _maxAttenuation: -80
+  _maxAttenuation: -60
+  delay: 0
   blurVolume: {fileID: 0}
   bloomVolume: {fileID: 0}
   pulseText: {fileID: 0}
@@ -659,9 +666,11 @@ MonoBehaviour:
   _shakeStrength: 7
   _shakeTime: 0.1
   _shakeFadeTime: 0.1
+  _audioManager: {fileID: 0}
   _audioSource: {fileID: 6731095719784399747}
   _shootingSound: {fileID: 8300000, guid: c166dcb24c923cb429a2bfa199c9b2fa, type: 3}
   _reloadSlightSound: {fileID: 8300000, guid: 5ce20c7ac872c514e93184c0e5b631c2, type: 3}
+  _environmentGroup: {fileID: -4517163722032033758, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
   _maxAmmo: 8
   _startTotalAmmo: 16
   _totalAmmo: 0
@@ -886,7 +895,7 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 33262
+  m_InstanceId: 37226
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.5, y: 0.49999988, z: 0}

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class Shotgun : MonoBehaviour
 {
@@ -22,9 +23,11 @@ public class Shotgun : MonoBehaviour
     [SerializeField] private float _shakeFadeTime;
 
     [Header("Shooting: Audio Settings")]
+    [SerializeField] private AudioManager _audioManager;
     [SerializeField] private AudioSource _audioSource;      // —сылка на AudioSource дл€ воспроизведени€ звуков
     [SerializeField] private AudioClip _shootingSound;
     [SerializeField] private AudioClip _reloadSlightSound;
+    [SerializeField] private AudioMixerGroup _environmentGroup;
 
     [Header("Reload: reloading")]
     [SerializeField] private int _maxAmmo; // Max ammo that can be IN shotgun
@@ -66,7 +69,7 @@ public class Shotgun : MonoBehaviour
                 Shoot(_bulletCount, _spread);
                 _nextFireTime = Time.time + 1f / _fireRate;
                 _currentAmmoInChamber--;
-                _audioSource.PlayOneShot(_reloadSlightSound);
+                _audioManager.PlaySound(_audioSource, _reloadSlightSound, _environmentGroup);
                 ammoUI.UpdateAmmoDisplay(_maxAmmo, _currentAmmoInChamber); // Update the ammo display after shooting
                 UpdateAmmoUI();
             }
@@ -93,7 +96,7 @@ public class Shotgun : MonoBehaviour
                 // Instantiate the bullet at the fire point position with the calculated rotation
                 GameObject bullet = Instantiate(_bulletPrefab, _firePoint.position, bulletRotation);
                 Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-                _audioSource.PlayOneShot(_shootingSound);
+                _audioManager.PlaySound(_audioSource, _shootingSound, _environmentGroup);
 
                 // Apply velocity in the forward direction of the fire point
                 Vector2 direction = bulletRotation * Vector2.up;

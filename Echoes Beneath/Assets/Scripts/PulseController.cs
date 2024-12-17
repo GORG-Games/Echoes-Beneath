@@ -9,17 +9,23 @@ using System.Collections;
 public class PulseController : MonoBehaviour
 {
     [Header("Pulse Settings")]
-    private int currentPulse;
-    [SerializeField] private int minPulse = 60;
-    [SerializeField] private int maxPulse = 210;
-    [SerializeField] private int pulseIncreaseRate = 10;
+    public float currentPulse;
+    [SerializeField] private float minPulse = 60f;
+    [SerializeField] private float maxPulse = 210f;
+    [SerializeField] private float pulseIncreaseRate = 10f;
+    [SerializeField] private float pulseDecreaseRate = 1f;
 
     [Header("Audio Settings")]
-    [SerializeField] private AudioSource heartbeatAudioSource;
-    [SerializeField] private AudioClip heartbeatClip; // Звук сердцебиения
+    [SerializeField] private AudioManager audioManager;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioMixerGroup heartbeatGroup;
+    [SerializeField] private AudioClip heartbeatClip; // Heartbeat sound
     private Coroutine heartbeatCoroutine;
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private float _maxAttenuation; // Should be negative
+    //[SerializeField] private AudioReverbFilter reverbFilter;
+    //[SerializeField] private float reverbPulseThreshold = 120f;
+    public float delay;
 
     [Header("Post-Processing Settings")]
     [SerializeField] private Volume blurVolume;
@@ -31,11 +37,11 @@ public class PulseController : MonoBehaviour
 
     void Start()
     {
+        currentPulse = minPulse;
         if (heartbeatCoroutine == null)
         {
             heartbeatCoroutine = StartCoroutine(HeartbeatRoutine());
         }
-        currentPulse = minPulse;
         UpdatePulseUI();
     }
     private void Update()
@@ -47,7 +53,8 @@ public class PulseController : MonoBehaviour
     {
         currentPulse += damageAmount * pulseIncreaseRate;
         currentPulse = Mathf.Clamp(currentPulse, minPulse, maxPulse);
-        AdjustAudioMix();
+        UpdateReverbEffect();
+        AdjustEnvironmentVolume();
         UpdateVisualEffects();
         UpdatePulseUI();
     }
@@ -56,17 +63,20 @@ public class PulseController : MonoBehaviour
     {
         if (currentPulse > minPulse)
         {
-            currentPulse -= 1; // Плавное снижение пульса
-            AdjustAudioMix();
+            currentPulse -= pulseDecreaseRate * Time.deltaTime; // Плавное снижение пульса
+            UpdateReverbEffect();
+            AdjustEnvironmentVolume();
             UpdateVisualEffects();
             UpdatePulseUI();
         }
     }
-
-    void AdjustAudioMix()
+    void AdjustEnvironmentVolume()
     {
-        float attenuation = Mathf.Lerp(0f, _maxAttenuation, (currentPulse - minPulse) / (float)(maxPulse - minPulse));
-        audioMixer.SetFloat("MasterVolume", attenuation);
+        float volume = Mathf.Lerp(0f, _maxAttenuation, (currentPulse - minPulse) / (maxPulse - minPulse));
+#if UNITY_EDITOR
+        Debug.Log($"Setting Environment Volume to: {volume}");
+#endif
+        audioMixer.SetFloat("EnvironmentVolume", volume);
     }
 
     void UpdateVisualEffects()
@@ -85,17 +95,26 @@ public class PulseController : MonoBehaviour
 
     void UpdatePulseUI()
     {
-        pulseText.text = $"Pulse: {currentPulse} bpm";
+        //pulseText.text = $"Pulse: {currentPulse} bpm";
+    }
+    void UpdateReverbEffect()
+    {
+        //reverbFilter.enabled = currentPulse >= reverbPulseThreshold;
     }
     IEnumerator HeartbeatRoutine()
     {
         while (true)
         {
-            // Playing heartbeat sound
-            heartbeatAudioSource.PlayOneShot(heartbeatClip);
 
+            audioManager.PlaySound( audioSource, heartbeatClip, heartbeatGroup);
+#if UNITY_EDITOR
+                Debug.LogWarning("Heartbeat clip is not assigned!");
+#endif
             // Counting delay between heartbeats
-            float delay = 60f / currentPulse; // Example: when 60 bpm => 1 second delay
+            delay = (currentPulse > 0) ? 60f / currentPulse : 1f;
+/*#if UNITY_EDITOR
+            Debug.Log($"Next heartbeat in {delay} seconds");
+#endif*/
             yield return new WaitForSeconds(delay);
         }
     }

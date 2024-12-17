@@ -11,9 +11,13 @@ public class PlayerHealth : MonoBehaviour
     [Header("Health UI")]
     [SerializeField] private Text _healthDisplay;
 
+    [Header("Pulse")]
+    private PulseController pulseController;
+
     void Start()
     {
         _currentHealth = MaxHealth;
+        pulseController = gameObject.GetComponent<PulseController>();
     }
 
     public void TakeDamage(int damage)
@@ -23,6 +27,7 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log($"Player Health: {_currentHealth}");
 #endif
         UpdateHealthUI();
+
         if (_currentHealth <= 0)
         {
             Die();

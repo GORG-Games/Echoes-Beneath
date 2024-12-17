@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,9 +9,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed;
 
     [Header("Audio Settings")]
-    [SerializeField] private AudioSource footstepAudioSource; // Ссылка на AudioSource для звука шагов
+    [SerializeField] private AudioManager audioManager;
+    [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip footstepClip;          // Step sound file
     [SerializeField] private float footstepDelay;      // Задержка между шагами
+    [SerializeField] private AudioMixerGroup _environmentGroup;
 
     private Rigidbody2D rb;
     private Vector2 movement;
@@ -61,19 +64,10 @@ public class PlayerMovement : MonoBehaviour
     }
     void PlayFootstepSound()
     {
-        if (footstepClip != null && footstepAudioSource != null)
-        {
 #if UNITY_EDITOR
             Debug.Log("Playing footstep sound");
 #endif
-            footstepAudioSource.PlayOneShot(footstepClip);
-        }
-        else
-        {
-#if UNITY_EDITOR
-            Debug.LogWarning("AudioClip or AudioSource is missing!");
-#endif
-        }
+            audioManager.PlaySound(audioSource, footstepClip, _environmentGroup);
     }
 }
 
