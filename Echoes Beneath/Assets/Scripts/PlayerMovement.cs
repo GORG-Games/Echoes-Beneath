@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Audio Settings")]
     [SerializeField] private AudioSource footstepAudioSource; // Ссылка на AudioSource для звука шагов
     [SerializeField] private AudioClip footstepClip;          // Step sound file
-    [SerializeField] private float footstepDelay = 0.5f;      // Задержка между шагами
+    [SerializeField] private float footstepDelay;      // Задержка между шагами
 
     private Rigidbody2D rb;
     private Vector2 movement;
@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        footstepTimer = footstepDelay;
     }
 
     void Update()
@@ -62,7 +63,16 @@ public class PlayerMovement : MonoBehaviour
     {
         if (footstepClip != null && footstepAudioSource != null)
         {
+#if UNITY_EDITOR
+            Debug.Log("Playing footstep sound");
+#endif
             footstepAudioSource.PlayOneShot(footstepClip);
+        }
+        else
+        {
+#if UNITY_EDITOR
+            Debug.LogWarning("AudioClip or AudioSource is missing!");
+#endif
         }
     }
 }

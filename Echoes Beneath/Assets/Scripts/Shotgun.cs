@@ -15,10 +15,16 @@ public class Shotgun : MonoBehaviour
     [field: SerializeField] public int Damage { get; private set; }
     private float _nextFireTime;
 
+
     [Header("Shooting: Camera Shake")]
     [SerializeField] private float _shakeStrength;
     [SerializeField] private float _shakeTime;
     [SerializeField] private float _shakeFadeTime;
+
+    [Header("Shooting: Audio Settings")]
+    [SerializeField] private AudioSource _audioSource;      // —сылка на AudioSource дл€ воспроизведени€ звуков
+    [SerializeField] private AudioClip _shootingSound;
+    [SerializeField] private AudioClip _reloadSlightSound;
 
     [Header("Reload: reloading")]
     [SerializeField] private int _maxAmmo; // Max ammo that can be IN shotgun
@@ -60,6 +66,7 @@ public class Shotgun : MonoBehaviour
                 Shoot(_bulletCount, _spread);
                 _nextFireTime = Time.time + 1f / _fireRate;
                 _currentAmmoInChamber--;
+                _audioSource.PlayOneShot(_reloadSlightSound);
                 ammoUI.UpdateAmmoDisplay(_maxAmmo, _currentAmmoInChamber); // Update the ammo display after shooting
                 UpdateAmmoUI();
             }
@@ -86,6 +93,7 @@ public class Shotgun : MonoBehaviour
                 // Instantiate the bullet at the fire point position with the calculated rotation
                 GameObject bullet = Instantiate(_bulletPrefab, _firePoint.position, bulletRotation);
                 Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+                _audioSource.PlayOneShot(_shootingSound);
 
                 // Apply velocity in the forward direction of the fire point
                 Vector2 direction = bulletRotation * Vector2.up;
