@@ -228,6 +228,7 @@ GameObject:
   - component: {fileID: 3634534332729839055}
   - component: {fileID: 2005366937880785328}
   - component: {fileID: 5522327356549699693}
+  - component: {fileID: 1288492805033451521}
   - component: {fileID: 270758629269382313}
   m_Layer: 8
   m_Name: Character
@@ -440,7 +441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   audioManager: {fileID: 0}
-  audioSource: {fileID: 5522327356549699693}
+  audioSource: {fileID: 1288492805033451521}
   footstepClip: {fileID: 8300000, guid: dd003deddb817544bbd56a6050202807, type: 3}
   footstepDelay: 1
   _environmentGroup: {fileID: -4517163722032033758, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
@@ -482,7 +483,103 @@ AudioSource:
   m_GameObject: {fileID: 6958056940225576645}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
+  OutputAudioMixerGroup: {fileID: 408982712734654552, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &1288492805033451521
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6958056940225576645}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -4517163722032033758, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -582,10 +679,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPulse: 0
-  minPulse: 50
+  <minPulse>k__BackingField: 50
   maxPulse: 150
-  pulseIncreaseRate: 10
+  pulseIncreaseRate: 2.5
   pulseDecreaseRate: 5
+  IsFlickering: 0
   audioManager: {fileID: 0}
   audioSource: {fileID: 5522327356549699693}
   heartbeatGroup: {fileID: 408982712734654552, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
@@ -772,7 +870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 403b64e066c40ea4b9887b639a33d198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flashlight: {fileID: 7860318738118016014}
+  _flashlight: {fileID: 7860318738118016014}
   _maxBattery: 100
   _lightDrainSpeed: 5
   _flickerThreshold: 50
@@ -780,11 +878,13 @@ MonoBehaviour:
   _minRange: 0.1
   _maxRange: 0.85
   batterySlider: {fileID: 0}
-  audioSource: {fileID: 0}
-  drainSound: {fileID: 0}
-  flickerSound: {fileID: 0}
-  chargeSound: {fileID: 0}
-  pulseController: {fileID: 270758629269382313}
+  _audioManager: {fileID: 0}
+  _audioSource: {fileID: 0}
+  _drainSound: {fileID: 0}
+  _flickerSound: {fileID: 0}
+  _chargeSound: {fileID: 0}
+  _pulseController: {fileID: 270758629269382313}
+  _pulseIncreaseAmount: 50
 --- !u!1 &7505128428874272170
 GameObject:
   m_ObjectHideFlags: 0

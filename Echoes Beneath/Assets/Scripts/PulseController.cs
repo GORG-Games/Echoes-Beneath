@@ -10,10 +10,11 @@ public class PulseController : MonoBehaviour
 {
     [Header("Pulse Settings")]
     public float currentPulse;
-    [SerializeField] private float minPulse = 60f;
+    [field: SerializeField] public float minPulse {get ; private set;}
     [SerializeField] private float maxPulse = 210f;
     [SerializeField] private float pulseIncreaseRate = 10f;
     [SerializeField] private float pulseDecreaseRate = 1f;
+    public bool IsFlickering = false;
 
     [Header("Audio Settings")]
     [SerializeField] private AudioManager audioManager;
@@ -69,10 +70,13 @@ public class PulseController : MonoBehaviour
     {
         if (currentPulse > minPulse)
         {
-            currentPulse -= pulseDecreaseRate * Time.deltaTime; // Плавное снижение пульса
-            AdjustEnvironmentVolume();
-            UpdateVisualEffects();
-            UpdatePulseUI();
+            if(!IsFlickering)
+            {
+                currentPulse -= pulseDecreaseRate * Time.deltaTime; // Плавное снижение пульса
+                AdjustEnvironmentVolume();
+                UpdateVisualEffects();
+                UpdatePulseUI();
+            }
         }
     }
     void AdjustEnvironmentVolume()

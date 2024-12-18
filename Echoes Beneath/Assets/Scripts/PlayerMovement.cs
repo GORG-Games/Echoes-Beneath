@@ -53,8 +53,8 @@ public class PlayerMovement : MonoBehaviour
             footstepTimer -= Time.deltaTime;
             if (footstepTimer <= 0f)
             {
-                PlayFootstepSound();
                 footstepTimer = footstepDelay;
+                PlayFootstepSound();
             }
         }
         else
