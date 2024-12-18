@@ -11,35 +11,36 @@ public class EKGMonitor : MonoBehaviour
     [Header("Pulse Settings")]
     [SerializeField] private PulseController pulseController;
     [SerializeField] private float pulseSpeed = 300f;        // Скорость движения импульсов
+    [SerializeField] private float timeout = 10f;
+    private float timer = 0f;
 
-
-    void Start()
-    {
-        StartCoroutine(GeneratePulse());
-    }
-
+    private float deleteThreshold;
     IEnumerator GeneratePulse()
     {
-        while (true)
-        {
-            // Создаём новый импульс
-            GameObject pulse = Instantiate(pulsePrefab, ekgLineContainer);
-            RectTransform pulseRect = pulse.GetComponent<RectTransform>();
+        // Создаём новый импульс
+        GameObject pulse = Instantiate(pulsePrefab, ekgLineContainer);
+        RectTransform pulseRect = pulse.GetComponent<RectTransform>();
 
-            // Анимация движения импульса
-            StartCoroutine(MovePulse(pulseRect));
+        // Устанавливаем позицию импульса в правой части контейнера
+        pulseRect.anchoredPosition = new Vector2(ekgLineContainer.rect.width / 2, 0);
 
-            // Задержка между импульсами зависит от текущего пульса
-            float delay = 60f / pulseController.currentPulse;
-            yield return new WaitForSeconds(delay);
-        }
+        // Анимация движения импульса
+        StartCoroutine(MovePulse(pulseRect));
+
+        // Минимальная задержка между импульсами
+        float delay = Mathf.Max(60f / pulseController.currentPulse, 0.05f);
+        yield return new WaitForSeconds(delay);
     }
 
     IEnumerator MovePulse(RectTransform pulseRect)
     {
-        while (pulseRect.anchoredPosition.x > -ekgLineContainer.rect.width)
+        timer = 0f;
+        deleteThreshold = -ekgLineContainer.rect.width / 2 + pulseRect.rect.width;
+        while (pulseRect.anchoredPosition.x > deleteThreshold && timer < timeout)
         {
+            //pulseRect.localPosition += Vector3.left * pulseSpeed * Time.deltaTime;
             pulseRect.anchoredPosition += Vector2.left * pulseSpeed * Time.deltaTime;
+            timer += Time.deltaTime;
             yield return null;
         }
 
