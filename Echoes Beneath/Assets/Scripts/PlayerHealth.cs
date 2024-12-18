@@ -12,20 +12,22 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Text _healthDisplay;
 
     [Header("Pulse")]
-    private PulseController pulseController;
+    private PulseController _pulseController;
 
     void Start()
     {
         _currentHealth = MaxHealth;
-        pulseController = gameObject.GetComponent<PulseController>();
+        _pulseController = gameObject.GetComponent<PulseController>();
     }
 
     public void TakeDamage(int damage)
     {
         _currentHealth -= damage;
+        _currentHealth = Mathf.Clamp(_currentHealth, 0, MaxHealth);
 #if UNITY_EDITOR
         Debug.Log($"Player Health: {_currentHealth}");
 #endif
+        _pulseController.IncreasePulse(damage);
         UpdateHealthUI();
 
         if (_currentHealth <= 0)

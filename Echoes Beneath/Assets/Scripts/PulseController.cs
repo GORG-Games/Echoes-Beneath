@@ -53,18 +53,23 @@ public class PulseController : MonoBehaviour
     {
         currentPulse += damageAmount * pulseIncreaseRate;
         currentPulse = Mathf.Clamp(currentPulse, minPulse, maxPulse);
-        UpdateReverbEffect();
         AdjustEnvironmentVolume();
         UpdateVisualEffects();
         UpdatePulseUI();
     }
-
+    public void IncreasePulseFromFlashlight(float pulseIncreaseAmount)
+    {
+        currentPulse += pulseIncreaseAmount * Time.deltaTime;
+        currentPulse = Mathf.Clamp(currentPulse, minPulse, maxPulse);
+        AdjustEnvironmentVolume();
+        UpdateVisualEffects();
+        UpdatePulseUI();
+    }
     public void DecreasePulse()
     {
         if (currentPulse > minPulse)
         {
             currentPulse -= pulseDecreaseRate * Time.deltaTime; // Плавное снижение пульса
-            UpdateReverbEffect();
             AdjustEnvironmentVolume();
             UpdateVisualEffects();
             UpdatePulseUI();
@@ -82,7 +87,7 @@ public class PulseController : MonoBehaviour
     void UpdateVisualEffects()
     {
         // Управляем интенсивностью размытия и блум-эффекта
-        if (blurVolume.profile.TryGet(out MotionBlur blur))
+        /*if (blurVolume.profile.TryGet(out MotionBlur blur))
         {
             blur.intensity.value = Mathf.Lerp(0f, 1f, (currentPulse - minPulse) / (float)(maxPulse - minPulse));
         }
@@ -90,16 +95,12 @@ public class PulseController : MonoBehaviour
         if (bloomVolume.profile.TryGet(out Bloom bloom))
         {
             bloom.intensity.value = Mathf.Lerp(0f, 2f, (currentPulse - minPulse) / (float)(maxPulse - minPulse));
-        }
+        }*/
     }
 
     void UpdatePulseUI()
     {
         //pulseText.text = $"Pulse: {currentPulse} bpm";
-    }
-    void UpdateReverbEffect()
-    {
-        //reverbFilter.enabled = currentPulse >= reverbPulseThreshold;
     }
     IEnumerator HeartbeatRoutine()
     {
@@ -107,9 +108,6 @@ public class PulseController : MonoBehaviour
         {
 
             audioManager.PlaySound( audioSource, heartbeatClip, heartbeatGroup);
-#if UNITY_EDITOR
-                Debug.LogWarning("Heartbeat clip is not assigned!");
-#endif
             // Counting delay between heartbeats
             delay = (currentPulse > 0) ? 60f / currentPulse : 1f;
 /*#if UNITY_EDITOR

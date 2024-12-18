@@ -784,6 +784,7 @@ MonoBehaviour:
   drainSound: {fileID: 0}
   flickerSound: {fileID: 0}
   chargeSound: {fileID: 0}
+  pulseController: {fileID: 270758629269382313}
 --- !u!1 &7505128428874272170
 GameObject:
   m_ObjectHideFlags: 0

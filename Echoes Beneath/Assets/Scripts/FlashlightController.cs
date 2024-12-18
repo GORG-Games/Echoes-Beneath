@@ -15,16 +15,18 @@ public class FlashlightController : MonoBehaviour
 
 
     private float currentBattery;       // Current battery charge
-    private bool isFlickering = false;  // Flag to show if flashlight flickers
+    public bool isFlickering = false;  // Flag to show if flashlight flickers
 
     [Header("UI Elements")]
     [SerializeField] private Slider batterySlider;
 
     [Header("Audio Settings")]
+    [SerializeField] private AudioManager _audioManager;
     [SerializeField] private AudioSource audioSource;      // Ссылка на AudioSource для воспроизведения звуков
     [SerializeField] private AudioClip drainSound;         // Звук разрядки фонарика
     [SerializeField] private AudioClip flickerSound;       // Звук мигания фонарика
     [SerializeField] private AudioClip chargeSound;        // Звук зарядки фонарика
+    [SerializeField] private PulseController pulseController;
 
     void Start()
     {
@@ -69,6 +71,7 @@ public class FlashlightController : MonoBehaviour
         {
             flashlight.enabled = !flashlight.enabled;
             yield return new WaitForSeconds(Random.Range(_minRange, _maxRange)); // Random range of flickering
+            pulseController.IncreasePulseFromFlashlight(5f);
         }
 
         // After exitting flickering mode
