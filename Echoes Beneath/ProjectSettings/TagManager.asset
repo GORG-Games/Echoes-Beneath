@@ -17,8 +17,8 @@ TagManager:
   - ammo
   - Obstacle
   - firstAidKit
-  - 
-  - 
+  - FOV
+  - Overlay
   - 
   - 
   - 
@@ -41,15 +41,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Character body
+    uniqueID: 1171093003
+    locked: 0
   - name: AmmoUI
     uniqueID: 3984828699
     locked: 0
   - name: AmmoBox
     uniqueID: 529485567
     locked: 0
+  - name: FOV
+    uniqueID: 3248194069
+    locked: 0
   - name: Overlay
     uniqueID: 453110591
-    locked: 0
-  - name: Character body
-    uniqueID: 1171093003
     locked: 0

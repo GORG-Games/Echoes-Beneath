@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
 {
+    [Header("General Settings")]
+    [SerializeField] private Transform playerTransform;
+
+
     [Header("FOV Settings")]
     public float viewRadius = 10f;
     [Range(0, 360)]
@@ -13,14 +17,17 @@ public class FieldOfView : MonoBehaviour
     [Header("Mesh Components")]
     public MeshFilter viewMeshFilter;
     private Mesh viewMesh;
-
+    
     void Start()
     {
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
     }
-
+    private void Update()
+    {
+        transform.position = playerTransform.position;
+    }
     void LateUpdate()
     {
         DrawFieldOfView();
