@@ -4,6 +4,8 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using System.Collections;
+using DG.Tweening;
+
 
 
 public class PulseController : MonoBehaviour
@@ -19,17 +21,21 @@ public class PulseController : MonoBehaviour
     [Header("Audio Settings: General")]
     [SerializeField] private AudioManager _audioManager;
     [SerializeField] private AudioSource _audioSource;
+    
     [Header("Audio Settings: Heartbeat")]
     [SerializeField] private AudioMixerGroup _heartbeatGroup;
     [SerializeField] private AudioClip _heartbeatClip; // Heartbeat sound
     private Coroutine _heartbeatCoroutine;
     [SerializeField] private AudioMixer _audioMixer;
     [SerializeField] private float _maxAttenuation; // Should be negative
+    
     [Header("Audio Settings: EarRing")]
     [SerializeField] private AudioSource _earRingAudioSource;
     [SerializeField] private AudioMixerGroup _earRingGroup;
     [SerializeField] private AudioClip _earRingClip; // Ear Ring sound
     [SerializeField] private float _maxEarRingVolume = -10f;
+    [SerializeField] private float earRingTweenDuration = 0.5f; // Duration of ear ring volume animation
+    [SerializeField] private string _earRingVolumeParameter = "EarRingVolume"; // Имя параметра в AudioMixer
 
     //[SerializeField] private AudioReverbFilter reverbFilter;
     //[SerializeField] private float reverbPulseThreshold = 120f;
@@ -91,7 +97,7 @@ public class PulseController : MonoBehaviour
     }
     void AdjustEnvironmentVolume()
     {
-        float volume = Mathf.Lerp(0f, _maxAttenuation, (CurrentPulse - MinPulse) / (_maxPulse - MinPulse));
+        float volume = Mathf.Lerp(-10f, _maxAttenuation, (CurrentPulse - MinPulse) / (_maxPulse - MinPulse));
 #if UNITY_EDITOR
         Debug.Log($"Setting Environment Volume to: {volume}");
 #endif
@@ -99,8 +105,12 @@ public class PulseController : MonoBehaviour
     }
     void AdjustEarRingVolume()
     {
-        float volume = Mathf.Lerp(-80f, _maxEarRingVolume, (CurrentPulse - MinPulse) / (_maxPulse - MinPulse));
-        _audioMixer.SetFloat("EarRingVolume", volume);
+        float targetVolume = Mathf.Lerp(-80f, 0f, (CurrentPulse - MinPulse) / (_maxPulse - MinPulse));
+
+        // Анимируем громкость параметра в AudioMixer через DoTween
+        float currentVolume;
+        _audioMixer.GetFloat(_earRingVolumeParameter, out currentVolume);
+        DOTween.To(() => currentVolume, x => _audioMixer.SetFloat(_earRingVolumeParameter, x), targetVolume, earRingTweenDuration).SetEase(Ease.InOutCubic);
     }
 
     void UpdateVisualEffects()

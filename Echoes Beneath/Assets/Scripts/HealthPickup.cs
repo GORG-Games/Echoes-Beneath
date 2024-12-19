@@ -4,7 +4,6 @@ using UnityEngine;
 using TMPro;
 public class HealthPickup : MonoBehaviour
 {
-    private PlayerHealth playerHealth;
     public TextMeshProUGUI pickupText { get; private set; }// —сылка на объект текста
     [SerializeField] private LayerMask _playerLayer;
     void Start()

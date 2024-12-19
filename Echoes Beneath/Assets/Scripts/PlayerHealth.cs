@@ -9,6 +9,7 @@ public class PlayerHealth : MonoBehaviour
     private int _currentHealth;
 
     [Header("Medkit Settings")]
+    [SerializeField] private FirstAidKitUIManager firstAidKitUIManager;
     [SerializeField] private int _healAmount = 25; // Количество восстанавливаемого здоровья
     public int MedkitCount = 0; // Количество аптечек
     [SerializeField] private KeyCode _useMedkitKey = KeyCode.Q; // Клавиша для использования аптечки
@@ -25,7 +26,7 @@ public class PlayerHealth : MonoBehaviour
         _currentHealth = MaxHealth;
         _pulseController = gameObject.GetComponent<PulseController>();
         UpdateHealthUI();
-        UpdateMedkitUI();
+        firstAidKitUIManager.UpdateMedkitUI(MedkitCount);
     }
     void Update()
     {
@@ -54,7 +55,7 @@ public class PlayerHealth : MonoBehaviour
     public void AddMedkit()
     {
         MedkitCount++;
-        UpdateMedkitUI();
+        firstAidKitUIManager.UpdateMedkitUI(MedkitCount);
     }
 
     // Метод для использования аптечки
@@ -66,7 +67,7 @@ public class PlayerHealth : MonoBehaviour
             _currentHealth = Mathf.Clamp(_currentHealth, 0, MaxHealth); // Ограничиваем здоровье максимальным значением
             MedkitCount--;
             UpdateHealthUI();
-            UpdateMedkitUI();
+            firstAidKitUIManager.UpdateMedkitUI(MedkitCount);
         }
     }
     private void UpdateHealthUI()
@@ -78,9 +79,5 @@ public class PlayerHealth : MonoBehaviour
 #if UNITY_EDITOR
         Debug.Log("Player has died!");
 #endif
-    }
-    void UpdateMedkitUI()
-    {
-        //_medkitDisplay.text = $"Medkits: {MedkitCount}";
     }
 }

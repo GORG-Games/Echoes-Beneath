@@ -6,6 +6,7 @@ public class FirstAidKitPicker : MonoBehaviour
 {
     private bool _canPickUpKit = false;
     private PlayerHealth _playerHealth;
+    private HealthPickup _healthPickup;
     [SerializeField] private LayerMask _FirstAidKitLayer;
 
     void Start()
@@ -31,7 +32,7 @@ public class FirstAidKitPicker : MonoBehaviour
 #if UNITY_EDITOR
         Debug.Log("Аптечка подобрана!");
 #endif
-        Destroy(_playerHealth.gameObject);
+        Destroy(_healthPickup.gameObject);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -39,8 +40,8 @@ public class FirstAidKitPicker : MonoBehaviour
         // LayerMask check
         if (Utils.LayerMaskUtil.ContainsLayer(_FirstAidKitLayer, collision.gameObject))
         {
-            _playerHealth = collision.GetComponent<PlayerHealth>();
-            if (_playerHealth != null)
+            _healthPickup = collision.GetComponent<HealthPickup>();
+            if (_healthPickup != null)
             {
                 _canPickUpKit = true;
 #if UNITY_EDITOR
