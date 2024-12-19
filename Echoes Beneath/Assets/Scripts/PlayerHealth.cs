@@ -8,8 +8,14 @@ public class PlayerHealth : MonoBehaviour
     [field:SerializeField] public int MaxHealth { get; private set; }
     private int _currentHealth;
 
-    [Header("Health UI")]
+    [Header("Medkit Settings")]
+    [SerializeField] private int _healAmount = 25; // Количество восстанавливаемого здоровья
+    public int MedkitCount = 0; // Количество аптечек
+    [SerializeField] private KeyCode _useMedkitKey = KeyCode.Q; // Клавиша для использования аптечки
+
+    [Header("UI Elements")]
     [SerializeField] private Text _healthDisplay;
+    [SerializeField] private Text _medkitDisplay;
 
     [Header("Pulse")]
     private PulseController _pulseController;
@@ -18,6 +24,15 @@ public class PlayerHealth : MonoBehaviour
     {
         _currentHealth = MaxHealth;
         _pulseController = gameObject.GetComponent<PulseController>();
+        UpdateHealthUI();
+        UpdateMedkitUI();
+    }
+    void Update()
+    {
+        if (Input.GetKeyDown(_useMedkitKey))
+        {
+            UseMedkit();
+        }
     }
 
     public void TakeDamage(int damage)
@@ -35,6 +50,25 @@ public class PlayerHealth : MonoBehaviour
             Die();
         }
     }
+    // Метод для увеличения количества аптечек
+    public void AddMedkit()
+    {
+        MedkitCount++;
+        UpdateMedkitUI();
+    }
+
+    // Метод для использования аптечки
+    public void UseMedkit()
+    {
+        if (MedkitCount > 0 && _currentHealth < MaxHealth)
+        {
+            _currentHealth += _healAmount;
+            _currentHealth = Mathf.Clamp(_currentHealth, 0, MaxHealth); // Ограничиваем здоровье максимальным значением
+            MedkitCount--;
+            UpdateHealthUI();
+            UpdateMedkitUI();
+        }
+    }
     private void UpdateHealthUI()
     {
         _healthDisplay.text = $"HP: {_currentHealth}";
@@ -44,5 +78,9 @@ public class PlayerHealth : MonoBehaviour
 #if UNITY_EDITOR
         Debug.Log("Player has died!");
 #endif
+    }
+    void UpdateMedkitUI()
+    {
+        //_medkitDisplay.text = $"Medkits: {MedkitCount}";
     }
 }

@@ -231,6 +231,7 @@ GameObject:
   - component: {fileID: 1288492805033451521}
   - component: {fileID: 2168526899745138970}
   - component: {fileID: 270758629269382313}
+  - component: {fileID: 186848573286029927}
   m_Layer: 8
   m_Name: Character
   m_TagString: Player
@@ -474,7 +475,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <MaxHealth>k__BackingField: 100
+  _healAmount: 25
+  MedkitCount: 0
+  _useMedkitKey: 113
   _healthDisplay: {fileID: 0}
+  _medkitDisplay: {fileID: 0}
 --- !u!82 &5522327356549699693
 AudioSource:
   m_ObjectHideFlags: 0
@@ -775,27 +780,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2babc7c2360357c4eadce625cac911c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPulse: 0
-  <minPulse>k__BackingField: 50
-  maxPulse: 150
-  pulseIncreaseRate: 2.5
-  pulseDecreaseRate: 5
+  CurrentPulse: 0
+  <MinPulse>k__BackingField: 50
+  _maxPulse: 150
+  _pulseIncreaseRate: 2.5
+  _pulseDecreaseRate: 5
   IsFlickering: 0
-  audioManager: {fileID: 0}
-  audioSource: {fileID: 5522327356549699693}
-  heartbeatGroup: {fileID: 408982712734654552, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
-  heartbeatClip: {fileID: 8300000, guid: 5338b3a3b79350b408d9164b2dded1ef, type: 3}
-  audioMixer: {fileID: 24100000, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
+  _audioManager: {fileID: 0}
+  _audioSource: {fileID: 5522327356549699693}
+  _heartbeatGroup: {fileID: 408982712734654552, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
+  _heartbeatClip: {fileID: 8300000, guid: 5338b3a3b79350b408d9164b2dded1ef, type: 3}
+  _audioMixer: {fileID: 24100000, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
   _maxAttenuation: -60
-  earRingAudioSource: {fileID: 0}
-  earRingGroup: {fileID: 0}
-  earRingClip: {fileID: 0}
-  maxEarRingVolume: -10
+  _earRingAudioSource: {fileID: 2168526899745138970}
+  _earRingGroup: {fileID: -4379704341740705295, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
+  _earRingClip: {fileID: 8300000, guid: 7b20ee9981d6a7f4f96807a58b23cc38, type: 3}
+  _maxEarRingVolume: -10
   _heartBeatDelay: 0
-  blurVolume: {fileID: 0}
-  bloomVolume: {fileID: 0}
-  pulseText: {fileID: 0}
-  ekgMonitor: {fileID: 0}
+  _blurVolume: {fileID: 0}
+  _bloomVolume: {fileID: 0}
+  _pulseText: {fileID: 0}
+  _ekgMonitor: {fileID: 0}
+--- !u!114 &186848573286029927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6958056940225576645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e787d428f42ac24483e78d8041b7d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _FirstAidKitLayer:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1 &7075523761749334516
 GameObject:
   m_ObjectHideFlags: 0

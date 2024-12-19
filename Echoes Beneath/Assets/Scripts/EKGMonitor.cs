@@ -28,7 +28,7 @@ public class EKGMonitor : MonoBehaviour
         StartCoroutine(MovePulse(pulseRect));
 
         // Минимальная задержка между импульсами
-        float delay = Mathf.Max(60f / pulseController.currentPulse, 0.05f);
+        float delay = Mathf.Max(60f / pulseController.CurrentPulse, 0.05f);
         yield return new WaitForSeconds(delay);
     }
 

@@ -9,46 +9,46 @@ using System.Collections;
 public class PulseController : MonoBehaviour
 {
     [Header("Pulse Settings")]
-    public float currentPulse;
-    [field: SerializeField] public float minPulse {get ; private set;}
-    [SerializeField] private float maxPulse = 210f;
-    [SerializeField] private float pulseIncreaseRate = 10f;
-    [SerializeField] private float pulseDecreaseRate = 1f;
+    public float CurrentPulse;
+    [field: SerializeField] public float MinPulse {get ; private set;}
+    [SerializeField] private float _maxPulse;
+    [SerializeField] private float _pulseIncreaseRate;
+    [SerializeField] private float _pulseDecreaseRate;
     public bool IsFlickering = false;
 
     [Header("Audio Settings: General")]
-    [SerializeField] private AudioManager audioManager;
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioManager _audioManager;
+    [SerializeField] private AudioSource _audioSource;
     [Header("Audio Settings: Heartbeat")]
-    [SerializeField] private AudioMixerGroup heartbeatGroup;
-    [SerializeField] private AudioClip heartbeatClip; // Heartbeat sound
-    private Coroutine heartbeatCoroutine;
-    [SerializeField] private AudioMixer audioMixer;
+    [SerializeField] private AudioMixerGroup _heartbeatGroup;
+    [SerializeField] private AudioClip _heartbeatClip; // Heartbeat sound
+    private Coroutine _heartbeatCoroutine;
+    [SerializeField] private AudioMixer _audioMixer;
     [SerializeField] private float _maxAttenuation; // Should be negative
     [Header("Audio Settings: EarRing")]
-    [SerializeField] private AudioSource earRingAudioSource;
-    [SerializeField] private AudioMixerGroup earRingGroup;
-    [SerializeField] private AudioClip earRingClip; // Ear Ring sound
-    [SerializeField] private float maxEarRingVolume = -10f;
+    [SerializeField] private AudioSource _earRingAudioSource;
+    [SerializeField] private AudioMixerGroup _earRingGroup;
+    [SerializeField] private AudioClip _earRingClip; // Ear Ring sound
+    [SerializeField] private float _maxEarRingVolume = -10f;
 
     //[SerializeField] private AudioReverbFilter reverbFilter;
     //[SerializeField] private float reverbPulseThreshold = 120f;
     public float _heartBeatDelay;
 
     [Header("Post-Processing Settings")]
-    [SerializeField] private Volume blurVolume;
-    [SerializeField] private Volume bloomVolume;
+    [SerializeField] private Volume _blurVolume;
+    [SerializeField] private Volume _bloomVolume;
 
     [Header("UI Settings")]
-    [SerializeField] private Text pulseText; // Show pulse value
-    [SerializeField] private EKGMonitor ekgMonitor;
+    [SerializeField] private Text _pulseText; // Show pulse value
+    [SerializeField] private EKGMonitor _ekgMonitor;
 
     void Start()
     {
-        currentPulse = minPulse;
-        if (heartbeatCoroutine == null)
+        CurrentPulse = MinPulse;
+        if (_heartbeatCoroutine == null)
         {
-            heartbeatCoroutine = StartCoroutine(HeartbeatRoutine());
+            _heartbeatCoroutine = StartCoroutine(HeartbeatRoutine());
         }
         UpdatePulseUI();
     }
@@ -59,8 +59,8 @@ public class PulseController : MonoBehaviour
 
     public void IncreasePulse(int damageAmount)
     {
-        currentPulse += damageAmount * pulseIncreaseRate;
-        currentPulse = Mathf.Clamp(currentPulse, minPulse, maxPulse);
+        CurrentPulse += damageAmount * _pulseIncreaseRate;
+        CurrentPulse = Mathf.Clamp(CurrentPulse, MinPulse, _maxPulse);
         AdjustEnvironmentVolume();
         AdjustEarRingVolume();
         UpdateVisualEffects();
@@ -68,8 +68,8 @@ public class PulseController : MonoBehaviour
     }
     public void IncreasePulseFromFlashlight(float pulseIncreaseAmount)
     {
-        currentPulse += pulseIncreaseAmount * Time.deltaTime;
-        currentPulse = Mathf.Clamp(currentPulse, minPulse, maxPulse);
+        CurrentPulse += pulseIncreaseAmount * Time.deltaTime;
+        CurrentPulse = Mathf.Clamp(CurrentPulse, MinPulse, _maxPulse);
         AdjustEnvironmentVolume();
         AdjustEarRingVolume();
         UpdateVisualEffects();
@@ -77,11 +77,11 @@ public class PulseController : MonoBehaviour
     }
     public void DecreasePulse()
     {
-        if (currentPulse > minPulse)
+        if (CurrentPulse > MinPulse)
         {
             if(!IsFlickering)
             {
-                currentPulse -= pulseDecreaseRate * Time.deltaTime; // Плавное снижение пульса
+                CurrentPulse -= _pulseDecreaseRate * Time.deltaTime; // Плавное снижение пульса
                 AdjustEnvironmentVolume();
                 AdjustEarRingVolume();
                 UpdateVisualEffects();
@@ -91,16 +91,16 @@ public class PulseController : MonoBehaviour
     }
     void AdjustEnvironmentVolume()
     {
-        float volume = Mathf.Lerp(0f, _maxAttenuation, (currentPulse - minPulse) / (maxPulse - minPulse));
+        float volume = Mathf.Lerp(0f, _maxAttenuation, (CurrentPulse - MinPulse) / (_maxPulse - MinPulse));
 #if UNITY_EDITOR
         Debug.Log($"Setting Environment Volume to: {volume}");
 #endif
-        audioMixer.SetFloat("EnvironmentVolume", volume);
+        _audioMixer.SetFloat("EnvironmentVolume", volume);
     }
     void AdjustEarRingVolume()
     {
-        float volume = Mathf.Lerp(-80f, maxEarRingVolume, (currentPulse - minPulse) / (maxPulse - minPulse));
-        audioMixer.SetFloat("EarRingVolume", volume);
+        float volume = Mathf.Lerp(-80f, _maxEarRingVolume, (CurrentPulse - MinPulse) / (_maxPulse - MinPulse));
+        _audioMixer.SetFloat("EarRingVolume", volume);
     }
 
     void UpdateVisualEffects()
@@ -126,11 +126,11 @@ public class PulseController : MonoBehaviour
         while (true)
         {
             
-            audioManager.PlaySound( audioSource, heartbeatClip, heartbeatGroup); // Play heartbeat clip
+            _audioManager.PlaySound( _audioSource, _heartbeatClip, _heartbeatGroup); // Play heartbeat clip
             
-            ekgMonitor.StartPulseGeneration(); // Generate impulse on EKG
+            _ekgMonitor.StartPulseGeneration(); // Generate impulse on EKG
             
-            _heartBeatDelay = (currentPulse > 0) ? 60f / currentPulse : 1f; // Counting delay between heartbeats
+            _heartBeatDelay = (CurrentPulse > 0) ? 60f / CurrentPulse : 1f; // Counting delay between heartbeats
             yield return new WaitForSeconds(_heartBeatDelay);
         }
     }
