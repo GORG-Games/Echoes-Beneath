@@ -7,32 +7,38 @@ public class AmmoUI : MonoBehaviour
     [SerializeField] private GameObject _bulletImagePrefab; // Prefab for the bullet Image
     [SerializeField] private Transform _ammoContainer;      // Container holding the bullet images
 
-    private List<GameObject> bulletImages = new List<GameObject>();
+    private List<Image> bulletImages = new List<Image>();
+    [SerializeField] private Shotgun _shotgun;
+    private int _maxAmmo;
+    private GameObject _ammoIcon;
+    private Image _ammoImage;
+    [SerializeField] private Sprite activeAmmoSprite;        // Спрайт для активного патрона
+    [SerializeField] private Sprite inactiveAmmoSprite;      // Спрайт для неактивного патрона
 
-    // Initialize or update the ammo display based on maxAmmo
-    public void UpdateAmmoDisplay(int maxAmmo, int currentAmmo)
+    private void Start()
     {
-        // Clear existing bullet images
-        ClearAmmoDisplay();
-
-        // Create bullet images based on maxAmmo
-        for (int i = 0; i < maxAmmo; i++)
+        _maxAmmo = _shotgun.MaxAmmo;
+        for (int i = 0; i < _maxAmmo; i++)
         {
-            GameObject bulletImage = Instantiate(_bulletImagePrefab, _ammoContainer);
-            bulletImages.Add(bulletImage);
-
-            // Deactivate the bullet if it's beyond the current ammo count
-            bulletImage.SetActive(i < currentAmmo);
+            _ammoIcon = Instantiate(_bulletImagePrefab, _ammoContainer);
+            _ammoImage = _ammoIcon.GetComponent<Image>();
+            _ammoImage.sprite = activeAmmoSprite;
+            bulletImages.Add(_ammoImage);
         }
     }
-
-    // Clear all existing bullet images
-    private void ClearAmmoDisplay()
+    // Update the ammo display based on maxAmmo
+    public void UpdateAmmoDisplay(int maxAmmo, int currentAmmo)
     {
-        foreach (GameObject bullet in bulletImages)
+        for (int i = 0; i < maxAmmo; i++)
         {
-            Destroy(bullet);
+            if (i < currentAmmo)
+            {
+                bulletImages[i].sprite = activeAmmoSprite;
+            }
+            else
+            {
+                bulletImages[i].sprite = inactiveAmmoSprite;
+            }
         }
-        bulletImages.Clear();
     }
 }

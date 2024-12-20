@@ -232,6 +232,7 @@ GameObject:
   - component: {fileID: 2168526899745138970}
   - component: {fileID: 270758629269382313}
   - component: {fileID: 186848573286029927}
+  - component: {fileID: 8931334154613416996}
   m_Layer: 8
   m_Name: Character
   m_TagString: Player
@@ -294,9 +295,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1171093003
-  m_SortingLayer: 4
-  m_SortingOrder: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: a810404f050a2e841b5a0450c48ef5f8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -367,8 +368,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.037778378, y: -0.28735232}
-  m_Size: {x: 1.3904123, y: 2.5872955}
+  m_Offset: {x: 0, y: -0.16718441}
+  m_Size: {x: 1.13, y: 1.9892508}
   m_Direction: 0
 --- !u!114 &2546886477817362267
 MonoBehaviour:
@@ -441,7 +442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb399a744a53f1940b7068fbf7161bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 1.2
   audioManager: {fileID: 0}
   audioSource: {fileID: 1288492805033451521}
   footstepClip: {fileID: 8300000, guid: dd003deddb817544bbd56a6050202807, type: 3}
@@ -796,7 +797,6 @@ MonoBehaviour:
   _earRingAudioSource: {fileID: 2168526899745138970}
   _earRingGroup: {fileID: -4379704341740705295, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
   _earRingClip: {fileID: 8300000, guid: 7b20ee9981d6a7f4f96807a58b23cc38, type: 3}
-  _maxEarRingVolume: -10
   earRingTweenDuration: 0.5
   _earRingVolumeParameter: EarRingVolume
   _heartBeatDelay: 0
@@ -819,6 +819,27 @@ MonoBehaviour:
   _FirstAidKitLayer:
     serializedVersion: 2
     m_Bits: 2048
+--- !u!95 &8931334154613416996
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6958056940225576645}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c8de734139c2c1e4eaf0e823c90f16f3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7075523761749334516
 GameObject:
   m_ObjectHideFlags: 0
@@ -867,6 +888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b23a80ae1a5b7b04ebced64d4f157f59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 8931334154613416996}
 --- !u!114 &503046134048659213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -894,7 +916,7 @@ MonoBehaviour:
   _shootingSound: {fileID: 8300000, guid: c166dcb24c923cb429a2bfa199c9b2fa, type: 3}
   _reloadSlightSound: {fileID: 8300000, guid: 5ce20c7ac872c514e93184c0e5b631c2, type: 3}
   _environmentGroup: {fileID: -4517163722032033758, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
-  _maxAmmo: 8
+  MaxAmmo: 8
   _startTotalAmmo: 16
   _totalAmmo: 0
   _reloadDelay: 0.7
@@ -997,7 +1019,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _flashlight: {fileID: 7860318738118016014}
   _maxBattery: 100
-  _lightDrainSpeed: 5
+  _lightDrainSpeed: 2.5
   _flickerThreshold: 50
   _chargeAmount: 15
   _minRange: 0.1

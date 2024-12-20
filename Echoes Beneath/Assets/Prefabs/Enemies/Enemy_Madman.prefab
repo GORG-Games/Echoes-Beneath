@@ -213,7 +213,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   IsPlayerInSight: 0
-  _attackCooldown: 1.6
+  _attackCooldown: 1.2
   _attackRange: 4
   _attackDamage: 10
   _isAttacking: 0
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61fa6ef4c97cd0642a2c9f376f0661a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MaxHealth>k__BackingField: 75
+  <MaxHealth>k__BackingField: 100
   _knockbackForce: 7
 --- !u!114 &6229031827162292681
 MonoBehaviour:

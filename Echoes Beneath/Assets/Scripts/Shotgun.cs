@@ -30,7 +30,7 @@ public class Shotgun : MonoBehaviour
     [SerializeField] private AudioMixerGroup _environmentGroup;
 
     [Header("Reload: reloading")]
-    [SerializeField] private int _maxAmmo; // Max ammo that can be IN shotgun
+    [SerializeField] public int MaxAmmo; // Max ammo that can be IN shotgun
     [SerializeField] private int _startTotalAmmo; // Starting amount of ammo in shotgun
     private int _currentAmmoInChamber; // Current amount of ammo in shotgun
     public int _totalAmmo; // Total amount of ammo
@@ -46,9 +46,8 @@ public class Shotgun : MonoBehaviour
 
     private void Start()
     {
-        _currentAmmoInChamber = _maxAmmo;
+        _currentAmmoInChamber = MaxAmmo;
         _totalAmmo = _startTotalAmmo;
-        ammoUI.UpdateAmmoDisplay(_maxAmmo, _currentAmmoInChamber); // Update the display to show full ammo
         UpdateAmmoUI();
     }
     void Update()
@@ -70,11 +69,11 @@ public class Shotgun : MonoBehaviour
                 _nextFireTime = Time.time + 1f / _fireRate;
                 _currentAmmoInChamber--;
                 _audioManager.PlaySound(_audioSource, _reloadSlightSound, _environmentGroup);
-                ammoUI.UpdateAmmoDisplay(_maxAmmo, _currentAmmoInChamber); // Update the ammo display after shooting
+                ammoUI.UpdateAmmoDisplay(MaxAmmo, _currentAmmoInChamber); // Update the ammo display after shooting
                 UpdateAmmoUI();
             }
         }
-        if ((Input.GetKeyDown(KeyCode.R) && _currentAmmoInChamber < _maxAmmo && !_isReloading) || (_currentAmmoInChamber == 0 && !_isReloading && _totalAmmo != 0))
+        if ((Input.GetKeyDown(KeyCode.R) && _currentAmmoInChamber < MaxAmmo && !_isReloading) || (_currentAmmoInChamber == 0 && !_isReloading && _totalAmmo != 0))
         {
             _reloadCoroutine = StartCoroutine(Reload());
         }
@@ -116,11 +115,11 @@ public class Shotgun : MonoBehaviour
         yield return new WaitForSeconds(0.5f); 
 
         // Loading bullets one by one with delay
-        while (_currentAmmoInChamber < _maxAmmo && _totalAmmo >= 1)
+        while (_currentAmmoInChamber < MaxAmmo && _totalAmmo >= 1)
         {
             _currentAmmoInChamber++; 
             _totalAmmo--;
-            ammoUI.UpdateAmmoDisplay(_maxAmmo, _currentAmmoInChamber); // Update the ammo display after reloading
+            ammoUI.UpdateAmmoDisplay(MaxAmmo, _currentAmmoInChamber); // Update the ammo display after reloading
             UpdateAmmoUI(); 
 
             // Delay
