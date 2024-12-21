@@ -137,8 +137,9 @@ MonoBehaviour:
   viewAngle: 360
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 17408
-  rayCount: 150
+    m_Bits: 16384
+  rayCount: 200
+  smoothingFactor: 0.6
   viewMeshFilter: {fileID: 1262306172340736284}
 --- !u!33 &1262306172340736284
 MeshFilter:

@@ -13,11 +13,13 @@ public class FieldOfView : MonoBehaviour
     public float viewAngle = 90f;
     public LayerMask obstacleMask;
     public int rayCount = 50;
+    public float smoothingFactor = 0.1f; // Фактор сглаживания
 
     [Header("Mesh Components")]
     public MeshFilter viewMeshFilter;
     private Mesh viewMesh;
-    
+    private Vector3[] previousVertices;
+
     void Start()
     {
         if (darkness != null)
@@ -27,14 +29,16 @@ public class FieldOfView : MonoBehaviour
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
+        previousVertices = new Vector3[rayCount + 1];
     }
     private void Update()
     {
         transform.position = playerTransform.position;
+        DrawFieldOfView();
     }
     void LateUpdate()
     {
-        DrawFieldOfView();
+        //DrawFieldOfView();
     }
 
     void DrawFieldOfView()
@@ -42,7 +46,7 @@ public class FieldOfView : MonoBehaviour
         List<Vector3> points = new List<Vector3>();
         float angleStep = viewAngle / rayCount;
 
-        points.Add(Vector3.zero);
+        points.Add(Vector3.zero); // Центр Mesh
 
         for (int i = 0; i <= rayCount; i++)
         {
@@ -50,17 +54,18 @@ public class FieldOfView : MonoBehaviour
             Vector3 direction = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0);
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, viewRadius, obstacleMask);
 
-            if (hit.collider != null)
-            {
-                points.Add(transform.InverseTransformPoint(hit.point));
-            }
-            else
-            {
-                points.Add(transform.InverseTransformPoint(transform.position + direction * viewRadius));
-            }
+            Vector3 targetPoint = hit.collider != null
+                ? transform.InverseTransformPoint(hit.point)
+                : transform.InverseTransformPoint(transform.position + direction * viewRadius);
+
+            // Сглаживание между предыдущей и новой вершиной
+            Vector3 smoothedPoint = Vector3.Lerp(previousVertices[i], targetPoint, smoothingFactor);
+
+            points.Add(smoothedPoint);
+            previousVertices[i] = smoothedPoint; // Обновляем предыдущую вершину
         }
 
-        int[] triangles = new int[(rayCount) * 3];
+        int[] triangles = new int[rayCount * 3];
         for (int i = 0; i < rayCount; i++)
         {
             triangles[i * 3] = 0;
