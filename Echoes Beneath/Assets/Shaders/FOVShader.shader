@@ -1,23 +1,24 @@
-Shader "Custom/DarknessStencilShader"
+Shader "Custom/FOVShader"
 {
     Properties
     {
-        _Color("Color", Color) = (0, 0, 0, 1) // Черный цвет для темноты
+        _Color("Color", Color) = (0, 0, 0, 0) // Белый цвет для маски
     }
 
         SubShader
     {
-        Tags { "RenderType" = "Transparent" "Queue" = "Overlay" }
+        Tags { "RenderType" = "Transparent" "Queue" = "Overlay-1" }
         Pass
         {
+            Cull Off
             Blend SrcAlpha OneMinusSrcAlpha
             ZWrite Off
 
             Stencil
             {
-                Ref 0
-                Comp Always
-                Pass Replace
+                Ref 1          // Устанавливаем значение 1
+                Comp Always    // Всегда записываем Stencil
+                Pass Replace   // Заменяем значение в Stencil буфере на 1
             }
 
             HLSLPROGRAM
@@ -46,7 +47,7 @@ Shader "Custom/DarknessStencilShader"
 
             float4 frag(v2f i) : SV_Target
             {
-                return _Color;
+                return float4(0, 0, 0, 0); // Полностью прозрачный цвет
             }
             ENDHLSL
         }

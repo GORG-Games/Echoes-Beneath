@@ -1,8 +1,8 @@
-Shader "Custom/FOVShader"
+Shader "Custom/DarknessStencilShader"
 {
     Properties
     {
-        _Color("Color", Color) = (1, 1, 1, 0) // Белый цвет для маски
+        _Color("Color", Color) = (0, 0, 0, 1) // Черный цвет для темноты
     }
 
         SubShader
@@ -15,9 +15,9 @@ Shader "Custom/FOVShader"
 
             Stencil
             {
-                Ref 0          // Устанавливаем значение 1
-                Comp Always    // Всегда записываем Stencil
-                Pass Replace   // Заменяем значение в Stencil буфере на 1
+                Ref 1
+                Comp NotEqual
+                Pass Keep
             }
 
             HLSLPROGRAM

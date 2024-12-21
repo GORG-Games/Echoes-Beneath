@@ -5,7 +5,7 @@ public class FieldOfView : MonoBehaviour
 {
     [Header("General Settings")]
     [SerializeField] private Transform playerTransform;
-
+    [SerializeField] private GameObject darkness;
 
     [Header("FOV Settings")]
     public float viewRadius = 10f;
@@ -20,6 +20,10 @@ public class FieldOfView : MonoBehaviour
     
     void Start()
     {
+        if (darkness != null)
+        {
+            darkness.SetActive(true);
+        }
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
