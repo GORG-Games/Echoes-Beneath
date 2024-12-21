@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1902401616099875249
 Transform:
   m_ObjectHideFlags: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 0}
   darkness: {fileID: 953319422400354699}
-  viewRadius: 13
+  viewRadius: 20
   viewAngle: 360
   obstacleMask:
     serializedVersion: 2
