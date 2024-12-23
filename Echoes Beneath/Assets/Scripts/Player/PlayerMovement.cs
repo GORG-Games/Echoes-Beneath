@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private AudioClip footstepClip;          // Step sound file
     [SerializeField] private float footstepDelay;      // Задержка между шагами
     [SerializeField] private AudioMixerGroup _environmentGroup;
+    private SpriteRenderer _spriteRenderer;
 
     private Rigidbody2D rb;
     private Vector2 movement;
@@ -27,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
         footstepTimer = footstepDelay;
 
         _animator = GetComponent<Animator>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -38,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         Move();
+        UpdateAnimator();
     }
     void HandleInput()
     {
@@ -77,6 +80,15 @@ public class PlayerMovement : MonoBehaviour
         _animator.SetFloat("MoveX", movement.x);
         _animator.SetFloat("MoveY", movement.y);
         _animator.SetBool("IsMoving", isMoving);
+
+        if (movement.x < 0)
+        {
+            _spriteRenderer.flipX = true;
+        }
+        else if (movement.x > 0)
+        {
+            _spriteRenderer.flipX = false;
+        }
     }
 }
 
