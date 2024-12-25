@@ -6,6 +6,7 @@ public class PlayerAim : MonoBehaviour
 {
     [Header("Animator Settings")]
     [SerializeField] private Animator _animator;  // Ссылка на компонент Animator
+    [SerializeField] private SpriteRenderer _spriteRenderer;
     void Update()
     {
         // Получаем позицию мыши в мировых координатах
@@ -20,21 +21,21 @@ public class PlayerAim : MonoBehaviour
         // Поворачиваем объект
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
-        if (angle > -45f && angle <= 45f)
+        if (direction.x < 0)
         {
-            _animator.SetInteger("Direction", 0); // Right
+            _spriteRenderer.flipX = true; // Отразить спрайт
         }
-        else if (angle > 45f && angle <= 135f)
+        else if (direction.x > 0)
         {
-            _animator.SetInteger("Direction", 1); // Back
+            _spriteRenderer.flipX = false; // Сбросить отражение
         }
-        else if (angle > 135f || angle <= -135f)
-        {
-            _animator.SetInteger("Direction", 2); // Left
-        }
-        else if (angle > -135f && angle <= -45f)
-        {
-            _animator.SetInteger("Direction", 3); // Front
-        }
+
+        UpdateAnimator(direction);
+    }
+    private void UpdateAnimator(Vector2 aimDirection)
+    {
+        // Передаем направление взгляда
+        _animator.SetFloat("AimX", aimDirection.x);
+        _animator.SetFloat("AimY", aimDirection.y);
     }
 }

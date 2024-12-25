@@ -44,6 +44,9 @@ TagManager:
   - name: Character body
     uniqueID: 1171093003
     locked: 0
+  - name: Walls
+    uniqueID: 1959512711
+    locked: 0
   - name: AmmoUI
     uniqueID: 3984828699
     locked: 0
