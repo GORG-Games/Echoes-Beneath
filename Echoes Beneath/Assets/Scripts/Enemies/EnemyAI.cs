@@ -15,6 +15,7 @@ public class EnemyAI : MonoBehaviour
     public bool IsPlayerInSight = false; // Check if player is detected
     private float _distanceToPlayer; // Distance from enemy to player
     private AIPath aiPath;
+    private Animator _animator;
 
     [Header("Attacking Player")]
     [SerializeField] private float _attackCooldown; // Attack cooldown
@@ -36,6 +37,7 @@ public class EnemyAI : MonoBehaviour
         aiPath.maxSpeed = _speed;
         aiPath.endReachedDistance = _attackRange;
 
+        _animator = GetComponent<Animator>();
         // Player health initialization
         if(_player != null)
         {
@@ -86,6 +88,7 @@ public class EnemyAI : MonoBehaviour
             if ((_playerLayer.value & (1 << hit.collider.gameObject.layer)) != 0)
             {
                 IsPlayerInSight = true; // Игрок видим
+                _animator.SetBool("Is Detected", IsPlayerInSight);
 #if UNITY_EDITOR
                 Debug.Log("Player detected!");
 #endif
