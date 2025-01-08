@@ -295,9 +295,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1171093003
-  m_SortingLayer: 1
-  m_SortingOrder: 2
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: cc8787256b9e10a4699e3c403f695914, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -442,11 +442,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb399a744a53f1940b7068fbf7161bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1.2
+  moveSpeed: 1.65
   audioManager: {fileID: 0}
   audioSource: {fileID: 1288492805033451521}
   footstepClip: {fileID: 8300000, guid: dd003deddb817544bbd56a6050202807, type: 3}
-  footstepDelay: 1
+  footstepDelay: 0.7
   _environmentGroup: {fileID: -4517163722032033758, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
 --- !u!114 &3634534332729839055
 MonoBehaviour:
@@ -976,7 +976,7 @@ MonoBehaviour:
   m_Intensity: 2.13
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000ff4e8f1f
+  m_ApplyToSortingLayers: 000000000b76cd4587cacb741ba983edff4e8f1f15829bc13feb011ba99050de
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -1106,7 +1106,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
   m_FlipX: 0
