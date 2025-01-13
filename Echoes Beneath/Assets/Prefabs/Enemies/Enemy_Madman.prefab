@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 6229031827162292681}
   - component: {fileID: -1001295338117234821}
   - component: {fileID: -1349498517389031573}
+  - component: {fileID: 3115505381782470905}
   m_Layer: 6
   m_Name: Enemy_Madman
   m_TagString: Untagged
@@ -213,6 +214,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   IsPlayerInSight: 0
+  _spriteRenderer: {fileID: 5559572507119096525}
   _attackCooldown: 1.2
   _attackRange: 4
   _attackDamage: 10
@@ -328,3 +330,24 @@ MonoBehaviour:
   wallAvoidFalloff: 1
   priority: 0.5
   debug: 0
+--- !u!95 &3115505381782470905
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9036237423343731133}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 04e37a8343d02234a93721dfdfc96a4d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
