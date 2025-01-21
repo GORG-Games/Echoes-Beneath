@@ -12,7 +12,7 @@ public class LightDirection : MonoBehaviour
 
     void Start()
     {
-        _playerDirection =
+        //_playerDirection =
 //        _lightPoints[0] = null;
     }
 
