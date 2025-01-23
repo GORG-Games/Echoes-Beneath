@@ -7,16 +7,20 @@ public class PlayerAim : MonoBehaviour
     [Header("Animator Settings")]
     [SerializeField] private Animator _animator;  // Ссылка на компонент Animator
     [SerializeField] private SpriteRenderer _spriteRenderer;
+
+
+    private Vector2 direction;
+    public float angle;
     void Update()
     {
         // Получаем позицию мыши в мировых координатах
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         // Вычисляем направление от игрока к мыши
-        Vector2 direction = (mousePosition - transform.position).normalized;
+        direction = (mousePosition - transform.position).normalized;
 
         // Вычисляем угол в радианах
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         // Поворачиваем объект
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));

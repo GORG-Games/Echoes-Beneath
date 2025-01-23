@@ -4,20 +4,13 @@ using UnityEngine;
 
 public class LightDirection : MonoBehaviour
 {
-    [SerializeField] private Transform[] _lightPoints;
-    [SerializeField] private Transform _flashLight;
-
     [SerializeField] private PlayerAim _playerAim;
-    private Vector2 _playerDirection;
-
-    void Start()
-    {
-        //_playerDirection =
-//        _lightPoints[0] = null;
-    }
+    private float _angle;
 
     void Update()
     {
-        
+        _angle = _playerAim.angle;
+
+        transform.rotation = Quaternion.Euler(new Vector3(0, 0, _angle - 90));
     }
 }

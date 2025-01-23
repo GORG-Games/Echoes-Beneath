@@ -49,15 +49,15 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.741
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.015
+  m_Intensity: 0.73
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: a99050de0000000087cacb741ba983edff4e8f1f15829bc13feb011b0b76cd45
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
-  m_OverlapOperation: 0
+  m_OverlapOperation: 1
   m_NormalMapDistance: 3
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
@@ -222,6 +222,7 @@ GameObject:
   - component: {fileID: 2244155445842050086}
   - component: {fileID: 5279506196937338129}
   - component: {fileID: 5419583743436432168}
+  - component: {fileID: 7898664960429133986}
   - component: {fileID: 2546886477817362267}
   - component: {fileID: 5867516708916007463}
   - component: {fileID: 1732746898140742670}
@@ -255,6 +256,7 @@ Transform:
   m_Children:
   - {fileID: 4993293292487539491}
   - {fileID: 1103890691053282569}
+  - {fileID: 3188885871315236900}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2244155445842050086
@@ -295,8 +297,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1171093003
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: cc8787256b9e10a4699e3c403f695914, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -348,10 +350,10 @@ CapsuleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 32695
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -368,9 +370,44 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.5183056}
-  m_Size: {x: 1.13, y: 1.6915153}
+  m_Offset: {x: 0, y: -0.53886104}
+  m_Size: {x: 1.13, y: 1.6504045}
   m_Direction: 0
+--- !u!70 &7898664960429133986
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6958056940225576645}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 32695
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0000000053737352, y: -1.0450784}
+  m_Size: {x: 1.1300001, y: 0.63797}
+  m_Direction: 1
 --- !u!114 &2546886477817362267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -413,7 +450,7 @@ MonoBehaviour:
   - {x: -0.29314852, y: -1.1235254, z: 0}
   m_ShapePathHash: -1406454479
   m_Mesh: {fileID: 0}
-  m_InstanceId: 32244
+  m_InstanceId: 31450
   m_LocalBounds:
     m_Center: {x: -0.022479057, y: -1.05517, z: 0}
     m_Extent: {x: 0.30348825, y: 0.09597999, z: 0}
@@ -873,7 +910,6 @@ Transform:
   m_Children:
   - {fileID: 2273036592515751712}
   - {fileID: 4552574824923826540}
-  - {fileID: 3188885871315236900}
   m_Father: {fileID: 1963648414835764067}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8625688525758698808
@@ -890,6 +926,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 8931334154613416996}
   _spriteRenderer: {fileID: 2244155445842050086}
+  angle: 0
 --- !u!114 &503046134048659213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -934,6 +971,7 @@ GameObject:
   - component: {fileID: 3188885871315236900}
   - component: {fileID: 7860318738118016014}
   - component: {fileID: 61978757221125167}
+  - component: {fileID: 1047532985392638760}
   m_Layer: 8
   m_Name: Flashlight
   m_TagString: Untagged
@@ -950,11 +988,11 @@ Transform:
   m_GameObject: {fileID: 7435412645026549564}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.70710605, w: 0.7071076}
-  m_LocalPosition: {x: 1.5159988, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1103890691053282569}
+  m_Father: {fileID: 1963648414835764067}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!114 &7860318738118016014
 MonoBehaviour:
@@ -971,12 +1009,12 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 1
+  m_FalloffIntensity: 0.893
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2.13
-  m_LightVolumeIntensity: 1
+  m_LightVolumeIntensity: 0.3
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 000000000b76cd4587cacb741ba983edff4e8f1f15829bc13feb011ba99050de
+  m_ApplyToSortingLayers: a99050de87cacb741ba983edff4e8f1f15829bc13feb011b00000000
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -987,15 +1025,15 @@ MonoBehaviour:
   m_UseNormalMap: 0
   m_ShadowIntensityEnabled: 1
   m_ShadowIntensity: 1
-  m_ShadowVolumeIntensityEnabled: 0
-  m_ShadowVolumeIntensity: 0.75
+  m_ShadowVolumeIntensityEnabled: 1
+  m_ShadowVolumeIntensity: 0.802
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 60
-  m_PointLightOuterAngle: 158.08646
-  m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 13
+  m_PointLightInnerAngle: 61.35748
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0.71
+  m_PointLightOuterRadius: 13.28
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -1033,6 +1071,19 @@ MonoBehaviour:
   _chargeSound: {fileID: 0}
   _pulseController: {fileID: 270758629269382313}
   _pulseIncreaseAmount: 100
+--- !u!114 &1047532985392638760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7435412645026549564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81aedd9800666b448b974c3e6fbbf34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerAim: {fileID: 8625688525758698808}
 --- !u!1 &7505128428874272170
 GameObject:
   m_ObjectHideFlags: 0
@@ -1144,7 +1195,7 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 32256
+  m_InstanceId: 31462
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.5, y: 0.49999988, z: 0}
