@@ -111,6 +111,7 @@ public class EnemyAI : MonoBehaviour
     IEnumerator AttackPlayer()
     {
         _isAttacking = true;
+        _animator.SetBool("IsAttacking", true);
 
 #if UNITY_EDITOR
         Debug.Log("Enemy attacks the player!");
@@ -124,6 +125,7 @@ public class EnemyAI : MonoBehaviour
         // Wait for attack cooldown
         yield return new WaitForSeconds(_attackCooldown);
         _isAttacking = false;
+        _animator.SetBool("IsAttacking", false);
     }
     private void ChangeAnimationWeight(Vector2 direction)
     {
