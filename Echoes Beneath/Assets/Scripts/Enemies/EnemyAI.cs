@@ -94,7 +94,7 @@ public class EnemyAI : MonoBehaviour
             if ((_playerLayer.value & (1 << hit.collider.gameObject.layer)) != 0)
             {
                 IsPlayerInSight = true; // Игрок видим
-                _animator.SetBool("Is Detected", IsPlayerInSight);
+                _animator.SetBool("IsDetected", IsPlayerInSight);
 #if UNITY_EDITOR
                 Debug.Log("Player detected!");
 #endif

@@ -261,7 +261,7 @@ MonoBehaviour:
     m_Bits: 256
   IsPlayerInSight: 0
   _spriteRenderer: {fileID: 5559572507119096525}
-  _attackCooldown: 1.2
+  _attackCooldown: 1.5
   _attackRange: 2
   _attackDamage: 10
   _isAttacking: 0
@@ -309,7 +309,7 @@ MonoBehaviour:
     mode: 2
     period: 0.5
     sensitivity: 10
-    maximumPeriod: 2
+    maximumPeriod: 1
     visualizeSensitivity: 1
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5

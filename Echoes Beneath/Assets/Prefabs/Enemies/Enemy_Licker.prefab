@@ -10,14 +10,15 @@ GameObject:
   m_Component:
   - component: {fileID: 558972605385412972}
   - component: {fileID: 6646336644120078947}
-  - component: {fileID: 4849357091249630944}
+  - component: {fileID: 2244551375465289331}
+  - component: {fileID: 6653099269295663225}
   - component: {fileID: 7264167384223960119}
-  - component: {fileID: 958512281517784368}
   - component: {fileID: 7849150042092496318}
   - component: {fileID: 580474475605123257}
   - component: {fileID: 5022532704978633855}
   - component: {fileID: 247553673902542397}
   - component: {fileID: 7084165687933290593}
+  - component: {fileID: 7766512516774597601}
   m_Layer: 6
   m_Name: Enemy_Licker
   m_TagString: Untagged
@@ -80,9 +81,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0, g: 0.10998869, b: 1, a: 1}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: a12ab8d269e454045b158418dcdaac28, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -92,7 +93,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &4849357091249630944
+--- !u!61 &2244551375465289331
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -104,10 +105,10 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 32631
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -124,19 +125,54 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0013151169, y: -0.052632213}
+  m_Offset: {x: 0.05347824, y: -1.7097738}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 3.53125, y: 4.46875}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.0078907, y: 0.8947346}
+  m_Size: {x: 1.8692131, y: 0.65658236}
   m_EdgeRadius: 0
+--- !u!70 &6653099269295663225
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3432167696588823742}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 32631
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.053959846, y: 0.3097682}
+  m_Size: {x: 1.7283382, y: 3.140936}
+  m_Direction: 0
 --- !u!50 &7264167384223960119
 Rigidbody2D:
   serializedVersion: 4
@@ -164,36 +200,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &958512281517784368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3432167696588823742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShadowGroup: 0
-  m_ComponentVersion: 1
-  m_HasRenderer: 1
-  m_UseRendererSilhouette: 1
-  m_CastsShadows: 1
-  m_SelfShadows: 0
-  m_ApplyToSortingLayers: 000000000b76cd45
-  m_ShapePath:
-  - {x: -0.5, y: -0.5, z: 0}
-  - {x: -0.5, y: 0.5, z: 0}
-  - {x: 0.5, y: 0.5, z: 0}
-  - {x: 0.5, y: -0.5, z: 0}
-  m_ShapePathHash: 0
-  m_Mesh: {fileID: 0}
-  m_InstanceId: -1382
-  m_LocalBounds:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0.5, y: 0.5, z: 0}
 --- !u!114 &7849150042092496318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,14 +214,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
   _detectionRange: 7
-  _speed: 2
+  _speed: 1.5
   _playerLayer:
     serializedVersion: 2
     m_Bits: 256
   IsPlayerInSight: 0
-  _attackCooldown: 1.6
-  _attackRange: 2.07
-  _attackDamage: 25
+  _spriteRenderer: {fileID: 6646336644120078947}
+  _attackCooldown: 3
+  _attackRange: 2
+  _attackDamage: 35
   _isAttacking: 0
 --- !u!114 &580474475605123257
 MonoBehaviour:
@@ -244,7 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
-  radius: 0.8
+  radius: 2.46
   height: 1
   canMove: 1
   maxSpeed: 4
@@ -260,15 +267,15 @@ MonoBehaviour:
   autoRepath:
     mode: 2
     period: 0.5
-    sensitivity: 10
-    maximumPeriod: 1.5
+    sensitivity: 15
+    maximumPeriod: 1
     visualizeSensitivity: 1
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
-  slowdownDistance: 2.72
-  pickNextWaypointDist: 2
-  endReachedDistance: 2.65
+  slowdownDistance: 4
+  pickNextWaypointDist: 2.9
+  endReachedDistance: 2.59
   alwaysDrawGizmos: 1
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
@@ -322,9 +329,30 @@ MonoBehaviour:
   agentTimeHorizon: 3
   obstacleTimeHorizon: 10
   maxNeighbours: 10
-  layer: 2
+  layer: 1
   collidesWith: -1
   wallAvoidForce: 1
   wallAvoidFalloff: 1
   priority: 1
   debug: 0
+--- !u!95 &7766512516774597601
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3432167696588823742}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 65e069e74ff138b4988a0763d561c659, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

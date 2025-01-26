@@ -12,11 +12,13 @@ public class EnemyHealth : MonoBehaviour
     private Rigidbody2D rb;
 
     private EnemyAI _enemyAI; // AI Script
+    private Animator _animator;
     void Start()
     {
         _currentHealth = MaxHealth; // Initialize health
         rb = GetComponent<Rigidbody2D>();
         _enemyAI = GetComponent<EnemyAI>();
+        _animator = GetComponent<Animator>();
     }
 
     // Method to apply damage to the enemy
@@ -24,6 +26,7 @@ public class EnemyHealth : MonoBehaviour
     {
         _currentHealth -= damage;
         _enemyAI.IsPlayerInSight = true;
+        _animator.SetBool("IsDetected", _enemyAI.IsPlayerInSight);
 #if UNIY_EDITOR
         Debug.Log($"Enemy Health: {_currentHealth}");
 #endif
