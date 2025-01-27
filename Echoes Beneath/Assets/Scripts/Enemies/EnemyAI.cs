@@ -3,6 +3,12 @@ using UnityEngine.AI;
 using Pathfinding;
 using System.Collections;
 
+
+public enum DefaultDirection
+{
+    left,
+    right
+}
 [RequireComponent(typeof(AIPath))]
 [RequireComponent(typeof(Seeker))]
 public class EnemyAI : MonoBehaviour
@@ -20,6 +26,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     private Animator _animator;
     private Vector2 _animationWeight;
+    [SerializeField] private DefaultDirection _direction;
 
     [Header("Attacking Player")]
     [SerializeField] private float _attackCooldown; // Attack cooldown
