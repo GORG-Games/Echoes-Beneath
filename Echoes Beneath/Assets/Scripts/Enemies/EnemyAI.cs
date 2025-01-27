@@ -26,7 +26,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     private Animator _animator;
     private Vector2 _animationWeight;
-    [SerializeField] private DefaultDirection _direction;
+    [SerializeField] private DefaultDirection _animDirection;
 
     [Header("Attacking Player")]
     [SerializeField] private float _attackCooldown; // Attack cooldown
@@ -65,7 +65,7 @@ public class EnemyAI : MonoBehaviour
         {
             // Устанавливаем игрока как цель
             aiPath.destination = _player.position;
-            ChangeAnimationWeight(_animationWeight);
+            ChangeAnimationWeight(_animationWeight, _animDirection);
             if (_distanceToPlayer <= _attackRange)
             {
                 if (!_isAttacking)
@@ -134,13 +134,13 @@ public class EnemyAI : MonoBehaviour
         _isAttacking = false;
         _animator.SetBool("IsAttacking", false);
     }
-    private void ChangeAnimationWeight(Vector2 direction)
+    private void ChangeAnimationWeight(Vector2 direction, DefaultDirection _animDirection)
     {
-        if (direction.x < 0)
+        if ((direction.x < 0 && _animDirection == DefaultDirection.left) || (direction.x > 0 && _animDirection == DefaultDirection.right))
         {
             _spriteRenderer.flipX = false;
         }
-        else if (direction.x > 0)
+        else if ((direction.x > 0 && _animDirection == DefaultDirection.left) || (direction.x < 0 && _animDirection == DefaultDirection.right))
         {
             _spriteRenderer.flipX = true;
         }

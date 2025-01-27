@@ -230,7 +230,7 @@ MonoBehaviour:
     m_Bits: 256
   IsPlayerInSight: 0
   _spriteRenderer: {fileID: 7541622866248624236}
-  _direction: 1
+  _animDirection: 1
   _attackCooldown: 0.8
   _attackRange: 2
   _attackDamage: 5
