@@ -43,6 +43,8 @@ public class PlayerHealth : MonoBehaviour
 #if UNITY_EDITOR
         Debug.Log($"Player Health: {_currentHealth}");
 #endif
+
+        CameraController.cameraShake(damage / 2.5f, 0.1f, 0.1f);
         _pulseController.IncreasePulse(damage);
         UpdateHealthUI();
 

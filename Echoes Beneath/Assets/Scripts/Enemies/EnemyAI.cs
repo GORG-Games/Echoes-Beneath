@@ -117,8 +117,9 @@ public class EnemyAI : MonoBehaviour
     }
     IEnumerator AttackPlayer()
     {
-        _isAttacking = true;
         _animator.SetBool("IsAttacking", true);
+
+        _isAttacking = true;
 
 #if UNITY_EDITOR
         Debug.Log("Enemy attacks the player!");
