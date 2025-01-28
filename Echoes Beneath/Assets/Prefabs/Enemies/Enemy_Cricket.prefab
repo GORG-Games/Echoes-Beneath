@@ -262,7 +262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
-  radius: 0.75
+  radius: 1.2
   height: 1
   canMove: 1
   maxSpeed: 4
@@ -278,15 +278,15 @@ MonoBehaviour:
   autoRepath:
     mode: 2
     period: 0.5
-    sensitivity: 10
+    sensitivity: 15.2
     maximumPeriod: 1
     visualizeSensitivity: 1
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
-  slowdownDistance: 2.72
-  pickNextWaypointDist: 2
-  endReachedDistance: 2.65
+  slowdownDistance: 4.09
+  pickNextWaypointDist: 2.11
+  endReachedDistance: 2.6
   alwaysDrawGizmos: 1
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0

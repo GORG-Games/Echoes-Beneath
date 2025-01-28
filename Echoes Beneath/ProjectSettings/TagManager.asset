@@ -62,3 +62,6 @@ TagManager:
   - name: Overlay
     uniqueID: 453110591
     locked: 0
+  - name: LocalLight
+    uniqueID: 1207349785
+    locked: 0
