@@ -47,7 +47,7 @@ public class PlayerAim : MonoBehaviour
             lastValidPosition = GetClosestFirePointPosition(mousePosition);
         }
 
-        Vector2 direction = mousePosition - (Vector2)player.position;
+        direction = mousePosition - (Vector2)player.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         if (direction.x < 0)
