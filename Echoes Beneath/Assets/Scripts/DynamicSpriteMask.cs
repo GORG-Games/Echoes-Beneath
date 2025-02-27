@@ -28,8 +28,14 @@ public class DynamicSpriteMask : MonoBehaviour
             return;
         }
 
-        // Получаем текстуру спрайта игрока
+        // Проверяем, доступна ли текстура для чтения
         Texture2D playerTexture = playerSprite.sprite.texture;
+        if (!playerTexture.isReadable)
+        {
+            Debug.LogError("Player texture is not readable! Check the import settings.");
+            return;
+        }
+
         Rect spriteRect = playerSprite.sprite.rect;
         Color[] spritePixels = playerTexture.GetPixels((int)spriteRect.x, (int)spriteRect.y, (int)spriteRect.width, (int)spriteRect.height);
 
@@ -38,19 +44,31 @@ public class DynamicSpriteMask : MonoBehaviour
         maskTexture.filterMode = FilterMode.Bilinear;
         maskTexture.wrapMode = TextureWrapMode.Clamp;
 
-        // Обнуляем все пиксели (фон делаем белым, силуэт игрока чёрным)
+        // Заполняем маску: силуэт игрока черный, остальное белое
         Color[] maskPixels = new Color[spritePixels.Length];
-
         for (int i = 0; i < spritePixels.Length; i++)
         {
-            maskPixels[i] = spritePixels[i].a > 0.1f ? Color.black : Color.white; // Игрок → Чёрный, фон → Белый
+            maskPixels[i] = spritePixels[i].a > 0.1f ? Color.black : Color.white;
         }
 
         maskTexture.SetPixels(maskPixels);
-        Debug.Log("Applying mask to texture: " + maskTexture.name);
         maskTexture.Apply();
 
-        // Создаём спрайт для Light Cookie
-        light2D.lightCookieSprite = Sprite.Create(maskTexture, new Rect(0, 0, maskTexture.width, maskTexture.height), new Vector2(0.5f, 0.5f));
+        // Проверяем корректность текстуры
+        Debug.Log($"Mask texture created: {maskTexture.width}x{maskTexture.height}");
+
+        // Создаём корректный спрайт
+        Sprite maskSprite = Sprite.Create(maskTexture, new Rect(0, 0, maskTexture.width, maskTexture.height), new Vector2(0.5f, 0.5f));
+
+        // Проверяем корректность спрайта перед применением
+        if (maskSprite != null)
+        {
+            light2D.lightCookieSprite = maskSprite;
+            Debug.Log("Applied mask successfully!");
+        }
+        else
+        {
+            Debug.LogError("Failed to create mask sprite!");
+        }
     }
 }

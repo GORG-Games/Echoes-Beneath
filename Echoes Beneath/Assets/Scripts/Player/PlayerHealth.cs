@@ -19,6 +19,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Text _medkitDisplay;
 
     [Header("Pulse")]
+    [SerializeField] private EKGMonitor _ekgMonitor;
     private PulseController _pulseController;
 
     void Start()
@@ -26,6 +27,7 @@ public class PlayerHealth : MonoBehaviour
         _currentHealth = MaxHealth;
         _pulseController = gameObject.GetComponent<PulseController>();
         UpdateHealthUI();
+        _ekgMonitor.UpdateEKGState(_currentHealth, MaxHealth);
         firstAidKitUIManager.UpdateMedkitUI(MedkitCount);
     }
     void Update()
@@ -47,7 +49,7 @@ public class PlayerHealth : MonoBehaviour
         CameraController.cameraShake(damage / 2.5f, 0.1f, 0.1f);
         _pulseController.IncreasePulse(damage);
         UpdateHealthUI();
-
+        _ekgMonitor.UpdateEKGState(_currentHealth, MaxHealth);
         if (_currentHealth <= 0)
         {
             Die();
@@ -69,6 +71,7 @@ public class PlayerHealth : MonoBehaviour
             _currentHealth = Mathf.Clamp(_currentHealth, 0, MaxHealth); // ќграничиваем здоровье максимальным значением
             MedkitCount--;
             UpdateHealthUI();
+            _ekgMonitor.UpdateEKGState(_currentHealth, MaxHealth);
             firstAidKitUIManager.UpdateMedkitUI(MedkitCount);
         }
     }

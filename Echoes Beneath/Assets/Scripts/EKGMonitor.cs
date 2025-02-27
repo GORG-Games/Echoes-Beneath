@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,7 +7,16 @@ public class EKGMonitor : MonoBehaviour
 {
     [Header("UI Elements")]
     [SerializeField] private RectTransform ekgLineContainer; // Контейнер для линий ЭКГ
-    [SerializeField] private GameObject pulsePrefab;         // Префаб для импульса ЭКГ
+    [SerializeField] private Image ekgBackground;
+    [SerializeField] private Image ekgLine;
+    [SerializeField] private Image ekgHeart;
+
+    [Header("Pulse Prefabs")]
+    [SerializeField] private GameObject pulseGreenPrefab;
+    [SerializeField] private GameObject pulseYellowPrefab;
+    [SerializeField] private GameObject pulseRedPrefab;
+
+    private GameObject currentPulsePrefab;
 
     [Header("Pulse Settings")]
     [SerializeField] private PulseController pulseController;
@@ -15,10 +25,25 @@ public class EKGMonitor : MonoBehaviour
     private float timer = 0f;
 
     private float deleteThreshold;
+
+    [Header("Green Sprites")]
+    [SerializeField] private Sprite greenBackground;
+    [SerializeField] private Sprite greenLine;
+    [SerializeField] private Sprite greenHeart;
+
+    [Header("Yellow Sprites")]
+    [SerializeField] private Sprite yellowBackground;
+    [SerializeField] private Sprite yellowLine;
+    [SerializeField] private Sprite yellowHeart;
+
+    [Header("Red Sprites")]
+    [SerializeField] private Sprite redBackground;
+    [SerializeField] private Sprite redLine;
+    [SerializeField] private Sprite redHeart;
     IEnumerator GeneratePulse()
     {
         // Создаём новый импульс
-        GameObject pulse = Instantiate(pulsePrefab, ekgLineContainer);
+        GameObject pulse = Instantiate(currentPulsePrefab, ekgLineContainer);
         RectTransform pulseRect = pulse.GetComponent<RectTransform>();
 
         // Устанавливаем позицию импульса в правой части контейнера
@@ -49,5 +74,35 @@ public class EKGMonitor : MonoBehaviour
     public void StartPulseGeneration()
     {
         StartCoroutine(GeneratePulse());
+    }
+
+
+    public void UpdateEKGState(int currentHP, int maxHP)
+    {
+        float hpPercent = (float)currentHP / maxHP;
+        if (hpPercent > 0.6f)
+        {
+            // Green set
+            ekgBackground.sprite = greenBackground;
+            ekgLine.sprite = greenLine;
+            ekgHeart.sprite = greenHeart;
+            currentPulsePrefab = pulseGreenPrefab;
+        }
+        else if (hpPercent > 0.3f)
+        {
+            // Yellow set
+            ekgBackground.sprite = yellowBackground;
+            ekgLine.sprite = yellowLine;
+            ekgHeart.sprite = yellowHeart;
+            currentPulsePrefab = pulseYellowPrefab;
+        }
+        else
+        {
+            // Red set
+            ekgBackground.sprite = redBackground;
+            ekgLine.sprite = redLine;
+            ekgHeart.sprite = redHeart;
+            currentPulsePrefab = pulseRedPrefab;
+        }
     }
 }

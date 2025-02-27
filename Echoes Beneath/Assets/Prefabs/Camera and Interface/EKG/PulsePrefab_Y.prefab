@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4284060488705837250}
   - component: {fileID: 5311724814569857476}
   m_Layer: 5
-  m_Name: PulsePrefab
+  m_Name: PulsePrefab_Y
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b52f08bcb621c08418dffce9e938601e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ffe9634c20d68aa41a8548645200f24e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
