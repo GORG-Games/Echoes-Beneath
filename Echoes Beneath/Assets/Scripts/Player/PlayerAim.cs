@@ -58,6 +58,7 @@ public class PlayerAim : MonoBehaviour
         {
             _spriteRenderer.flipX = false; // Сбросить отражение
         }
+        flashlight.rotation = Quaternion.Euler(0, 0, angle - 90);
 
         // FirePoint всегда на последней допустимой позиции
         firePoint.position = lastValidPosition;
