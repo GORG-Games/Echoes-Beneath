@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerAim : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class PlayerAim : MonoBehaviour
     [SerializeField] private Transform firePoint;  // FirePoint – точка выстрела
     [SerializeField] private Transform player;    // Центр игрока
     [SerializeField] private Transform flashlight;
+    [SerializeField] private SyncOverlay syncOverlayComponent;
 
     [Header("Settings")]
     [SerializeField] private float minCursorDistance = 1.0f;  // Минимальная дистанция курсора
@@ -49,7 +51,8 @@ public class PlayerAim : MonoBehaviour
 
         direction = mousePosition - (Vector2)player.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
+        CorrectPlayerOverlay(angle); // Correcting darking overlay for a player sprite
+        
         if (direction.x < 0)
         {
             _spriteRenderer.flipX = true; // Отразить спрайт
@@ -110,5 +113,22 @@ public class PlayerAim : MonoBehaviour
         // Передаем направление взгляда
         _animator.SetFloat("AimX", aimDirection.x);
         _animator.SetFloat("AimY", aimDirection.y);
+    }
+    private void CorrectPlayerOverlay(float angle)
+    {
+        float clampedAngle = Mathf.Clamp(angle, -90f, 90f);
+
+        // Нормализуем: при 90° t = 0, при -90° t = 1
+        float t = Mathf.InverseLerp(90f, -90f, clampedAngle);
+
+        // Предположим, что minDarkening и maxDarkening заданы:
+        float minDarkening = 0.3f; // минимальное значение (при взгляде вверх)
+        float maxDarkening = 1f;   // максимальное значение (при взгляде вниз)
+
+        // Интерполируем значение
+        float newDarkeningMultiplier = Mathf.Lerp(minDarkening, maxDarkening, t);
+
+        // Теперь можно передать newDarkeningMultiplier в компонент SyncOverlay, например:
+        syncOverlayComponent.darkeningMultiplier = newDarkeningMultiplier;
     }
 }
