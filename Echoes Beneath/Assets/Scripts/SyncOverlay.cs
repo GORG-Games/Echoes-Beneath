@@ -8,7 +8,7 @@ public class SyncOverlay : MonoBehaviour
     [SerializeField] private SpriteRenderer playerSpriteRenderer; // Ссылка на SpriteRenderer игрока
 
     [Header("Darkening Factor")]
-    [SerializeField, Range(0.2f, 1f)] public float darkeningMultiplier = 0.6f; // Коэффициент затемнения (1 - без затемнения, меньше 1 - темнее)
+    [SerializeField, Range(0.26f, 1.0f)] public float darkeningMultiplier = 0.6f; // Коэффициент затемнения (1 - без затемнения, меньше 1 - темнее)
 
     private SpriteRenderer overlaySpriteRenderer;
 

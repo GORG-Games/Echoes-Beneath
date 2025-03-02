@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 public class PlayerAim : MonoBehaviour
 {
@@ -116,17 +117,12 @@ public class PlayerAim : MonoBehaviour
     }
     private void CorrectPlayerOverlay(float angle)
     {
-        float clampedAngle = Mathf.Clamp(angle, -90f, 90f);
+        float normalizedY = Mathf.InverseLerp(1f, -1f, direction.y);
 
-        // Нормализуем: при 90° t = 0, при -90° t = 1
-        float t = Mathf.InverseLerp(90f, -90f, clampedAngle);
+        float minDarkening = 0.26f; // минимальное значение (при взгляде вверх)
+        float maxDarkening = 1.0f;   // максимальное значение (при взгляде вниз)
 
-        // Предположим, что minDarkening и maxDarkening заданы:
-        float minDarkening = 0.3f; // минимальное значение (при взгляде вверх)
-        float maxDarkening = 1f;   // максимальное значение (при взгляде вниз)
-
-        // Интерполируем значение
-        float newDarkeningMultiplier = Mathf.Lerp(minDarkening, maxDarkening, t);
+        float newDarkeningMultiplier = Mathf.Lerp(minDarkening, maxDarkening, normalizedY);
 
         // Теперь можно передать newDarkeningMultiplier в компонент SyncOverlay, например:
         syncOverlayComponent.darkeningMultiplier = newDarkeningMultiplier;
