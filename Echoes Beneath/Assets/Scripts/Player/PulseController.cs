@@ -97,9 +97,9 @@ public class PulseController : MonoBehaviour
     void AdjustEnvironmentVolume()
     {
         float volume = Mathf.Lerp(-10f, _maxAttenuation, (CurrentPulse - MinPulse) / (_maxPulse - MinPulse));
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
         Debug.Log($"Setting Environment Volume to: {volume}");
-#endif
+#endif*/
         _audioMixer.SetFloat("EnvironmentVolume", volume);
     }
     void AdjustEarRingVolume()
@@ -109,7 +109,7 @@ public class PulseController : MonoBehaviour
         // Анимируем громкость параметра в AudioMixer через DoTween
         float currentVolume;
         _audioMixer.GetFloat(_earRingVolumeParameter, out currentVolume);
-        DOTween.To(() => currentVolume, x => _audioMixer.SetFloat(_earRingVolumeParameter, x), targetVolume, earRingTweenDuration).SetEase(Ease.InOutCubic);
+        DOTween.To(() => currentVolume, x => _audioMixer.SetFloat(_earRingVolumeParameter, x), targetVolume, earRingTweenDuration);
     }
 
     void UpdateVisualEffects()

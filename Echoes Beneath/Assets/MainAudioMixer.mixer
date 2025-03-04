@@ -88,6 +88,8 @@ AudioMixerController:
     name: EnvironmentVolume
   - guid: a953576f508e31644a3292c2c1fe4c46
     name: HeartbeatVolume
+  - guid: ef403a6ee9bab6e41b4da738d5a3e1a8
+    name: MasterVolume
   m_AudioMixerGroupViews:
   - guids:
     - 1b2efbf1e3ced504196244df66ccb3e9
