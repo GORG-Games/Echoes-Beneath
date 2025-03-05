@@ -15,8 +15,16 @@ public class AudioSettingsManager : MonoBehaviour
     private float minVolume = -80f;
     private float maxVolume = 0f;
 
+    // for PlayerPrefs
+    private const string MasterVolumeKey = "MasterVolume";
+
     void Start()
     {
+        float masterVol = PlayerPrefs.GetFloat(MasterVolumeKey, 1f); // значение от 0 до 1
+
+        if (masterSlider != null) masterSlider.value = masterVol;
+        SetMasterVolume(masterVol);
+
         masterSlider.onValueChanged.AddListener(SetMasterVolume);
     }
 
@@ -25,5 +33,7 @@ public class AudioSettingsManager : MonoBehaviour
         // Преобразуем значение слайдера (0-1) в децибелы
         float volume = Mathf.Lerp(minVolume, maxVolume, sliderValue / divider);
         audioMixer.SetFloat("MasterVolume", volume);
+        PlayerPrefs.SetFloat(MasterVolumeKey, sliderValue);
+        PlayerPrefs.Save();
     }
 }
