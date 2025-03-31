@@ -32,7 +32,6 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         HandleInput();
-        HandleFootsteps();
     }
 
     void FixedUpdate()
@@ -50,23 +49,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
-    void HandleFootsteps()
-    {
-        if (isMoving)
-        {
-            footstepTimer -= Time.deltaTime;
-            if (footstepTimer <= 0f)
-            {
-                footstepTimer = footstepDelay;
-                PlayFootstepSound();
-            }
-        }
-        else
-        {
-            footstepTimer = 0f; // Reset Timer if character isn't moving
-        }
-    }
-    void PlayFootstepSound()
+    public void PlayFootstepSound()
     {
 #if UNITY_EDITOR
             Debug.Log("Playing footstep sound");

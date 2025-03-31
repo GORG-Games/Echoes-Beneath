@@ -114,6 +114,24 @@ public class PlayerAim : MonoBehaviour
         // Передаем направление взгляда
         _animator.SetFloat("AimX", aimDirection.x);
         _animator.SetFloat("AimY", aimDirection.y);
+
+        int animVariant = 0;
+
+        if (Mathf.Abs(aimDirection.y) < 0.3f)
+        {
+            animVariant = 0; // боковая
+        }
+        else if (aimDirection.y > 0)
+        {
+            animVariant = 1; // верх
+        }
+        else
+        {
+            animVariant = 2; // низ
+        }
+
+        // устанавливаем этот параметр
+        _animator.SetInteger("AnimVariant", animVariant);
     }
     private void CorrectPlayerOverlay(float angle)
     {
