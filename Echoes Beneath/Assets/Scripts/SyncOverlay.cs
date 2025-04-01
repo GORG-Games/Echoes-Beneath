@@ -17,7 +17,9 @@ public class SyncOverlay : MonoBehaviour
         overlaySpriteRenderer = GetComponent<SpriteRenderer>();
         if (playerSpriteRenderer == null)
         {
+#if UNITY_EDITOR
             Debug.LogError("Player SpriteRenderer не назначен в SyncOverlay!");
+#endif
         }
     }
 

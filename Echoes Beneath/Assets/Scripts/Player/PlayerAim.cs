@@ -117,17 +117,16 @@ public class PlayerAim : MonoBehaviour
 
         int animVariant = 0;
 
-        if (Mathf.Abs(aimDirection.y) < 0.3f)
+        if (Mathf.Abs(aimDirection.x) > Mathf.Abs(aimDirection.y))
         {
             animVariant = 0; // боковая
         }
-        else if (aimDirection.y > 0)
-        {
-            animVariant = 1; // верх
-        }
         else
         {
-            animVariant = 2; // низ
+            if (aimDirection.y >= 0)
+                animVariant = 1; // верх
+            else
+                animVariant = 2; // низ
         }
 
         // устанавливаем этот параметр

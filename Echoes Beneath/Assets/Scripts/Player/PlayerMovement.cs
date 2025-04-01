@@ -49,12 +49,23 @@ public class PlayerMovement : MonoBehaviour
     {
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
-    public void PlayFootstepSound()
+    public void PlayFootstepSound(int eventVariant)
     {
-#if UNITY_EDITOR
+        int currentVariant = _animator.GetInteger("AnimVariant");
+
+        if (currentVariant == eventVariant)
+        {
+/*#if UNITY_EDITOR
             Debug.Log("Playing footstep sound");
-#endif
+#endif*/
             audioManager.PlaySound(audioSource, footstepClip, _environmentGroup);
+        }
+        else
+        {
+#if UNITY_EDITOR
+            Debug.Log($"Footstep event ignored. eventVariant={eventVariant} currentVariant={currentVariant}");
+#endif
+        }
     }
     void UpdateAnimator()
     {
