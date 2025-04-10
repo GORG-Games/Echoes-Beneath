@@ -27,6 +27,8 @@ public class Shotgun : MonoBehaviour
     [SerializeField] private AudioSource _audioSource;      // —сылка на AudioSource дл€ воспроизведени€ звуков
     [SerializeField] private AudioClip _shootingSound;
     [SerializeField] private AudioClip _reloadSlightSound;
+    [SerializeField] private AudioClip _loadingAmmoSound;
+    [SerializeField] private AudioClip _shellDropSound;
     [SerializeField] private AudioMixerGroup _environmentGroup;
 
     [Header("Reload: reloading")]
@@ -103,6 +105,7 @@ public class Shotgun : MonoBehaviour
 
                 // Shake the camera (if applicable)
                 CameraController.cameraShake(_shakeStrength, _shakeTime, _shakeFadeTime);
+                _audioManager.PlaySound(_audioSource, _shellDropSound, _environmentGroup);
             }
         }
     }
@@ -117,6 +120,7 @@ public class Shotgun : MonoBehaviour
         // Loading bullets one by one with delay
         while (_currentAmmoInChamber < MaxAmmo && _totalAmmo >= 1)
         {
+            _audioManager.PlaySound(_audioSource, _loadingAmmoSound, _environmentGroup);
             _currentAmmoInChamber++; 
             _totalAmmo--;
             ammoUI.UpdateAmmoDisplay(MaxAmmo, _currentAmmoInChamber); // Update the ammo display after reloading

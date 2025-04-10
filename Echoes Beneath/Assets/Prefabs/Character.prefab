@@ -332,6 +332,7 @@ GameObject:
   - component: {fileID: 186848573286029927}
   - component: {fileID: 8931334154613416996}
   - component: {fileID: 7049671665432553237}
+  - component: {fileID: 1894697474289488051}
   m_Layer: 8
   m_Name: Character
   m_TagString: Player
@@ -544,6 +545,11 @@ MonoBehaviour:
   _useMedkitKey: 113
   _healthDisplay: {fileID: 0}
   _medkitDisplay: {fileID: 0}
+  _audioManager: {fileID: 0}
+  _audioSource: {fileID: 1894697474289488051}
+  _takingDamageSound: {fileID: 8300000, guid: 5463db4cd60d35f42a92bc3cc2dd3fc4, type: 3}
+  _usingMedSound: {fileID: 0}
+  _environmentGroup: {fileID: -4517163722032033758, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
   _ekgMonitor: {fileID: 0}
 --- !u!82 &5522327356549699693
 AudioSource:
@@ -859,7 +865,7 @@ MonoBehaviour:
   _maxAttenuation: -60
   _earRingAudioSource: {fileID: 2168526899745138970}
   _earRingGroup: {fileID: -4379704341740705295, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
-  _earRingClip: {fileID: 8300000, guid: 7b20ee9981d6a7f4f96807a58b23cc38, type: 3}
+  _earRingClip: {fileID: 8300000, guid: d0c618722a432ca478fea7344f4369d2, type: 3}
   earRingTweenDuration: 0.45
   _earRingVolumeParameter: EarRingVolume
   _heartBeatDelay: 0
@@ -930,6 +936,102 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!82 &1894697474289488051
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6958056940225576645}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -4517163722032033758, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &7075523761749334516
 GameObject:
   m_ObjectHideFlags: 0
@@ -1018,6 +1120,8 @@ MonoBehaviour:
   _audioSource: {fileID: 6731095719784399747}
   _shootingSound: {fileID: 8300000, guid: c166dcb24c923cb429a2bfa199c9b2fa, type: 3}
   _reloadSlightSound: {fileID: 8300000, guid: 5ce20c7ac872c514e93184c0e5b631c2, type: 3}
+  _loadingAmmoSound: {fileID: 8300000, guid: f19b738f7fd1679429a4c66ca7c11b0f, type: 3}
+  _shellDropSound: {fileID: 8300000, guid: cf93732425a31d741aa8dafc658f24fc, type: 3}
   _environmentGroup: {fileID: -4517163722032033758, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
   MaxAmmo: 8
   _startTotalAmmo: 16

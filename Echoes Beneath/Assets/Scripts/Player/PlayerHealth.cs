@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
@@ -17,6 +18,15 @@ public class PlayerHealth : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private Text _healthDisplay;
     [SerializeField] private Text _medkitDisplay;
+
+    [Header("Audio Settings")]
+    [SerializeField] private AudioManager _audioManager;
+    [SerializeField] private AudioSource _audioSource;
+
+    [SerializeField] private AudioClip _takingDamageSound;
+    [SerializeField] private AudioClip _usingMedSound;
+
+    [SerializeField] private AudioMixerGroup _environmentGroup;
 
     [Header("Pulse")]
     [SerializeField] private EKGMonitor _ekgMonitor;
@@ -40,6 +50,10 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+#if UNITY_EDITOR
+            Debug.Log("Playing hurt sound");
+#endif
+        _audioManager.PlaySound(_audioSource, _takingDamageSound, _environmentGroup);
         _currentHealth -= damage;
         _currentHealth = Mathf.Clamp(_currentHealth, 0, MaxHealth);
 #if UNITY_EDITOR
@@ -67,6 +81,8 @@ public class PlayerHealth : MonoBehaviour
     {
         if (MedkitCount > 0 && _currentHealth < MaxHealth)
         {
+            if (_usingMedSound != null)
+                _audioManager.PlaySound(_audioSource, _usingMedSound, _environmentGroup);
             _currentHealth += _healAmount;
             _currentHealth = Mathf.Clamp(_currentHealth, 0, MaxHealth); // ќграничиваем здоровье максимальным значением
             MedkitCount--;

@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Audio Settings")]
     [SerializeField] private AudioManager audioManager;
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip footstepClip;          // Step sound file
+    [SerializeField] private AudioClip footstepClip;    // Step sound file
     [SerializeField] private float footstepDelay;      // Задержка между шагами
     [SerializeField] private AudioMixerGroup _environmentGroup;
 
