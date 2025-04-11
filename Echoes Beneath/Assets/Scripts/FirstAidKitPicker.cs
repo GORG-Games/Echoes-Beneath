@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class FirstAidKitPicker : MonoBehaviour
 {
-    private bool _canPickUpKit = false;
-    private PlayerHealth _playerHealth;
+    public bool _canPickUpKit = false;
+    [SerializeField] private PlayerHealth _playerHealth;
     private HealthPickup _healthPickup;
     [SerializeField] private LayerMask _FirstAidKitLayer;
 
