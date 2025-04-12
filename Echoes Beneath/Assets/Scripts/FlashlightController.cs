@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Audio;
 
 public class FlashlightController : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class FlashlightController : MonoBehaviour
     [SerializeField] private AudioClip _drainSound;         // Звук разрядки фонарика
     [SerializeField] private AudioClip _flickerSound;       // Звук мигания фонарика
     [SerializeField] private AudioClip _chargeSound;        // Звук зарядки фонарика
+    [SerializeField] private AudioMixerGroup _environmentGroup;
 
     [Header("Pulse Settings")]
     [SerializeField] private PulseController _pulseController;
@@ -42,7 +44,7 @@ public class FlashlightController : MonoBehaviour
     {
         DrainBattery();
         CheckBatteryLevel();
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && _lightDrainSpeed > 0)
         {
             HandleRecharge();
         }
@@ -88,6 +90,7 @@ public class FlashlightController : MonoBehaviour
     void HandleRecharge()
     {
         _currentBattery += _chargeAmount;
+        _audioManager.PlaySound(_audioSource, _chargeSound, _environmentGroup);
         _currentBattery = Mathf.Clamp(_currentBattery, 0, _maxBattery);
         UpdateBatteryUI();
     }

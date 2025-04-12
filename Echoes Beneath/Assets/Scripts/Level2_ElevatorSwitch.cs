@@ -1,6 +1,8 @@
 using System.Collections;
-using TMPro.EditorUtilities;
-using UnityEditor.Tilemaps;
+#if UNITY_EDITOR
+    using TMPro.EditorUtilities;
+    using UnityEditor.Tilemaps;
+#endif
 using UnityEngine;
 
 public class Level2_ElevatorSwitch : MonoBehaviour
@@ -15,6 +17,7 @@ public class Level2_ElevatorSwitch : MonoBehaviour
     [SerializeField] private GameObject errorText2;
 
     private Coroutine _coroutine;
+    [SerializeField] private LayerMask _playerLayer;
 
     private bool isPlayerInZone = false;
     private bool hasActivated = false;
@@ -60,7 +63,7 @@ public class Level2_ElevatorSwitch : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (Utils.LayerMaskUtil.ContainsLayer(_playerLayer, other.gameObject))
         {
             isPlayerInZone = true;
             if (interactionPrompt != null)
@@ -70,7 +73,7 @@ public class Level2_ElevatorSwitch : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (Utils.LayerMaskUtil.ContainsLayer(_playerLayer, other.gameObject))
         {
             isPlayerInZone = false;
             if (interactionPrompt != null)

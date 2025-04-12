@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af3428893f614f8409d7b90877d934fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AmmoAmount: 4
+  AmmoAmount: 6
   _playerLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_HasRenderer: 1
   m_UseRendererSilhouette: 1
-  m_CastsShadows: 1
+  m_CastsShadows: 0
   m_SelfShadows: 0
   m_ApplyToSortingLayers: 000000000b76cd45ff4e8f1f
   m_ShapePath:
@@ -215,7 +215,7 @@ MonoBehaviour:
   - {x: -0.012242472, y: -0.23086688, z: 0}
   m_ShapePathHash: -9336363
   m_Mesh: {fileID: 0}
-  m_InstanceId: 81700
+  m_InstanceId: 251108
   m_LocalBounds:
     m_Center: {x: 0.0017280877, y: -0.002677992, z: 0}
     m_Extent: {x: 0.25614995, y: 0.24397425, z: 0}

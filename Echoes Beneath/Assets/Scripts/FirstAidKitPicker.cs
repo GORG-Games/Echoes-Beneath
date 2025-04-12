@@ -5,7 +5,7 @@ using UnityEngine;
 public class FirstAidKitPicker : MonoBehaviour
 {
     public bool _canPickUpKit = false;
-    [SerializeField] private PlayerHealth _playerHealth;
+    private PlayerHealth _playerHealth;
     private HealthPickup _healthPickup;
     [SerializeField] private LayerMask _FirstAidKitLayer;
 
@@ -20,7 +20,7 @@ public class FirstAidKitPicker : MonoBehaviour
 
     void Update()
     {
-        if (_canPickUpKit && Input.GetKeyDown(KeyCode.E))
+        if (_canPickUpKit && Input.GetKeyDown(KeyCode.E) && (_playerHealth.MedkitCount < _playerHealth.MaxMedkits))
         {
             PickUpKit();
         }
@@ -48,7 +48,9 @@ public class FirstAidKitPicker : MonoBehaviour
                 Debug.Log("можно подобрать аптечку");
 #endif
             }
+
         }
+
     }
 
     void OnTriggerExit2D(Collider2D collision)
@@ -57,7 +59,6 @@ public class FirstAidKitPicker : MonoBehaviour
         {
 
             _canPickUpKit = false;
-            _playerHealth = null;
         }
     }
 }

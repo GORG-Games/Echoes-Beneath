@@ -13,6 +13,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private FirstAidKitUIManager firstAidKitUIManager;
     [SerializeField] private int _healAmount = 25; // Количество восстанавливаемого здоровья
     public int MedkitCount = 0; // Количество аптечек
+    [field: SerializeField] public int MaxMedkits { get; private set; }
     [SerializeField] private KeyCode _useMedkitKey = KeyCode.Q; // Клавиша для использования аптечки
 
     [Header("UI Elements")]

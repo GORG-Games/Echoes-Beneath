@@ -1,5 +1,7 @@
 using System.Collections;
-using UnityEditor.Experimental.GraphView;
+#if UNITY_EDITOR
+    using UnityEditor.Experimental.GraphView;
+#endif
 using UnityEngine;
 using UnityEngine.UI;
 
