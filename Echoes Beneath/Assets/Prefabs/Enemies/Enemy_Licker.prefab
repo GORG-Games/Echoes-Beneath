@@ -170,8 +170,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.053959846, y: 0.3097682}
-  m_Size: {x: 1.7283382, y: 3.140936}
+  m_Offset: {x: 0.053959846, y: -0.33969092}
+  m_Size: {x: 1.3977661, y: 1.8420177}
   m_Direction: 0
 --- !u!50 &7264167384223960119
 Rigidbody2D:
@@ -220,6 +220,7 @@ MonoBehaviour:
     m_Bits: 256
   IsPlayerInSight: 0
   _spriteRenderer: {fileID: 6646336644120078947}
+  _animDirection: 0
   _attackCooldown: 3
   _attackRange: 2
   _attackDamage: 35
