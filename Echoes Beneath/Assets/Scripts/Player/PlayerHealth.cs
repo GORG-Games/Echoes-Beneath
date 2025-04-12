@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
 {
     [field:SerializeField] public int MaxHealth { get; private set; }
     private int _currentHealth;
+    [SerializeField] SceneLoader _sceneLoader;
 
     [Header("Medkit Settings")]
     [SerializeField] private FirstAidKitUIManager firstAidKitUIManager;
@@ -101,5 +102,7 @@ public class PlayerHealth : MonoBehaviour
 #if UNITY_EDITOR
         Debug.Log("Player has died!");
 #endif
+        _sceneLoader.ReloadCurrentScene();
+        _pulseController.AdjustEarRingVolume();
     }
 }

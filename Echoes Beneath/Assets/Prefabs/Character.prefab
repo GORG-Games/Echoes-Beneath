@@ -539,6 +539,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <MaxHealth>k__BackingField: 100
+  _sceneLoader: {fileID: 0}
   firstAidKitUIManager: {fileID: 0}
   _healAmount: 25
   MedkitCount: 0
@@ -1241,6 +1242,7 @@ MonoBehaviour:
   _drainSound: {fileID: 0}
   _flickerSound: {fileID: 0}
   _chargeSound: {fileID: 8300000, guid: 39af0e29d27e8074e95c9582b42d4dbd, type: 3}
+  _environmentGroup: {fileID: -4517163722032033758, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
   _pulseController: {fileID: 270758629269382313}
   _pulseIncreaseAmount: 100
 --- !u!114 &1047532985392638760

@@ -56,6 +56,7 @@ public class PulseController : MonoBehaviour
             _heartbeatCoroutine = StartCoroutine(HeartbeatRoutine());
         }
         UpdatePulseUI();
+        AdjustEarRingVolume();
     }
     private void Update()
     {
@@ -102,7 +103,7 @@ public class PulseController : MonoBehaviour
 #endif*/
         _audioMixer.SetFloat("EnvironmentVolume", volume);
     }
-    void AdjustEarRingVolume()
+    public void AdjustEarRingVolume()
     {
         float targetVolume = Mathf.Lerp(-80f, -15f, (CurrentPulse - MinPulse) / (_maxPulse - MinPulse));
 
