@@ -29,7 +29,7 @@ public class Level2_ElevatorSwitch : MonoBehaviour
         {
             ActivateElevator();
         }
-        else if (isPlayerInZone && !isPowered && Input.GetKeyDown(KeyCode.E))
+        else if (isPlayerInZone && !isPowered && !hasActivated && Input.GetKeyDown(KeyCode.E))
         {
             _coroutine = StartCoroutine(ErrorTextDisplay());
         }
@@ -47,6 +47,7 @@ public class Level2_ElevatorSwitch : MonoBehaviour
 
     IEnumerator ErrorTextDisplay()
     {
+        hasActivated = true;
         errorText.SetActive(true); 
 
         yield return new WaitForSeconds(2f);
