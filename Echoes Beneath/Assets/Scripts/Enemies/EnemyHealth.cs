@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -13,12 +14,23 @@ public class EnemyHealth : MonoBehaviour
 
     private EnemyAI _enemyAI; // AI Script
     private Animator _animator;
+
+    [Header("Damage Flash")]
+    [SerializeField] private float flashDuration = 0.2f; // how long to stay red
+    [SerializeField] private float fadeBackTime = 0.2f;   // how long to fade back
+    private SpriteRenderer _spriteRenderer;
+    private Color _originalColor;
+    private Coroutine _damageFlashCoroutine;
     void Start()
     {
         _currentHealth = MaxHealth; // Initialize health
         rb = GetComponent<Rigidbody2D>();
         _enemyAI = GetComponent<EnemyAI>();
         _animator = GetComponent<Animator>();
+
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        if (_spriteRenderer != null)
+            _originalColor = _spriteRenderer.color;
     }
 
     // Method to apply damage to the enemy
@@ -40,6 +52,34 @@ public class EnemyHealth : MonoBehaviour
         {
             Die();
         }
+        StartDamageFlash();
+    }
+    private void StartDamageFlash()
+    {
+        if (_spriteRenderer == null) return;
+
+        if (_damageFlashCoroutine != null)
+            StopCoroutine(_damageFlashCoroutine);
+
+        _damageFlashCoroutine = StartCoroutine(DamageFlashRoutine());
+    }
+
+    private IEnumerator DamageFlashRoutine()
+    {
+        _spriteRenderer.color = Color.red;
+
+        yield return new WaitForSeconds(flashDuration);
+
+        float elapsed = 0f;
+        while (elapsed < fadeBackTime)
+        {
+            elapsed += Time.deltaTime;
+            _spriteRenderer.color = Color.Lerp(Color.red, _originalColor, elapsed / fadeBackTime);
+            yield return null;
+        }
+
+        _spriteRenderer.color = _originalColor;
+        _damageFlashCoroutine = null;
     }
 
     // Method to handle enemy death
