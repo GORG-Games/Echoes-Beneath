@@ -9,14 +9,10 @@ public class FlashlightController : MonoBehaviour
     [SerializeField] private Light2D _flashlight;        // Light component of flashlight
     [SerializeField] private float _maxBattery;       // Max charge of battery
     [SerializeField] private float _lightDrainSpeed;    // Light drain speed 
-    [SerializeField] private float _flickerThreshold;  // How much percent should be to start flickering
     [SerializeField] private float _chargeAmount;       // How much we charge after pressing F
-    [SerializeField] private float _minRange;
-    [SerializeField] private float _maxRange;
 
 
     private float _currentBattery;       // Current battery charge
-    private bool _isFlickering = false;  // Flag to show if flashlight flickers
 
     [Header("UI Elements")]
     [SerializeField] private Slider batterySlider;
@@ -25,13 +21,20 @@ public class FlashlightController : MonoBehaviour
     [SerializeField] private AudioManager _audioManager;
     [SerializeField] private AudioSource _audioSource;      // Ссылка на AudioSource для воспроизведения звуков
     [SerializeField] private AudioClip _drainSound;         // Звук разрядки фонарика
-    [SerializeField] private AudioClip _flickerSound;       // Звук мигания фонарика
     [SerializeField] private AudioClip _chargeSound;        // Звук зарядки фонарика
     [SerializeField] private AudioMixerGroup _environmentGroup;
 
     [Header("Pulse Settings")]
     [SerializeField] private PulseController _pulseController;
     [SerializeField] private float _pulseIncreaseAmount;
+
+    [Header("Battery Pack System")]
+    [SerializeField] private int _batteryPacks = 0;                 // Кол-во запасных батареек
+    [SerializeField] private Text _batteryCountText;                // UI элемент с отображением кол-ва батареек
+    [SerializeField] private float _pulseWhenOff = 1f;              // Сколько прибавлять к пульсу, когда фонарик выключен
+
+    private bool _isFlashlightOn = true;                            // Фонарик включён ли
+
 
     void Start()
     {
@@ -42,12 +45,30 @@ public class FlashlightController : MonoBehaviour
 
     void Update()
     {
-        DrainBattery();
-        CheckBatteryLevel();
-        if (Input.GetKeyDown(KeyCode.F) && _lightDrainSpeed > 0)
-        {
-            HandleRecharge();
-        }
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                ToggleFlashlight();
+            }
+
+            if (_isFlashlightOn)
+            {
+                Debug.Log("Фонарик включен");
+                DrainBattery();
+
+                if (_currentBattery <= 0f)
+                {
+                    Debug.Log("Батарея на нуле");
+                    _currentBattery = 0f;
+                    TryConsumeBatteryPack();
+                }
+            }
+            else
+            {
+                Debug.Log("Фонарик выключен — повышаем пульс");
+                _pulseController.IncreasePulseFromFlashlight(_pulseWhenOff * Time.deltaTime);
+            }
+
+            UpdateBatteryUI();
     }
 
 
@@ -60,45 +81,52 @@ public class FlashlightController : MonoBehaviour
             UpdateBatteryUI();
         }
     }
-    void CheckBatteryLevel()
-    {
-        if (_currentBattery <= _flickerThreshold && !_isFlickering)
-        {
-            _isFlickering = true;
-            _pulseController.IsFlickering = true;
-            StartCoroutine(FlickerLight());
-        }
-    }
-
-    // Flickering couroutine
-    System.Collections.IEnumerator FlickerLight()
-    {
-        while (_currentBattery <= _flickerThreshold)
-        {
-            _flashlight.enabled = !_flashlight.enabled;
-            yield return new WaitForSeconds(Random.Range(_minRange, _maxRange)); // Random range of flickering
-            _pulseController.IncreasePulseFromFlashlight(_pulseIncreaseAmount);
-        }
-
-        // After exitting flickering mode
-        _flashlight.enabled = true;
-        _isFlickering = false;
-        _pulseController.IsFlickering = false;
-    }
 
     // Charging battery
-    void HandleRecharge()
-    {
-        _currentBattery += _chargeAmount;
-        _audioManager.PlaySound(_audioSource, _chargeSound, _environmentGroup);
-        _currentBattery = Mathf.Clamp(_currentBattery, 0, _maxBattery);
-        UpdateBatteryUI();
-    }
     void UpdateBatteryUI()
     {
         if (batterySlider != null)
         {
             batterySlider.value = _currentBattery;
         }
+    }
+    private void UpdateBatteryPackUI()
+    {
+        if (_batteryCountText != null)
+        {
+            _batteryCountText.text = $"x{_batteryPacks}";
+        }
+    }
+
+
+    private void ToggleFlashlight()
+    {
+        _isFlashlightOn = !_isFlashlightOn;
+        _flashlight.enabled = _isFlashlightOn;
+    }
+
+    private void TryConsumeBatteryPack()
+    {
+        if (_batteryPacks > 0)
+        {
+            _batteryPacks--;
+            _currentBattery = _maxBattery;
+            UpdateBatteryUI();
+            UpdateBatteryPackUI();
+        }
+        else
+        {
+            if (_isFlashlightOn)
+            {
+                ToggleFlashlight(); // Выключаем фонарик, если не хватает батареек
+            }
+        }
+    }
+
+    // Добавление батареек через предмет/подбор
+    public void AddBatteryPack(int count)
+    {
+        _batteryPacks += count;
+        UpdateBatteryUI();
     }
 }

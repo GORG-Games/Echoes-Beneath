@@ -1232,19 +1232,18 @@ MonoBehaviour:
   _flashlight: {fileID: 7860318738118016014}
   _maxBattery: 100
   _lightDrainSpeed: 2.5
-  _flickerThreshold: 50
   _chargeAmount: 15
-  _minRange: 0.1
-  _maxRange: 0.85
   batterySlider: {fileID: 0}
   _audioManager: {fileID: 0}
   _audioSource: {fileID: 7349046147909766237}
   _drainSound: {fileID: 0}
-  _flickerSound: {fileID: 0}
   _chargeSound: {fileID: 8300000, guid: 39af0e29d27e8074e95c9582b42d4dbd, type: 3}
   _environmentGroup: {fileID: -4517163722032033758, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
   _pulseController: {fileID: 270758629269382313}
   _pulseIncreaseAmount: 100
+  _batteryPacks: 0
+  _batteryCountText: {fileID: 0}
+  _pulseWhenOff: 500
 --- !u!114 &1047532985392638760
 MonoBehaviour:
   m_ObjectHideFlags: 0
