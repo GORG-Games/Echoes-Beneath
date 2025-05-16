@@ -36,21 +36,35 @@ public class PlayerAim : MonoBehaviour
 
     private Vector2 direction;
     public float angle;
+
+    // Aim Logic
+    private Vector2 rawMousePosition;
+    private Vector2 dirToMouse;
+    private float distanceToMouse;
+    private Vector2 constrainedMousePosition;
     void Update()
     {
-        // ѕолучаем позицию мыши в мировых координатах
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        rawMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        dirToMouse = rawMousePosition - (Vector2)player.position;
+        distanceToMouse = dirToMouse.magnitude;
 
-        float distanceToCursor = Vector2.Distance(player.position, mousePosition);
-
-        // ѕровер€ем, достаточно ли курсор далеко
-        if (distanceToCursor >= minCursorDistance)
+        // ќграничение ближней дистанции
+        if (distanceToMouse < minCursorDistance)
         {
-            // ≈сли да Ц обновл€ем позицию FirePoint
-            lastValidPosition = GetClosestFirePointPosition(mousePosition);
+            dirToMouse = dirToMouse.normalized * minCursorDistance;
         }
 
-        direction = mousePosition - (Vector2)player.position;
+        // ‘инальна€ позици€ прицела, которую будет видеть вс€ остальна€ система
+        constrainedMousePosition = (Vector2)player.position + dirToMouse;
+
+        // ѕровер€ем, достаточно ли курсор далеко
+        if (distanceToMouse >= minCursorDistance)
+        {
+            // ≈сли да Ц обновл€ем позицию FirePoint
+            lastValidPosition = GetClosestFirePointPosition(constrainedMousePosition);
+        }
+
+        direction = constrainedMousePosition - (Vector2)player.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         CorrectPlayerOverlay(angle); // Correcting darking overlay for a player sprite
         
@@ -68,7 +82,7 @@ public class PlayerAim : MonoBehaviour
         firePoint.position = lastValidPosition;
 
         // **ѕоворачиваем firePoint в сторону курсора**
-        RotateFirePoint(mousePosition);
+        RotateFirePoint(constrainedMousePosition);
 
 
         UpdateAnimator(direction);

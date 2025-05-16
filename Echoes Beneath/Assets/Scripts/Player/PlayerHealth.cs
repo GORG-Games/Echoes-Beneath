@@ -9,6 +9,7 @@ public class PlayerHealth : MonoBehaviour
     [field:SerializeField] public int MaxHealth { get; private set; }
     private int _currentHealth;
     [SerializeField] SceneLoader _sceneLoader;
+    [SerializeField] private PlayerDamageEffects _damageEffects;
 
     [Header("Medkit Settings")]
     [SerializeField] private FirstAidKitUIManager firstAidKitUIManager;
@@ -56,6 +57,7 @@ public class PlayerHealth : MonoBehaviour
             Debug.Log("Playing hurt sound");
 #endif
         _audioManager.PlaySound(_audioSource, _takingDamageSound, _environmentGroup);
+        _damageEffects.PlayDamageFlash();
         _currentHealth -= damage;
         _currentHealth = Mathf.Clamp(_currentHealth, 0, MaxHealth);
 #if UNITY_EDITOR

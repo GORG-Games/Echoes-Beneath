@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using UnityEngine.Rendering.Universal;
 
 public class Shotgun : MonoBehaviour
 {
@@ -30,6 +31,11 @@ public class Shotgun : MonoBehaviour
     [SerializeField] private AudioClip _loadingAmmoSound;
     [SerializeField] private AudioClip _shellDropSound;
     [SerializeField] private AudioMixerGroup _environmentGroup;
+
+    [Header("Shooting: Visual Effects")]
+    [SerializeField] private GameObject _muzzleFlash; // Префаб вспышки
+    [SerializeField] private float _flashDuration = 0.05f;
+    [SerializeField] private Light2D _muzzleLight; // если используешь обычный Light
 
     [Header("Reload: reloading")]
     [SerializeField] public int MaxAmmo; // Max ammo that can be IN shotgun
@@ -107,6 +113,11 @@ public class Shotgun : MonoBehaviour
                 CameraController.cameraShake(_shakeStrength, _shakeTime, _shakeFadeTime);
                 _audioManager.PlaySound(_audioSource, _shellDropSound, _environmentGroup);
             }
+
+            if (_muzzleFlash != null)
+            {
+                StartCoroutine(PlayMuzzleFlash());
+            }
         }
     }
     IEnumerator Reload()
@@ -134,6 +145,20 @@ public class Shotgun : MonoBehaviour
 #if UNITY_EDITOR
         Debug.Log("Перезарядка завершена!");
 #endif
+    }
+    private IEnumerator PlayMuzzleFlash()
+    {
+        _muzzleFlash.SetActive(true);
+
+        if (_muzzleLight != null)
+            _muzzleLight.enabled = true;
+
+        yield return new WaitForSeconds(_flashDuration);
+
+        _muzzleFlash.SetActive(false);
+
+        if (_muzzleLight != null)
+            _muzzleLight.enabled = false;
     }
     public void UpdateAmmoUI()
     {

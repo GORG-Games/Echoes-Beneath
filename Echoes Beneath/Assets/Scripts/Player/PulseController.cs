@@ -41,6 +41,11 @@ public class PulseController : MonoBehaviour
     public float _heartBeatDelay;
 
     [Header("Post-Processing Settings")]
+    [SerializeField] private Image _vignetteImage;
+    [SerializeField] private float _vignetteMaxAlpha = 0.5f;
+    [SerializeField] private float _vignetteFadeSpeed = 2f;
+    [SerializeField] private float _pulseThresholdForVignette = 90f; // примерный пульс, после которого начинается эффект
+
     [SerializeField] private Volume _blurVolume;
     [SerializeField] private Volume _bloomVolume;
 
@@ -115,6 +120,19 @@ public class PulseController : MonoBehaviour
 
     void UpdateVisualEffects()
     {
+        float targetAlpha = 0f;
+
+        if (CurrentPulse >= _pulseThresholdForVignette)
+        {
+            float intensity = Mathf.InverseLerp(_pulseThresholdForVignette, _maxPulse, CurrentPulse);
+            targetAlpha = intensity * _vignetteMaxAlpha;
+        }
+
+        // Плавное обновление альфы виньетки
+        Color currentColor = _vignetteImage.color;
+        currentColor.a = Mathf.Lerp(currentColor.a, targetAlpha, Time.deltaTime * _vignetteFadeSpeed);
+        _vignetteImage.color = currentColor;
+
         // Управляем интенсивностью размытия и блум-эффекта
         /*if (blurVolume.profile.TryGet(out MotionBlur blur))
         {
