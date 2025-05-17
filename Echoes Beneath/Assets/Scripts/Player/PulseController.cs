@@ -17,6 +17,7 @@ public class PulseController : MonoBehaviour
     [SerializeField] private float _pulseIncreaseRate;
     [SerializeField] private float _pulseDecreaseRate;
     public bool IsFlickering = false;
+    private bool _isAlive = true;
 
     [Header("Audio Settings: General")]
     [SerializeField] private AudioManager _audioManager;
@@ -169,7 +170,7 @@ public class PulseController : MonoBehaviour
     }
     IEnumerator HeartbeatRoutine()
     {
-        while (true)
+        while (_isAlive)
         {
             
             _audioManager.PlaySound( _audioSource, _heartbeatClip, _heartbeatGroup); // Play heartbeat clip
@@ -179,5 +180,17 @@ public class PulseController : MonoBehaviour
             _heartBeatDelay = (CurrentPulse > 0) ? 60f / CurrentPulse : 1f; // Counting delay between heartbeats
             yield return new WaitForSeconds(_heartBeatDelay);
         }
+    }
+    public void StopHeartbeat()
+    {
+        _isAlive = false;
+        if (_heartbeatCoroutine != null)
+            StopCoroutine(_heartbeatCoroutine);
+    }
+
+    public void ResetAudioMixers()
+    {
+        _audioMixer.SetFloat("EnvironmentVolume", -10f);
+        _audioMixer.SetFloat(_earRingVolumeParameter, -80f);
     }
 }

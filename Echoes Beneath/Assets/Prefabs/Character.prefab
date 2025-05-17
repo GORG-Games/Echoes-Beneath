@@ -1249,7 +1249,6 @@ GameObject:
   - component: {fileID: 3188885871315236900}
   - component: {fileID: 7860318738118016014}
   - component: {fileID: 61978757221125167}
-  - component: {fileID: 1047532985392638760}
   - component: {fileID: 7349046147909766237}
   m_Layer: 8
   m_Name: Flashlight
@@ -1350,19 +1349,6 @@ MonoBehaviour:
   _batteryPacks: 0
   _batteryCountText: {fileID: 0}
   _pulseWhenOff: 650
---- !u!114 &1047532985392638760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7435412645026549564}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c81aedd9800666b448b974c3e6fbbf34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerAim: {fileID: 8625688525758698808}
 --- !u!82 &7349046147909766237
 AudioSource:
   m_ObjectHideFlags: 0

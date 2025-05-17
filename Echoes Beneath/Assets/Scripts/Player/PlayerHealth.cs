@@ -39,6 +39,7 @@ public class PlayerHealth : MonoBehaviour
     {
         _currentHealth = MaxHealth;
         _pulseController = gameObject.GetComponent<PulseController>();
+        _pulseController.ResetAudioMixers();
         UpdateHealthUI();
         _ekgMonitor.UpdateEKGState(_currentHealth, MaxHealth);
         firstAidKitUIManager.UpdateMedkitUI(MedkitCount);
@@ -104,6 +105,7 @@ public class PlayerHealth : MonoBehaviour
 #if UNITY_EDITOR
         Debug.Log("Player has died!");
 #endif
+        _pulseController.StopHeartbeat();
         _sceneLoader.ReloadCurrentScene();
         _pulseController.AdjustEarRingVolume();
     }

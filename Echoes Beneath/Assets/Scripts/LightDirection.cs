@@ -9,8 +9,8 @@ public class LightDirection : MonoBehaviour
 
     void Update()
     {
+        Debug.Log($"LightDirection: angle = {_playerAim.angle}");
         _angle = _playerAim.angle;
-
-        transform.rotation = Quaternion.Euler(new Vector3(0, 0, _angle - 90));
+        transform.rotation = Quaternion.Euler(0, 0, _angle - 90); // установка угла
     }
 }

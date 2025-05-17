@@ -42,8 +42,19 @@ public class EKGMonitor : MonoBehaviour
     [SerializeField] private Sprite redBackground;
     [SerializeField] private Sprite redLine;
     [SerializeField] private Sprite redHeart;
+    void Start()
+    {
+        currentPulsePrefab = pulseGreenPrefab; // безопасное значение по умолчанию
+    }
     IEnumerator GeneratePulse()
     {
+        if (currentPulsePrefab == null || ekgLineContainer == null)
+        {
+#if UNITY_EDITOR
+            Debug.LogWarning("EKGMonitor: Missing pulse prefab or container.");
+#endif
+            yield break;
+        }
         // Создаём новый импульс
         GameObject pulse = Instantiate(currentPulsePrefab, ekgLineContainer);
         RectTransform pulseRect = pulse.GetComponent<RectTransform>();
