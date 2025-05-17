@@ -971,8 +971,11 @@ MonoBehaviour:
   earRingTweenDuration: 0.45
   _earRingVolumeParameter: EarRingVolume
   _heartBeatDelay: 0
-  _blurVolume: {fileID: 0}
-  _bloomVolume: {fileID: 0}
+  _vignetteImage: {fileID: 0}
+  _vignetteMaxAlpha: 1
+  _vignetteFadeSpeed: 1
+  _pulseThresholdForVignette: 60
+  _postProcessVolume: {fileID: 0}
   _pulseText: {fileID: 0}
   _ekgMonitor: {fileID: 0}
 --- !u!114 &3634534332729839055

@@ -2,6 +2,7 @@ using Cinemachine;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class CameraController : MonoBehaviour
 {
@@ -33,7 +34,6 @@ public class CameraController : MonoBehaviour
         changeCameraSizeEvent -= ChangeCameraSize;
         changeFollowTargetEvent -= ChangeFollowTarget;
     }
-
     private void Update()
     {
 

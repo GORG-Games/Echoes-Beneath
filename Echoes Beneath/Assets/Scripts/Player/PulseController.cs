@@ -40,14 +40,19 @@ public class PulseController : MonoBehaviour
     //[SerializeField] private float reverbPulseThreshold = 120f;
     public float _heartBeatDelay;
 
-    [Header("Post-Processing Settings")]
+    [Header("Post-Processing Vignette Settings")]
     [SerializeField] private Image _vignetteImage;
     [SerializeField] private float _vignetteMaxAlpha = 0.5f;
     [SerializeField] private float _vignetteFadeSpeed = 2f;
     [SerializeField] private float _pulseThresholdForVignette = 90f; // примерный пульс, после которого начинается эффект
 
-    [SerializeField] private Volume _blurVolume;
-    [SerializeField] private Volume _bloomVolume;
+    [Header("PostProcessing Panic FX")]
+    [SerializeField] private Volume _postProcessVolume;
+
+    private Bloom _bloom;
+    private ChromaticAberration _chromatic;
+    private MotionBlur _motionBlur;
+    private LensDistortion _lensDistortion;
 
     [Header("UI Settings")]
     [SerializeField] private Text _pulseText; // Show pulse value
@@ -60,6 +65,16 @@ public class PulseController : MonoBehaviour
         {
             _heartbeatCoroutine = StartCoroutine(HeartbeatRoutine());
         }
+
+        if (_postProcessVolume.profile.TryGet(out Bloom bloom))
+            _bloom = bloom;
+        if (_postProcessVolume.profile.TryGet(out ChromaticAberration chromatic))
+            _chromatic = chromatic;
+        if (_postProcessVolume.profile.TryGet(out MotionBlur blur))
+            _motionBlur = blur;
+        if (_postProcessVolume.profile.TryGet(out LensDistortion distortion))
+            _lensDistortion = distortion;
+
         UpdatePulseUI();
         AdjustEarRingVolume();
     }
@@ -133,16 +148,19 @@ public class PulseController : MonoBehaviour
         currentColor.a = Mathf.Lerp(currentColor.a, targetAlpha, Time.deltaTime * _vignetteFadeSpeed);
         _vignetteImage.color = currentColor;
 
-        // Управляем интенсивностью размытия и блум-эффекта
-        /*if (blurVolume.profile.TryGet(out MotionBlur blur))
-        {
-            blur.intensity.value = Mathf.Lerp(0f, 1f, (currentPulse - minPulse) / (float)(maxPulse - minPulse));
-        }
+        float panicLevel = Mathf.InverseLerp(_pulseThresholdForVignette, _maxPulse, CurrentPulse);
 
-        if (bloomVolume.profile.TryGet(out Bloom bloom))
-        {
-            bloom.intensity.value = Mathf.Lerp(0f, 2f, (currentPulse - minPulse) / (float)(maxPulse - minPulse));
-        }*/
+        if (_bloom != null)
+            _bloom.intensity.value = Mathf.Lerp(1f, 4f, panicLevel);
+
+        if (_chromatic != null)
+            _chromatic.intensity.value = Mathf.Lerp(0f, 0.6f, panicLevel);
+
+        if (_motionBlur != null)
+            _motionBlur.intensity.value = Mathf.Lerp(0f, 1f, panicLevel);
+
+        if (_lensDistortion != null)
+            _lensDistortion.intensity.value = Mathf.Lerp(0f, -0.4f, panicLevel);
     }
 
     void UpdatePulseUI()
