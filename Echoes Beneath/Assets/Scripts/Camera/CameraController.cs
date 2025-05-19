@@ -7,6 +7,7 @@ using UnityEngine.Rendering.Universal;
 public class CameraController : MonoBehaviour
 {
     public static Action<float, float, float> cameraShake;
+    private Coroutine shakeCoroutine;
     public static Action<float> changeCameraSizeEvent;
     public static Action<Transform> changeFollowTargetEvent;
 
@@ -41,8 +42,14 @@ public class CameraController : MonoBehaviour
 
     void Shake(float strength, float time, float fadeTime)
     {
+        if (shakeCoroutine != null)
+            StopCoroutine(shakeCoroutine);
         StartCoroutine(shakeCam(strength, time, fadeTime));
     }
+    /*void StopShake()
+    {
+        StopCoroutine(shakeCam);
+    }*/
 
     void ChangeCameraSize(float newSize)
     {

@@ -35,6 +35,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private EKGMonitor _ekgMonitor;
     private PulseController _pulseController;
 
+    [Header("Death Settings")]
+    [SerializeField] private DeathScreenController deathScreenController;
     void Start()
     {
         _currentHealth = MaxHealth;
@@ -106,7 +108,8 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Player has died!");
 #endif
         _pulseController.StopHeartbeat();
-        _sceneLoader.ReloadCurrentScene();
+        deathScreenController.ShowDeathScreen();
         _pulseController.AdjustEarRingVolume();
+        gameObject.SetActive(false);
     }
 }
