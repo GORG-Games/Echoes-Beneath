@@ -15,6 +15,15 @@ public class Bullet : MonoBehaviour
     [SerializeField] private int damage = 10; // Damage dealt by the bullet
     private Vector2 _knockbackDirection;
 
+    [Header("Hit Effects")]
+    [SerializeField] private GameObject bloodSplashPrefab;
+    [SerializeField] private GameObject[] bloodDecalPrefabs; // массив префабов
+    [SerializeField] private int numberOfDecals = 3;          // сколько штук спавнить
+    [SerializeField] private float spawnRadius = 0.2f;        // радиус разброса
+    [SerializeField] private AudioClip hitSound;
+    [SerializeField] private float decalYOffset = 0.01f;
+    [SerializeField] private float hitSoundVolume = 0.8f;
+
     void Start()
     {
         trailRenderer = GetComponent<TrailRenderer>();
@@ -38,6 +47,30 @@ public class Bullet : MonoBehaviour
             {
                 _knockbackDirection = (collision.transform.position - transform.position).normalized;
                 _enemyHealth.TakeDamage(damage, _knockbackDirection);
+
+                if (bloodSplashPrefab != null)
+                {
+                    Vector2 direction = -_knockbackDirection; // от врага, в сторону вылета крови
+                    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                    Quaternion rotation = Quaternion.Euler(0, 0, angle);
+
+                    Instantiate(bloodSplashPrefab, transform.position, rotation);
+                }
+                for (int i = 0; i < numberOfDecals; i++)
+                {
+
+                    GameObject chosenDecal = bloodDecalPrefabs[Random.Range(0, bloodDecalPrefabs.Length)];
+
+                    Vector2 offset = Random.insideUnitCircle * spawnRadius;
+                    Vector3 spawnPosition = transform.position + new Vector3(offset.x, offset.y - decalYOffset, 0);
+                    Quaternion rotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
+
+                    DecalPool.Instance.Spawn(chosenDecal, spawnPosition, rotation);
+                }
+                if (hitSound != null)
+                {
+                    AudioSource.PlayClipAtPoint(hitSound, transform.position, hitSoundVolume);
+                }
             }
         }
         Destroy(gameObject);

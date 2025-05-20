@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1098405733039813590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3442096551796594558}
+  - component: {fileID: 5889783729510786938}
+  m_Layer: 0
+  m_Name: DecalPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3442096551796594558
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098405733039813590}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.9775027, y: -0.8146128, z: 0.027575351}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5889783729510786938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098405733039813590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06a4fe3c6d0aaa24ba8de68c7d1e6371, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  decalTypes:
+  - prefab: {fileID: 510698934403020005, guid: 432a03ec6ca3cb74abe0a240d3aff6de, type: 3}
+    initialCount: 20
+  - prefab: {fileID: 2276598447992732496, guid: 6ed5e7e64c6d70c4d8d2b1340125719c, type: 3}
+    initialCount: 15
+  - prefab: {fileID: 8499272272136821492, guid: 30eeac124fc9c4f49a3eb2bd2d87206d, type: 3}
+    initialCount: 15
+  - prefab: {fileID: 2798655410788089665, guid: 13e52fb7d4c3fd74196f40d5d6b822d4, type: 3}
+    initialCount: 20

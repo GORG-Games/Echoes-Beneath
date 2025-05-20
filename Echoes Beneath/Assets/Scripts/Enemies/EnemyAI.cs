@@ -117,6 +117,8 @@ public class EnemyAI : MonoBehaviour
     }
     IEnumerator AttackPlayer()
     {
+        if (_playerHealth.IsDead)
+            yield break;
         _animator.SetBool("IsAttacking", true);
 
         _isAttacking = true;

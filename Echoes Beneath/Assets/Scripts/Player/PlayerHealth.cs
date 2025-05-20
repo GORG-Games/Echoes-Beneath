@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviour
     private int _currentHealth;
     [SerializeField] SceneLoader _sceneLoader;
     [SerializeField] private PlayerDamageEffects _damageEffects;
+    [SerializeField] private CameraController _cameraController;
 
     [Header("Medkit Settings")]
     [SerializeField] private FirstAidKitUIManager firstAidKitUIManager;
@@ -37,8 +38,10 @@ public class PlayerHealth : MonoBehaviour
 
     [Header("Death Settings")]
     [SerializeField] private DeathScreenController deathScreenController;
+    [field: SerializeField] public bool IsDead { get; private set; } = false;
     void Start()
     {
+        _cameraController.StopShake();
         _currentHealth = MaxHealth;
         _pulseController = gameObject.GetComponent<PulseController>();
         _pulseController.ResetAudioMixers();
@@ -107,9 +110,25 @@ public class PlayerHealth : MonoBehaviour
 #if UNITY_EDITOR
         Debug.Log("Player has died!");
 #endif
+        IsDead = true;
+        _cameraController.StopShake();
         _pulseController.StopHeartbeat();
+        DisablePlayerLogic();
         deathScreenController.ShowDeathScreen();
         _pulseController.AdjustEarRingVolume();
-        gameObject.SetActive(false);
+    }
+
+    void DisablePlayerLogic()
+    {
+        GetComponent<PlayerMovement>().enabled = false;
+        GetComponent<Rigidbody2D>().simulated = false;
+        GetComponent<Collider2D>().enabled = false;
+        GetComponent<AudioSource>().enabled = false;
+
+        GetComponentInChildren<FlashlightController>().enabled = false;
+        GetComponentInChildren<PlayerAim>().enabled = false;
+        GetComponentInChildren<Shotgun>().enabled = false;
+        GetComponentInChildren<Shotgun>().enabled = false;
+
     }
 }

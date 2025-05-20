@@ -61,7 +61,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &1264558352313107995
 BoxCollider2D:
@@ -125,6 +125,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   damage: 25
+  bloodSplashPrefab: {fileID: 1769633281121765080, guid: 2fa173cc430a1dc4f8e7eb7b7c7f27b6, type: 3}
+  bloodDecalPrefabs:
+  - {fileID: 510698934403020005, guid: 432a03ec6ca3cb74abe0a240d3aff6de, type: 3}
+  - {fileID: 2276598447992732496, guid: 6ed5e7e64c6d70c4d8d2b1340125719c, type: 3}
+  - {fileID: 8499272272136821492, guid: 30eeac124fc9c4f49a3eb2bd2d87206d, type: 3}
+  - {fileID: 2798655410788089665, guid: 13e52fb7d4c3fd74196f40d5d6b822d4, type: 3}
+  numberOfDecals: 6
+  spawnRadius: 0.5
+  hitSound: {fileID: 0}
+  decalYOffset: 0.02
+  hitSoundVolume: 0.8
 --- !u!96 &980017380255468901
 TrailRenderer:
   serializedVersion: 3

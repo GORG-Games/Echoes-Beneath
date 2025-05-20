@@ -6,8 +6,8 @@ using UnityEngine.Rendering.Universal;
 
 public class CameraController : MonoBehaviour
 {
-    public static Action<float, float, float> cameraShake;
     private Coroutine shakeCoroutine;
+    public static Action<float, float, float> cameraShake;
     public static Action<float> changeCameraSizeEvent;
     public static Action<Transform> changeFollowTargetEvent;
 
@@ -44,12 +44,19 @@ public class CameraController : MonoBehaviour
     {
         if (shakeCoroutine != null)
             StopCoroutine(shakeCoroutine);
-        StartCoroutine(shakeCam(strength, time, fadeTime));
+        shakeCoroutine = StartCoroutine(shakeCam(strength, time, fadeTime));
     }
-    /*void StopShake()
+    public void StopShake()
     {
-        StopCoroutine(shakeCam);
-    }*/
+        if (shakeCoroutine != null)
+        {
+            StopCoroutine(shakeCoroutine);
+            shakeCoroutine = null;
+        }
+
+        if (channelPerlin != null)
+            channelPerlin.m_AmplitudeGain = 0;
+    }
 
     void ChangeCameraSize(float newSize)
     {

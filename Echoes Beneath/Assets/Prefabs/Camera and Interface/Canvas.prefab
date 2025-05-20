@@ -345,7 +345,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6456884790092998835}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: LoadSceneByIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!1 &1167953456492918200
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,9 +391,9 @@ RectTransform:
   m_Father: {fileID: 7666813068086585693}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.15111113}
-  m_AnchorMax: {x: 0.24875, y: 0.30667463}
-  m_AnchoredPosition: {x: 67.600006, y: -0.10202026}
-  m_SizeDelta: {x: -145.9779, y: -6.1019974}
+  m_AnchorMax: {x: 0.25800002, y: 0.30667463}
+  m_AnchoredPosition: {x: 73.90399, y: -0.10122681}
+  m_SizeDelta: {x: -152.9779, y: -6.1019974}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8157562748486175090
 CanvasRenderer:
@@ -418,13 +430,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 4
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 100
+  m_Text: 0
 --- !u!1 &1407450271144322810
 GameObject:
   m_ObjectHideFlags: 0
@@ -1629,7 +1641,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathScreenGroup: {fileID: 2376081590881410578}
   audioMixer: {fileID: 24100000, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
-  fadeDuration: 1
+  fadeDuration: 0.1
   _sceneLoader: {fileID: 0}
 --- !u!1 &3593278986369772146
 GameObject:
