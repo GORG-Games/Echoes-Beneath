@@ -18,6 +18,7 @@ public class DeathScreenController : MonoBehaviour
         deathScreenGroup.alpha = 0f;
         deathScreenGroup.interactable = false;
         deathScreenGroup.blocksRaycasts = false;
+        audioMixer.SetFloat("MasterVolume", 0f);
     }
 
     public void ShowDeathScreen()
