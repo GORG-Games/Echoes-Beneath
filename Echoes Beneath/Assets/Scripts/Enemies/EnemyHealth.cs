@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using Pathfinding;
+using Pathfinding.RVO;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -14,6 +16,9 @@ public class EnemyHealth : MonoBehaviour
 
     private EnemyAI _enemyAI; // AI Script
     private Animator _animator;
+    private AIPath _aiPath;
+    private RVOController _rvoController;
+    private Seeker _seeker;
 
     [Header("Damage Flash")]
     [SerializeField] private float flashDuration = 0.2f; // how long to stay red
@@ -27,6 +32,9 @@ public class EnemyHealth : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         _enemyAI = GetComponent<EnemyAI>();
         _animator = GetComponent<Animator>();
+        _aiPath = GetComponent<AIPath>();
+        _rvoController = GetComponent<RVOController>();
+        _seeker = GetComponent<Seeker>();
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
         if (_spriteRenderer != null)
@@ -85,10 +93,32 @@ public class EnemyHealth : MonoBehaviour
     // Method to handle enemy death
     private void Die()
     {
-#if UNIY_EDITOR
+#if UNITY_EDITOR
         Debug.Log("Enemy has died!");
 #endif
-        // Add death animation, sound effect, or particle effect here
-        Destroy(gameObject); // Destroy the enemy GameObject
+
+        // Отключаем логику поведения
+        if (_enemyAI != null)
+            _enemyAI.enabled = false;
+
+        // Запускаем анимацию "труп"
+        if (_animator != null)
+            _animator.SetTrigger("DeathMess");
+
+        // Отключаем физику (если надо)
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.bodyType = RigidbodyType2D.Kinematic;
+            rb.simulated = false;
+        }
+        if (_aiPath != null) _aiPath.enabled = false;
+        if (_rvoController != null) _rvoController.enabled = false;
+        if (_seeker != null) _seeker.enabled = false;
+
+        // Отключаем коллайдер (если нужно, чтобы не мешал)
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null)
+            col.enabled = false;
     }
 }

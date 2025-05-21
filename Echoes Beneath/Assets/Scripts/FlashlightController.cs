@@ -41,6 +41,7 @@ public class FlashlightController : MonoBehaviour
         _currentBattery = _maxBattery;
         batterySlider.maxValue = _maxBattery;
         UpdateBatteryUI();
+        UpdateBatteryPackUI();
     }
 
     void Update()
@@ -94,7 +95,7 @@ public class FlashlightController : MonoBehaviour
     {
         if (_batteryCountText != null)
         {
-            _batteryCountText.text = $"x{_batteryPacks}";
+            _batteryCountText.text = $"{_batteryPacks}";
         }
     }
 
