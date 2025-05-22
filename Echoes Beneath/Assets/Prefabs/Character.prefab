@@ -414,6 +414,7 @@ GameObject:
   - component: {fileID: 270758629269382313}
   - component: {fileID: 3634534332729839055}
   - component: {fileID: 186848573286029927}
+  - component: {fileID: 7527710194394231019}
   - component: {fileID: 8931334154613416996}
   - component: {fileID: 7049671665432553237}
   - component: {fileID: 1894697474289488051}
@@ -1012,6 +1013,21 @@ MonoBehaviour:
   _FirstAidKitLayer:
     serializedVersion: 2
     m_Bits: 2048
+--- !u!114 &7527710194394231019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6958056940225576645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30bcab3be28ddea47b4c178a288ebddb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _batteryLayer:
+    serializedVersion: 2
+    m_Bits: 32768
 --- !u!95 &8931334154613416996
 Animator:
   serializedVersion: 5
@@ -1349,9 +1365,9 @@ MonoBehaviour:
   _environmentGroup: {fileID: -4517163722032033758, guid: 66799fad7e1db0f47a6b6b6e6390845a, type: 2}
   _pulseController: {fileID: 270758629269382313}
   _pulseIncreaseAmount: 100
-  _batteryPacks: 1
   _batteryCountText: {fileID: 0}
   _pulseWhenOff: 650
+  <_batteryPacks>k__BackingField: 1
 --- !u!82 &7349046147909766237
 AudioSource:
   m_ObjectHideFlags: 0
