@@ -30,7 +30,7 @@ public class FlashlightController : MonoBehaviour
 
     [Header("Battery Pack System")]
     [SerializeField] private Text _batteryCountText;                // UI элемент с отображением кол-ва батареек
-    [SerializeField] private float _pulseWhenOff = 1f;              // Сколько прибавлять к пульсу, когда фонарик выключен
+    [SerializeField] private float _pulseWhenOff;              // Сколько прибавлять к пульсу, когда фонарик выключен
     [field: SerializeField] public int _batteryPacks { get; private set; } = 0;                 // Кол-во запасных батареек
 
     private bool _isFlashlightOn = true;                            // Фонарик включён ли
@@ -53,12 +53,17 @@ public class FlashlightController : MonoBehaviour
 
             if (_isFlashlightOn)
             {
-                Debug.Log("Фонарик включен");
+                _pulseController.DisablePulseDecay(false);
+#if UNITY_EDITOR
+            Debug.Log("Фонарик включен");
+#endif
                 DrainBattery();
 
                 if (_currentBattery <= 0f)
                 {
-                    Debug.Log("Батарея на нуле");
+#if UNITY_EDITOR
+                Debug.Log("Батарея на нуле");
+#endif
                     _currentBattery = 0f;
                     TryConsumeBatteryPack();
                 }
@@ -66,8 +71,9 @@ public class FlashlightController : MonoBehaviour
             else
             {
                 Debug.Log("Фонарик выключен — повышаем пульс");
+                _pulseController.DisablePulseDecay(true);
                 _pulseController.IncreasePulseFromFlashlight(_pulseWhenOff * Time.deltaTime);
-            }
+        }
 
             UpdateBatteryUI();
     }

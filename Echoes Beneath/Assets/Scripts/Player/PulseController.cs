@@ -18,6 +18,7 @@ public class PulseController : MonoBehaviour
     [SerializeField] private float _pulseDecreaseRate;
     public bool IsFlickering = false;
     private bool _isAlive = true;
+    private bool pulseDecayEnabled = true;
 
     [Header("Audio Settings: General")]
     [SerializeField] private AudioManager _audioManager;
@@ -104,16 +105,13 @@ public class PulseController : MonoBehaviour
     }
     public void DecreasePulse()
     {
-        if (CurrentPulse > MinPulse)
+        if (pulseDecayEnabled && CurrentPulse > MinPulse)
         {
-            if(!IsFlickering)
-            {
-                CurrentPulse -= _pulseDecreaseRate * Time.deltaTime; // Плавное снижение пульса
-                AdjustEnvironmentVolume();
-                AdjustEarRingVolume();
-                UpdateVisualEffects();
-                UpdatePulseUI();
-            }
+            CurrentPulse -= _pulseDecreaseRate * Time.deltaTime; // Плавное снижение пульса
+            AdjustEnvironmentVolume();
+            AdjustEarRingVolume();
+            UpdateVisualEffects();
+            UpdatePulseUI();
         }
     }
     void AdjustEnvironmentVolume()
@@ -192,5 +190,9 @@ public class PulseController : MonoBehaviour
     {
         _audioMixer.SetFloat("EnvironmentVolume", -10f);
         _audioMixer.SetFloat(_earRingVolumeParameter, -80f);
+    }
+    public void DisablePulseDecay(bool state)
+    {
+        pulseDecayEnabled = !state;
     }
 }

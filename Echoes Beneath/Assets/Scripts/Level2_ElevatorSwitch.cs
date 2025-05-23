@@ -21,17 +21,31 @@ public class Level2_ElevatorSwitch : MonoBehaviour
 
     private bool isPlayerInZone = false;
     private bool hasActivated = false;
-    public bool isPowered = false;  
+    public bool isPowered = false;
+    private bool _interactionRequested = false;
 
     void Update()
     {
-        if (isPlayerInZone && isPowered && !hasActivated && Input.GetKeyDown(KeyCode.E))
+        if (isPlayerInZone && !_interactionRequested)
         {
-            ActivateElevator();
+            if (Input.GetKeyDown(KeyCode.E))
+                _interactionRequested = true;
         }
-        else if (isPlayerInZone && !isPowered && !hasActivated && Input.GetKeyDown(KeyCode.E))
+    }
+    void LateUpdate()
+    {
+        if (_interactionRequested)
         {
-            _coroutine = StartCoroutine(ErrorTextDisplay());
+            if (isPowered && !hasActivated)
+            {
+                ActivateElevator();
+            }
+            else if (!isPowered && !hasActivated)
+            {
+                _coroutine = StartCoroutine(ErrorTextDisplay());
+            }
+
+            _interactionRequested = false;
         }
     }
 
