@@ -1,18 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ElevatorSceneLoader : MonoBehaviour
 {
     [SerializeField] private LayerMask _playerLayer;
     private bool isPlayerInZone = false;
     [SerializeField] private SceneLoader _sceneLoader;
+    [SerializeField] Shotgun shotgun;
+    [SerializeField] PlayerHealth playerHealth;
 
     [Header("UI")]
     [SerializeField] private GameObject interactionPrompt;
     void Start()
     {
-        
+            PlayerPrefs.DeleteKey("TotalAmmo");
+            PlayerPrefs.DeleteKey("MedkitCount");
+            PlayerPrefs.Save();
     }
 
     // Update is called once per frame
@@ -20,6 +25,9 @@ public class ElevatorSceneLoader : MonoBehaviour
     {
         if (isPlayerInZone && Input.GetKeyDown(KeyCode.E))
         {
+            PlayerPrefs.SetInt("TotalAmmo", shotgun._totalAmmo);
+            PlayerPrefs.SetInt("MedkitCount", playerHealth.MedkitCount);
+            PlayerPrefs.Save();
             _sceneLoader.LoadNextScene();
         }
     }

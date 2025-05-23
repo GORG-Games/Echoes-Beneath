@@ -43,11 +43,13 @@ public class PlayerHealth : MonoBehaviour
     {
         _cameraController.StopShake();
         _currentHealth = MaxHealth;
+        if (PlayerPrefs.HasKey("MedkitCount"))
+            MedkitCount = PlayerPrefs.GetInt("MedkitCount");
         _pulseController = gameObject.GetComponent<PulseController>();
         _pulseController.ResetAudioMixers();
         UpdateHealthUI();
         _ekgMonitor.UpdateEKGState(_currentHealth, MaxHealth);
-        firstAidKitUIManager.UpdateMedkitUI(MedkitCount);
+        StartCoroutine(DelayedMedkitUIUpdate());
     }
     void Update()
     {
@@ -130,5 +132,10 @@ public class PlayerHealth : MonoBehaviour
         GetComponentInChildren<Shotgun>().enabled = false;
         GetComponentInChildren<Shotgun>().enabled = false;
 
+    }
+    private IEnumerator DelayedMedkitUIUpdate()
+    {
+        yield return null; // ждём 1 кадр
+        firstAidKitUIManager.UpdateMedkitUI(MedkitCount);
     }
 }

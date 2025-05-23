@@ -55,7 +55,10 @@ public class Shotgun : MonoBehaviour
     private void Start()
     {
         _currentAmmoInChamber = MaxAmmo;
-        _totalAmmo = _startTotalAmmo;
+        if (PlayerPrefs.HasKey("TotalAmmo"))
+            _totalAmmo = PlayerPrefs.GetInt("TotalAmmo");
+        else
+            _totalAmmo = _startTotalAmmo;
         UpdateAmmoUI();
     }
     void Update()
