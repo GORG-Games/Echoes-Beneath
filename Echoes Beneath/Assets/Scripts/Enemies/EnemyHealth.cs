@@ -7,7 +7,8 @@ public class EnemyHealth : MonoBehaviour
 {
 
     [Header("Health")]
-    private int _currentHealth; // Current health of the enemy
+    public  int _currentHealth; // Current health of the enemy
+    public int CurrentHealth => _currentHealth;
     [field: SerializeField] public int MaxHealth { get; private set; } // Maximum health of the enemy
 
     [Header("Knockback")]
@@ -26,6 +27,10 @@ public class EnemyHealth : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Color _originalColor;
     private Coroutine _damageFlashCoroutine;
+
+    [Header("Optional Boss settings")]
+    [SerializeField] private bool isBoss = false;
+    private BossController bossController;
     void Start()
     {
         _currentHealth = MaxHealth; // Initialize health
@@ -36,6 +41,12 @@ public class EnemyHealth : MonoBehaviour
         _rvoController = GetComponent<RVOController>();
         _seeker = GetComponent<Seeker>();
 
+        if (isBoss)
+        {
+            bossController = GetComponent<BossController>();
+            Debug.Log("bossController: " + bossController);
+        }
+
         _spriteRenderer = GetComponent<SpriteRenderer>();
         if (_spriteRenderer != null)
             _originalColor = _spriteRenderer.color;
@@ -45,8 +56,11 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(int damage, Vector2 knockbackDirection)
     {
         _currentHealth -= damage;
-        _enemyAI.IsPlayerInSight = true;
-        _animator.SetBool("IsDetected", _enemyAI.IsPlayerInSight);
+        if (_enemyAI != null)
+        {
+            _enemyAI.IsPlayerInSight = true;
+            _animator.SetBool("IsDetected", _enemyAI.IsPlayerInSight);
+        }
 #if UNIY_EDITOR
         Debug.Log($"Enemy Health: {_currentHealth}");
 #endif
@@ -54,6 +68,20 @@ public class EnemyHealth : MonoBehaviour
         if (rb != null)
         {
             rb.AddForce(knockbackDirection * _knockbackForce, ForceMode2D.Impulse);
+        }
+        /*if (isBoss)
+        {
+            Debug.Log("CurrentState: " + bossController.CurrentState);
+            Debug.Log("IsDashing: " + bossController.IsDashing);
+            Debug.Log("WasHitThisDash: " + bossController.WasHitThisDash);
+        }*/
+        if (isBoss && 
+            bossController != null && 
+            (bossController.CurrentState == BossState.Phase1 || bossController.CurrentState == BossState.Phase2) && 
+            bossController.IsDashing && 
+            !bossController.WasHitThisDash)
+        {
+            bossController.RegisterHit();
         }
         // Check if health is depleted
         if (_currentHealth <= 0)
@@ -89,6 +117,10 @@ public class EnemyHealth : MonoBehaviour
         _spriteRenderer.color = _originalColor;
         _damageFlashCoroutine = null;
     }
+    public void SetBossReference(BossController boss)
+    {
+        bossController = boss;
+    }
 
     // Method to handle enemy death
     private void Die()
@@ -96,7 +128,10 @@ public class EnemyHealth : MonoBehaviour
 #if UNITY_EDITOR
         Debug.Log("Enemy has died!");
 #endif
-
+        if (bossController != null)
+        {
+            bossController.NotifyMinionKilled(gameObject);
+        }
         // Отключаем логику поведения
         if (_enemyAI != null)
             _enemyAI.enabled = false;
@@ -120,5 +155,9 @@ public class EnemyHealth : MonoBehaviour
         Collider2D col = GetComponent<Collider2D>();
         if (col != null)
             col.enabled = false;
+    }
+    public void ResetHealthToMax()
+    {
+        _currentHealth = MaxHealth;
     }
 }

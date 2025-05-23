@@ -150,6 +150,10 @@ public class EnemyAI : MonoBehaviour
         _animator.SetFloat("MoveX", direction.x);
         _animator.SetFloat("MoveY", direction.y);
     }
+    public void SetPlayerTarget(Transform player)
+    {
+        _player = player;
+    }
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
