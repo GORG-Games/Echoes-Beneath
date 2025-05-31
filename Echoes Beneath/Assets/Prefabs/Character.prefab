@@ -1355,7 +1355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _flashlight: {fileID: 7860318738118016014}
   _maxBattery: 100
-  _lightDrainSpeed: 2.5
+  _lightDrainSpeed: 1.5
   _chargeAmount: 15
   batterySlider: {fileID: 0}
   _audioManager: {fileID: 0}

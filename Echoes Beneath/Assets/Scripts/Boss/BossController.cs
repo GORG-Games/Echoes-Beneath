@@ -42,7 +42,7 @@ public class BossController : MonoBehaviour
     [SerializeField] private Transform playerTransform;
 
     private float phase1Timer = 0f;
-    private int successfulHits = 0;
+    //private int successfulHits = 0;
     private bool wasHitThisDash = false;
     private Vector2 dashDirection;
     [SerializeField] float distance = 16f;
@@ -251,7 +251,7 @@ public class BossController : MonoBehaviour
 
         // Можно сбросить счётчики
         phase1Timer = 0f;
-        successfulHits = 0;
+        //successfulHits = 0;
         phase1State = Phase1State.Waiting;
 
         // Усиливаем босса:

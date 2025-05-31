@@ -124,7 +124,7 @@ public class PulseController : MonoBehaviour
     }
     public void AdjustEarRingVolume()
     {
-        float targetVolume = Mathf.Lerp(-80f, -30f, (CurrentPulse - MinPulse) / (_maxPulse - MinPulse));
+        float targetVolume = Mathf.Lerp(-80f, -35f, (CurrentPulse - MinPulse) / (_maxPulse - MinPulse));
 
         // Анимируем громкость параметра в AudioMixer через DoTween
         float currentVolume;

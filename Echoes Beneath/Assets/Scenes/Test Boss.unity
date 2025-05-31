@@ -380,7 +380,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b13986042c0e3b43afef90893c2934d, type: 3}
---- !u!43 &516367268
+--- !u!43 &506574925
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -957,6 +957,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3575156498271369625, guid: 015c7074d227e1b4c91e1d7c62d07691, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -3.9999847
+      objectReference: {fileID: 0}
+    - target: {fileID: 3704373672097350899, guid: 015c7074d227e1b4c91e1d7c62d07691, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.7000122
+      objectReference: {fileID: 0}
     - target: {fileID: 3822907556050367330, guid: 015c7074d227e1b4c91e1d7c62d07691, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.7055664
@@ -1339,7 +1347,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: fd8d411bb413de24ba5e87723f1e57f4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 63c130b48f31fc346928b573274be0c0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1401,7 +1409,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.15625, y: 3.875}
+    oldSize: {x: 10.958333, y: 9.416667}
     newSize: {x: 4.15625, y: 3.875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1503,7 +1511,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.15625, y: 3.875}
+    oldSize: {x: 10.958333, y: 9.416667}
     newSize: {x: 4.15625, y: 3.875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
