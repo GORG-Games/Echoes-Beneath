@@ -315,7 +315,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 9062205422559067622, guid: 7cf32baa6b715104cadd089715fabac3, type: 3}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: LoadSceneByIndex
         m_Mode: 3
