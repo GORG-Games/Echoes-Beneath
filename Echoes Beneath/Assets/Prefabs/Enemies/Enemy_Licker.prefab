@@ -125,7 +125,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.05347824, y: -1.7097738}
+  m_Offset: {x: 0.05347824, y: -1.1750174}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -136,7 +136,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.8692131, y: 0.65658236}
+  m_Size: {x: 1.0462472, y: 1.7260952}
   m_EdgeRadius: 0
 --- !u!70 &6653099269295663225
 CapsuleCollider2D:
@@ -237,8 +237,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61fa6ef4c97cd0642a2c9f376f0661a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentHealth: 0
   <MaxHealth>k__BackingField: 250
   _knockbackForce: 4
+  flashDuration: 0.2
+  fadeBackTime: 0.2
+  isBoss: 0
 --- !u!114 &5022532704978633855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,7 +256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
-  radius: 2.46
+  radius: 2.07
   height: 1
   canMove: 1
   maxSpeed: 4
@@ -268,15 +272,15 @@ MonoBehaviour:
   autoRepath:
     mode: 2
     period: 0.5
-    sensitivity: 15
+    sensitivity: 20
     maximumPeriod: 1
-    visualizeSensitivity: 1
+    visualizeSensitivity: 0
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
-  slowdownDistance: 4
-  pickNextWaypointDist: 2.9
-  endReachedDistance: 2.59
+  slowdownDistance: 3.88
+  pickNextWaypointDist: 2.4
+  endReachedDistance: 1.48
   alwaysDrawGizmos: 1
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
@@ -328,14 +332,14 @@ MonoBehaviour:
   locked: 0
   lockWhenNotMoving: 0
   agentTimeHorizon: 3
-  obstacleTimeHorizon: 10
+  obstacleTimeHorizon: 3
   maxNeighbours: 10
   layer: 1
   collidesWith: -1
   wallAvoidForce: 1
   wallAvoidFalloff: 1
   priority: 1
-  debug: 0
+  debug: 1
 --- !u!95 &7766512516774597601
 Animator:
   serializedVersion: 5

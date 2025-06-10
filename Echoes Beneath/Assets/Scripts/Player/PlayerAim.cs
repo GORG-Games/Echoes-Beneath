@@ -45,24 +45,18 @@ public class PlayerAim : MonoBehaviour
     void Update()
     {
         rawMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        dirToMouse = rawMousePosition - (Vector2)player.position;
-        distanceToMouse = dirToMouse.magnitude;
+dirToMouse = rawMousePosition - (Vector2)player.position;
+distanceToMouse = dirToMouse.magnitude;
 
-        // ќграничение ближней дистанции
-        if (distanceToMouse < minCursorDistance)
-        {
-            dirToMouse = dirToMouse.normalized * minCursorDistance;
-        }
+// ќграничение ближней дистанции (всегда clamp'им)
+Vector2 clampedDirection = dirToMouse.normalized * Mathf.Max(distanceToMouse, minCursorDistance);
+Vector2 clampedMousePos = (Vector2)player.position + clampedDirection;
 
-        // ‘инальна€ позици€ прицела, которую будет видеть вс€ остальна€ система
-        constrainedMousePosition = (Vector2)player.position + dirToMouse;
+// FirePoint всегда обновл€етс€ с нормальной дистанцией
+lastValidPosition = GetClosestFirePointPosition(clampedMousePos);
 
-        // ѕровер€ем, достаточно ли курсор далеко
-        if (distanceToMouse >= minCursorDistance)
-        {
-            // ≈сли да Ц обновл€ем позицию FirePoint
-            lastValidPosition = GetClosestFirePointPosition(constrainedMousePosition);
-        }
+// ‘инальна€ позици€, котора€ используетс€ дл€ поворота, UI и пр.
+constrainedMousePosition = (Vector2)player.position + dirToMouse;
 
         direction = constrainedMousePosition - (Vector2)player.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -82,7 +76,7 @@ public class PlayerAim : MonoBehaviour
         firePoint.position = lastValidPosition;
 
         // **ѕоворачиваем firePoint в сторону курсора**
-        RotateFirePoint(constrainedMousePosition);
+        RotateFirePoint(rawMousePosition);
 
 
         UpdateAnimator(direction);
@@ -116,9 +110,9 @@ public class PlayerAim : MonoBehaviour
 
         return bestPosition;
     }
-    private void RotateFirePoint(Vector2 cursorPosition)
+    private void RotateFirePoint(Vector2 target)
     {
-        Vector2 direction = cursorPosition - (Vector2)firePoint.position;
+        Vector2 direction = target - (Vector2)player.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         firePoint.rotation = Quaternion.Euler(0, 0, angle - 90);
     }
