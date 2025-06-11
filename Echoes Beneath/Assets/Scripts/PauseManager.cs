@@ -45,6 +45,8 @@ public class PauseManager : MonoBehaviour
     }
     private void OpenMenu()
     {
+        Time.timeScale = 0f;
+        AudioListener.pause = true;
         _pauseMenuObject.SetActive(true);
         _isPaused = true;
         foreach (MonoBehaviour comp in playerComponents)
@@ -55,6 +57,8 @@ public class PauseManager : MonoBehaviour
     }
     private void CloseMenu()
     {
+        Time.timeScale = 1f;
+        AudioListener.pause = false;
         _pauseMenuObject.SetActive(false);
         _isPaused = false;
         foreach (MonoBehaviour comp in playerComponents)

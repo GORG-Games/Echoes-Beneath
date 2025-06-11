@@ -55,7 +55,6 @@ public class EnemyHealth : MonoBehaviour
     // Method to apply damage to the enemy
     public void TakeDamage(int damage, Vector2 knockbackDirection)
     {
-        _currentHealth -= damage;
         if (_enemyAI != null)
         {
             _enemyAI.IsPlayerInSight = true;
@@ -64,30 +63,40 @@ public class EnemyHealth : MonoBehaviour
 #if UNIY_EDITOR
         Debug.Log($"Enemy Health: {_currentHealth}");
 #endif
-        // Apply knockback force
+        // --- Реакция босса ---
+        if (isBoss && bossController != null)
+        {
+            if ((bossController.CurrentState == BossState.Phase1 || bossController.CurrentState == BossState.Phase2) &&
+                bossController.IsDashing && !bossController.WasHitThisDash)
+            {
+                _currentHealth -= damage;
+                bossController.RegisterHit(); // запускает отступление
+            }
+            else
+            {
+#if UNITY_EDITOR
+                Debug.Log("Босс не получил урон — не в уязвимой фазе.");
+#endif
+                return; // урон не засчитываем, всё остальное не выполняем
+            }
+        }
+        else
+        {
+            _currentHealth -= damage;
+        }
+
+        // --- Наносим отталкивание ---
         if (rb != null)
-        {
             rb.AddForce(knockbackDirection * _knockbackForce, ForceMode2D.Impulse);
-        }
-        /*if (isBoss)
-        {
-            Debug.Log("CurrentState: " + bossController.CurrentState);
-            Debug.Log("IsDashing: " + bossController.IsDashing);
-            Debug.Log("WasHitThisDash: " + bossController.WasHitThisDash);
-        }*/
-        if (isBoss && 
-            bossController != null && 
-            (bossController.CurrentState == BossState.Phase1 || bossController.CurrentState == BossState.Phase2) && 
-            bossController.IsDashing && 
-            !bossController.WasHitThisDash)
-        {
-            bossController.RegisterHit();
-        }
-        // Check if health is depleted
+
+        // --- Проверка на смерть ---
         if (_currentHealth <= 0)
         {
             Die();
+            return;
         }
+
+        // --- Визуальный флэш ---
         StartDamageFlash();
     }
     private void StartDamageFlash()
