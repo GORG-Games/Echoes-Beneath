@@ -137,6 +137,11 @@ public class EnemyHealth : MonoBehaviour
 #if UNITY_EDITOR
         Debug.Log("Enemy has died!");
 #endif
+        if (isBoss && bossController != null)
+        {
+            bossController.Die(); // Вызов функции смерти босса
+            return; // Не продолжаем стандартную логику
+        }
         if (bossController != null)
         {
             bossController.NotifyMinionKilled(gameObject);

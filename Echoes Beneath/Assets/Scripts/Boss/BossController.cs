@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Playables;
 
 public enum BossState
 {
@@ -16,6 +17,7 @@ public class BossController : MonoBehaviour
     [SerializeField] private EnemyHealth enemyHealth;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private int damageToPlayer = 40;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     [field: SerializeField] public int phase2Threshold { get; private set; } = 50; // при каком здоровье переходит во 2 фазу
 
     [Header("Components")]
@@ -81,9 +83,10 @@ public class BossController : MonoBehaviour
     [Header("Audio Routing")]
     [SerializeField] private AudioMixerGroup environmentMixerGroup;
 
-    //----------------------------------- PHASE 2
+    //----------------------------------- 
 
-    //-----------------------------------
+    [Header("Timeline Control")]
+    [SerializeField] private PlayableDirector deathTimeline;
 
     public bool IsDashing => phase1State == Phase1State.Dashing;
     public bool WasHitThisDash => wasHitThisDash;
@@ -94,6 +97,8 @@ public class BossController : MonoBehaviour
         CurrentState = BossState.Idle;
 
         animator = GetComponent<Animator>();
+        animator.SetInteger("Phase", 0);
+
         rb = GetComponent<Rigidbody2D>();
 
         if (environmentMixerGroup != null)
@@ -106,7 +111,7 @@ public class BossController : MonoBehaviour
         }
         // ≈сли бой начинаетс€ сразу Ч можно вызвать StartPhase1()
         // ”ƒјЋ»“№ ѕ–» —Ѕќ– ≈
-        StartPhase1();
+        //StartPhase1();
     }
 
     void Update()
@@ -128,7 +133,7 @@ public class BossController : MonoBehaviour
         }
     }
 
-    void StartPhase1()
+    public void StartPhase1()
     {
         CurrentState = BossState.Phase1;
         // запустить анимацию, звуки, спавн и т.д.
@@ -145,6 +150,7 @@ public class BossController : MonoBehaviour
         switch (phase1State)
         {
             case Phase1State.Waiting:
+                animator.SetBool("IsMoving", false);
                 phase1Timer += Time.deltaTime;
                 if (phase1Timer >= dashCooldown)
                 {
@@ -167,6 +173,7 @@ public class BossController : MonoBehaviour
                         isScreamPlayed = true;
                     }
                 }
+                animator.SetBool("IsMoving", false);
                 phase1Timer += Time.deltaTime;
                 if (phase1Timer >= 0.5f) // полсекунды подготовки
                 {
@@ -182,13 +189,28 @@ public class BossController : MonoBehaviour
                     isScreamPlayed = false;
                     break;
                 }
+                Vector2 moveDir = dashDirection.normalized; // или escapeDirection.normalized
+                animator.SetBool("IsMoving", true);
+                animator.SetFloat("MoveX", moveDir.x);
+                animator.SetFloat("MoveY", moveDir.y);
+
+                // flip спрайта Ч если используешь:
+                spriteRenderer.flipX = moveDir.x > 0;
                 transform.position += (Vector3)dashDirection * dashSpeed * Time.deltaTime;
                 isScreamPlayed = false;
                 break;
 
             case Phase1State.Escaping:
 
+
+                Vector2 escMoveDir = escapeDirection.normalized; // или escapeDirection.normalized
+                animator.SetBool("IsMoving", true);
+                animator.SetFloat("MoveX", escMoveDir.x);
+                animator.SetFloat("MoveY", escMoveDir.y);
+                // flip спрайта Ч если используешь:
+                spriteRenderer.flipX = escMoveDir.x > 0;
                 transform.position += (Vector3)escapeDirection * escapeSpeed * Time.deltaTime;
+
                 escapeTimer += Time.deltaTime;
 
                 if (escapeTimer >= escapeDuration)
@@ -253,7 +275,7 @@ public class BossController : MonoBehaviour
         phase1Timer = 0f;
         //successfulHits = 0;
         phase1State = Phase1State.Waiting;
-
+        animator.SetInteger("Phase", 1);
         // ”силиваем босса:
         dashCooldown = 2.0f; // или меньше
         dashSpeed *= 1.25f;
@@ -267,6 +289,7 @@ public class BossController : MonoBehaviour
         switch (phase1State)
         {
             case Phase1State.Waiting:
+                animator.SetBool("IsMoving", false);
                 phase1Timer += Time.deltaTime;
                 if (phase1Timer >= dashCooldown)
                 {
@@ -282,6 +305,7 @@ public class BossController : MonoBehaviour
                 break;
 
             case Phase1State.Appearing:
+                animator.SetBool("IsMoving", false);
                 phase1Timer += Time.deltaTime;
                 if (phase1Timer >= 0.3f) // подготовка быстрее
                 {
@@ -293,13 +317,22 @@ public class BossController : MonoBehaviour
             case Phase1State.Dashing:
                 if (phase1State != Phase1State.Dashing)
                     break;
-
+                Vector2 moveDir = dashDirection.normalized;
+                animator.SetBool("IsMoving", true);
+                animator.SetFloat("MoveX", moveDir.x);
+                animator.SetFloat("MoveY", moveDir.y);
+                spriteRenderer.flipX = moveDir.x > 0;
                 transform.position += (Vector3)dashDirection * dashSpeed * Time.deltaTime;
                 break;
 
             case Phase1State.Escaping:
                 escapeDirection = -dashDirection;
 
+                Vector2 escMoveDir = escapeDirection.normalized;
+                animator.SetBool("IsMoving", true);
+                animator.SetFloat("MoveX", escMoveDir.x);
+                animator.SetFloat("MoveY", escMoveDir.y);
+                spriteRenderer.flipX = escMoveDir.x > 0;
                 transform.position += (Vector3)escapeDirection * escapeSpeed * Time.deltaTime;
                 escapeTimer += Time.deltaTime;
 
@@ -390,9 +423,19 @@ public class BossController : MonoBehaviour
             escapeTimer = 0f;
         }
     }
-    void Die()
+    public void Die()
     {
         CurrentState = BossState.Dead;
         // отключить поведение, проиграть анимацию, вызвать конец бо€
+
+        if (deathTimeline != null)
+        {
+            deathTimeline.Play();
+        }
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = false;
+
+        // отключение скрипта логики, если нужно:
+        enabled = false;
     }
 }
