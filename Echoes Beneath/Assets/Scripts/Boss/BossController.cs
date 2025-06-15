@@ -19,6 +19,9 @@ public class BossController : MonoBehaviour
     [SerializeField] private int damageToPlayer = 40;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private BossCutsceneTrigger trigger;
+    [SerializeField] private FlashlightController flashlight;
+    [SerializeField] private SceneLoader loader;
+    int animVariant = 0;
     [field: SerializeField] public int phase2Threshold { get; private set; } = 50; // при каком здоровье переходит во 2 фазу
 
     [Header("Spawns")]
@@ -74,7 +77,7 @@ public class BossController : MonoBehaviour
     [SerializeField] private AudioClip bossDashScreamClip;
     private bool isScreamPlayed = false;
 
-    [SerializeField] private AudioClip bossStepsClip;
+    [SerializeField] private AudioClip stepClip;
 
     [SerializeField] private AudioClip bossScreamClip;
     private bool phase2screamPlayed = false;
@@ -140,11 +143,12 @@ public class BossController : MonoBehaviour
 
     public void StartPhase1()
     {
+        animator.SetInteger("AnimVariant", 0);
         CurrentState = BossState.Phase1;
-        FindObjectOfType<FlashlightController>()?.SetDrainInactive();
         FindObjectOfType<LightFlicker>()?.StartFlicker();
         foreach (GameObject lightObject in lights)
             if(lightObject != null) lightObject.SetActive(true);
+        flashlight?.SetDrainInactive();
         // запустить анимацию, звуки, спавн и т.д.
         if (bossMusicClip != null && musicSource != null)
         {
@@ -184,7 +188,7 @@ public class BossController : MonoBehaviour
                 }
                 animator.SetBool("IsMoving", false);
                 phase1Timer += Time.deltaTime;
-                if (phase1Timer >= 0.5f) // полсекунды подготовки
+                if (phase1Timer >= 0.75f) // полсекунды подготовки
                 {
                     phase1Timer = 0f;
                     phase1State = Phase1State.Dashing;
@@ -199,6 +203,7 @@ public class BossController : MonoBehaviour
                     break;
                 }
                 Vector2 moveDir = dashDirection.normalized; // или escapeDirection.normalized
+                UpdateAnimVariant(moveDir);
                 animator.SetBool("IsMoving", true);
                 animator.SetFloat("MoveX", moveDir.x);
                 animator.SetFloat("MoveY", moveDir.y);
@@ -213,6 +218,7 @@ public class BossController : MonoBehaviour
 
 
                 Vector2 escMoveDir = escapeDirection.normalized; // или escapeDirection.normalized
+                UpdateAnimVariant(escMoveDir);
                 animator.SetBool("IsMoving", true);
                 animator.SetFloat("MoveX", escMoveDir.x);
                 animator.SetFloat("MoveY", escMoveDir.y);
@@ -228,7 +234,7 @@ public class BossController : MonoBehaviour
                     {
                         SpawnMinions();
                         minionsSpawned = true;
-                        phase1State = Phase1State.Transition;
+                        EnterTransition();
                         phase1Timer = 0f;
                     }
                     else
@@ -327,6 +333,7 @@ public class BossController : MonoBehaviour
                 if (phase1State != Phase1State.Dashing)
                     break;
                 Vector2 moveDir = dashDirection.normalized;
+                UpdateAnimVariant(moveDir);
                 animator.SetBool("IsMoving", true);
                 animator.SetFloat("MoveX", moveDir.x);
                 animator.SetFloat("MoveY", moveDir.y);
@@ -338,6 +345,7 @@ public class BossController : MonoBehaviour
                 escapeDirection = -dashDirection;
 
                 Vector2 escMoveDir = escapeDirection.normalized;
+                UpdateAnimVariant(escMoveDir);
                 animator.SetBool("IsMoving", true);
                 animator.SetFloat("MoveX", escMoveDir.x);
                 animator.SetFloat("MoveY", escMoveDir.y);
@@ -436,18 +444,60 @@ public class BossController : MonoBehaviour
     }
     public void Die()
     {
-        CurrentState = BossState.Dead;
         // отключить поведение, проиграть анимацию, вызвать конец боя
-
         if (deathTimeline != null)
         {
             deathTimeline.Play();
         }
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = false;
+        CurrentState = BossState.Dead;
 
+        animator.SetBool("IsMoving", false);
+        animator.SetInteger("AnimVariant", -1);
         // отключение скрипта логики, если нужно:
-        enabled = false;
+        //enabled = false;
+    }
+    public void OnDeathCutsceneEnd()
+    { 
+        if (loader != null)
+        {
+            loader.LoadSceneByIndex(0); // или "Level_Complete", что у тебя там
+        }
+        else
+        {
+            Debug.LogError("SceneLoader not found!");
+        }
+    }
+    public void PlayStepSound(int eventVariant)
+    {
+        int currentVariant = animator.GetInteger("AnimVariant");
+
+        if (currentVariant == eventVariant)
+        {
+            if (stepClip != null && sfxSource != null)
+            {
+                sfxSource.PlayOneShot(stepClip);
+            }
+        }
+#if UNITY_EDITOR
+        else
+        {
+            Debug.Log($"Step ignored. eventVariant={eventVariant} currentVariant={currentVariant}");
+        }
+#endif
+    }
+    private void UpdateAnimVariant(Vector2 moveDir)
+    {
+        if (Mathf.Abs(moveDir.x) > Mathf.Abs(moveDir.y))
+        {
+            animVariant = 0; // боковая
+        }
+        else
+        {
+            animVariant = moveDir.y >= 0 ? 1 : 2; // вверх или вниз
+        }
+        animator.SetInteger("AnimVariant", animVariant);
     }
     // Вызывается сигналом в конце Timeline
     public void EnablePlayerControlAndStartBoss()

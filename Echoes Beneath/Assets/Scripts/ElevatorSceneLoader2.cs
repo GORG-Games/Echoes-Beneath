@@ -20,7 +20,7 @@ public class ElevatorSceneLoader2 : MonoBehaviour
     {
         if (isPlayerInZone && Input.GetKeyDown(KeyCode.E))
         {
-            _sceneLoader.LoadSceneByIndex(0);
+            _sceneLoader.LoadNextScene();
         }
     }
 

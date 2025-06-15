@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 912868442488535810}
   - component: {fileID: 9109832004981955642}
   - component: {fileID: 1737035010815105825}
+  - component: {fileID: 6055715180445946938}
   m_Layer: 6
   m_Name: PATIENT_ZERO
   m_TagString: Untagged
@@ -196,16 +197,20 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
-  damageToPlayer: 30
+  damageToPlayer: 25
   spriteRenderer: {fileID: 2354341875337356848}
-  <phase2Threshold>k__BackingField: 250
+  trigger: {fileID: 0}
+  flashlight: {fileID: 0}
+  <phase2Threshold>k__BackingField: 200
+  lights: []
+  ammos: []
   CurrentState: 0
   dashCooldown: 3
-  dashSpeed: 15
+  dashSpeed: 13
   playerTransform: {fileID: 0}
   distance: 25
   escapeSpeed: 20
-  escapeDuration: 1.5
+  escapeDuration: 1.3
   minionSpawnPoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -213,9 +218,9 @@ MonoBehaviour:
   - {fileID: 0}
   minionPrefab: {fileID: 9036237423343731133, guid: 1833e762a079df84689a5f4093ed6ae1, type: 3}
   bossHurtClip: {fileID: 0}
-  bossDashScreamClip: {fileID: 0}
-  bossStepsClip: {fileID: 0}
-  bossScreamClip: {fileID: 0}
+  bossDashScreamClip: {fileID: 8300000, guid: 561c9dd69e6fa5a45a168a4610fca8f9, type: 3}
+  stepClip: {fileID: 8300000, guid: 291c9a7f489e936488a8c835173967f5, type: 3}
+  bossScreamClip: {fileID: 8300000, guid: 561c9dd69e6fa5a45a168a4610fca8f9, type: 3}
   bossMusicClip: {fileID: 0}
   sfxSource: {fileID: 9109832004981955642}
   musicSource: {fileID: 0}
@@ -234,7 +239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentHealth: 0
-  <MaxHealth>k__BackingField: 500
+  <MaxHealth>k__BackingField: 400
   _knockbackForce: 4
   flashDuration: 0.3
   fadeBackTime: 0.2
@@ -356,3 +361,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6055715180445946938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359457818831002504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: f8e7adc9c7df79144901e3644f454c20, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7481076131053725115}
+          m_TargetAssemblyTypeName: BossController, Assembly-CSharp
+          m_MethodName: EnablePlayerControlAndStartBoss
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 1

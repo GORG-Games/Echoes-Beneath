@@ -57,6 +57,7 @@ public class EnemyHealth : MonoBehaviour
     {
         if (_enemyAI != null)
         {
+            _enemyAI.PlayHurtSound();
             _enemyAI.IsPlayerInSight = true;
             _animator.SetBool("IsDetected", _enemyAI.IsPlayerInSight);
         }

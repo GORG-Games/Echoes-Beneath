@@ -27,6 +27,7 @@ public class EnemyAI : MonoBehaviour
     private Animator _animator;
     private Vector2 _animationWeight;
     [SerializeField] private DefaultDirection _animDirection;
+    int animVariant = 0;
 
     [Header("Attacking Player")]
     [SerializeField] private float _attackCooldown; // Attack cooldown
@@ -34,6 +35,14 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private int _attackDamage; // Attack damage dealt to player
     public bool _isAttacking = false;
     private PlayerHealth _playerHealth;
+
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip stepClip;
+    [SerializeField] private AudioClip hurtClip;
+    [SerializeField] private AudioClip attackClip;
+
+    private bool hasPlayedHurtSound = false;
 
     void Start()
     {
@@ -149,10 +158,66 @@ public class EnemyAI : MonoBehaviour
         }
         _animator.SetFloat("MoveX", direction.x);
         _animator.SetFloat("MoveY", direction.y);
+
+        
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+        {
+            animVariant = 0; // боковая
+        }
+        else
+        {
+            animVariant = direction.y >= 0 ? 1 : 2; // вверх или вниз
+        }
+        _animator.SetInteger("AnimVariant", animVariant);
     }
     public void SetPlayerTarget(Transform player)
     {
         _player = player;
+    }
+    // Вызывается через Animation Event
+    public void PlayStepSound(int eventVariant)
+    {
+        int currentVariant = _animator.GetInteger("AnimVariant");
+
+        if (currentVariant == eventVariant)
+        {
+            if (stepClip != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(stepClip);
+            }
+        }
+#if UNITY_EDITOR
+        else
+        {
+            Debug.Log($"Step ignored. eventVariant={eventVariant} currentVariant={currentVariant}");
+        }
+#endif
+    }
+
+    // Вызывается через Animation Event
+    public void PlayAttackSound()
+    {
+        if (attackClip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(attackClip);
+        }
+    }
+
+    // Вызывается в EnemyHealth при получении урона
+    public void PlayHurtSound()
+    {
+        if (hasPlayedHurtSound || hurtClip == null || audioSource == null)
+            return;
+
+        hasPlayedHurtSound = true;
+        audioSource.PlayOneShot(hurtClip);
+        StartCoroutine(ResetHurtSoundFlag());
+    }
+
+    private IEnumerator ResetHurtSoundFlag()
+    {
+        yield return new WaitForSeconds(0.1f); // таймаут между ударами
+        hasPlayedHurtSound = false;
     }
 #if UNITY_EDITOR
     private void OnDrawGizmos()

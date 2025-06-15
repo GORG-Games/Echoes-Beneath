@@ -605,7 +605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb399a744a53f1940b7068fbf7161bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2.4
+  moveSpeed: 2.8
   audioManager: {fileID: 0}
   audioSource: {fileID: 1288492805033451521}
   footstepClip: {fileID: 8300000, guid: dd003deddb817544bbd56a6050202807, type: 3}
