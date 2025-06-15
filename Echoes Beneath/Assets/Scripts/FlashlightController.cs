@@ -141,4 +141,8 @@ public class FlashlightController : MonoBehaviour
         _batteryPacks += count;
         UpdateBatteryUI();
     }
+    public void SetDrainInactive()
+    {
+        _lightDrainSpeed = 0f; 
+    }
 }

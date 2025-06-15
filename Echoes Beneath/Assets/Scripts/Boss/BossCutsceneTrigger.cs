@@ -35,11 +35,11 @@ public class BossCutsceneTrigger : MonoBehaviour
             }
 
             // АХТУНГ - УДАЛИТЬ ПРИ СБОРКЕ - ЭТО МГНОВЕННОЕ НАЧАЛО БОЯ
-            BossController boss = FindObjectOfType<BossController>();
-            if (boss != null)
-            {
-                boss.StartPhase1(); // Запускаем бой
-            }
+            //BossController boss = FindObjectOfType<BossController>();
+            //if (boss != null)
+            //{
+            //    boss.StartPhase1(); // Запускаем бой
+            //}
 
             // Запускаем катсцену
             if (timelineDirector != null)
@@ -55,19 +55,11 @@ public class BossCutsceneTrigger : MonoBehaviour
         }
     }
 
-    // Вызывается сигналом в конце Timeline
-    public void EnablePlayerControlAndStartBoss()
+    public void ActivatePlayer()
     {
         foreach (var script in playerControlScripts)
         {
             if (script != null) script.enabled = true;
-        }
-
-        // Найдём и запустим бой (можно и через ссылку если нужно)
-        BossController boss = FindObjectOfType<BossController>();
-        if (boss != null)
-        {
-            boss.StartPhase1(); // Запускаем бой
         }
     }
 }

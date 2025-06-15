@@ -38,7 +38,25 @@ public class PlayerHealth : MonoBehaviour
 
     [Header("Death Settings")]
     [SerializeField] private DeathScreenController deathScreenController;
+    private PlayerMovement movement;
+    private Rigidbody2D rb;
+    private Collider2D col;
+    private AudioSource audioSource;
+    private FlashlightController flashlight;
+    private PlayerAim aim;
+    private Shotgun shotgun;
     [field: SerializeField] public bool IsDead { get; private set; } = false;
+
+    void Awake()
+    {
+        movement = GetComponent<PlayerMovement>();
+        rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<Collider2D>();
+        audioSource = GetComponent<AudioSource>();
+        flashlight = GetComponentInChildren<FlashlightController>();
+        aim = GetComponentInChildren<PlayerAim>();
+        shotgun = GetComponentInChildren<Shotgun>();
+    }
     void Start()
     {
         _cameraController.StopShake();
@@ -122,16 +140,14 @@ public class PlayerHealth : MonoBehaviour
 
     void DisablePlayerLogic()
     {
-        GetComponent<PlayerMovement>().enabled = false;
-        GetComponent<Rigidbody2D>().simulated = false;
-        GetComponent<Collider2D>().enabled = false;
-        GetComponent<AudioSource>().enabled = false;
+        if (movement != null) movement.enabled = false;
+        if (rb != null) rb.simulated = false;
+        if (col != null) col.enabled = false;
+        if (audioSource != null) audioSource.enabled = false;
 
-        GetComponentInChildren<FlashlightController>().enabled = false;
-        GetComponentInChildren<PlayerAim>().enabled = false;
-        GetComponentInChildren<Shotgun>().enabled = false;
-        GetComponentInChildren<Shotgun>().enabled = false;
-
+        if (flashlight != null) flashlight.enabled = false;
+        if (aim != null) aim.enabled = false;
+        if (shotgun != null) shotgun.enabled = false;
     }
     private IEnumerator DelayedMedkitUIUpdate()
     {

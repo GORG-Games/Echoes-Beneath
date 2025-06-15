@@ -18,7 +18,12 @@ public class BossController : MonoBehaviour
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private int damageToPlayer = 40;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private BossCutsceneTrigger trigger;
     [field: SerializeField] public int phase2Threshold { get; private set; } = 50; // при каком здоровье переходит во 2 фазу
+
+    [Header("Spawns")]
+    [SerializeField] private GameObject[] lights;
+    [SerializeField] private GameObject[] ammos;
 
     [Header("Components")]
     private Animator animator;
@@ -136,6 +141,10 @@ public class BossController : MonoBehaviour
     public void StartPhase1()
     {
         CurrentState = BossState.Phase1;
+        FindObjectOfType<FlashlightController>()?.SetDrainInactive();
+        FindObjectOfType<LightFlicker>()?.StartFlicker();
+        foreach (GameObject lightObject in lights)
+            if(lightObject != null) lightObject.SetActive(true);
         // запустить анимацию, звуки, спавн и т.д.
         if (bossMusicClip != null && musicSource != null)
         {
@@ -361,6 +370,8 @@ public class BossController : MonoBehaviour
     }
     void SpawnMinions()
     {
+        foreach(GameObject ammoObject in ammos)
+            if(ammoObject != null) ammoObject.SetActive(true);
         for (int i = 0; i < 3; i++)
         {
             int index = Random.Range(0, minionSpawnPoints.Length);
@@ -437,5 +448,17 @@ public class BossController : MonoBehaviour
 
         // отключение скрипта логики, если нужно:
         enabled = false;
+    }
+    // Вызывается сигналом в конце Timeline
+    public void EnablePlayerControlAndStartBoss()
+    {
+        trigger.ActivatePlayer();
+
+        // Найдём и запустим бой (можно и через ссылку если нужно)
+        BossController boss = FindObjectOfType<BossController>();
+        if (boss != null)
+        {
+            boss.StartPhase1(); // Запускаем бой
+        }
     }
 }
