@@ -36,7 +36,7 @@ public class Level2_ElevatorSwitch : MonoBehaviour
     {
         if (_interactionRequested)
         {
-            if (isPowered && !hasActivated)
+            if (isPowered)
             {
                 ActivateElevator();
             }

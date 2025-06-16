@@ -197,10 +197,11 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
-  damageToPlayer: 25
+  damageToPlayer: 20
   spriteRenderer: {fileID: 2354341875337356848}
   trigger: {fileID: 0}
   flashlight: {fileID: 0}
+  loader: {fileID: 0}
   <phase2Threshold>k__BackingField: 200
   lights: []
   ammos: []

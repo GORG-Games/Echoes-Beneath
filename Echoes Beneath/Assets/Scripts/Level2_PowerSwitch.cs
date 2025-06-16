@@ -19,13 +19,14 @@ public class Level2_PowerSwitch : MonoBehaviour
     private bool hasActivated = false;
 
     [Header("Affected by Activation Properties")]
-    [SerializeField] private Level2_ElevatorSwitch elevator;
+    [SerializeField] private GameObject elevator;
+    private Level2_ElevatorSwitch elevatorScript;
     [SerializeField] private GameObject[] objectsToActivate;
     [SerializeField] private ParticleSystem particleEffect;
     private Coroutine _coroutine;
     void Start()
     {
-        
+        if (elevator != null) elevatorScript = elevator.GetComponent<Level2_ElevatorSwitch>();
     }
 
     void Update()
@@ -38,7 +39,7 @@ public class Level2_PowerSwitch : MonoBehaviour
 
     void ActivateSwitch()
     {
-        elevator.isPowered = true;
+        elevatorScript.isPowered = true;
         ChangeSprite();
         StartParticles();
         ActivateObjects();
