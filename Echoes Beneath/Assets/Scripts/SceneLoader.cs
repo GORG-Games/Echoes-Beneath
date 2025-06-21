@@ -114,6 +114,12 @@ public class SceneLoader : MonoBehaviour
 
         Debug.Log("[FadeController] DONE");
     }
+    public void LoadSceneByIndexUnpaused(int index)
+    {
+        Time.timeScale = 1f;
+        AudioListener.pause = false;
+        SceneManager.LoadScene(index);
+    }
 
     public void QuitGame()
     {
